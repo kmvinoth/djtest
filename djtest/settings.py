@@ -121,4 +121,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/org/login'  # for login required decorator, password chane, password change done
+LOGIN_URL = '/org/login'  # for login required decorator, password change, password change done don't forget
