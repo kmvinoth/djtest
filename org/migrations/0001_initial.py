@@ -13,25 +13,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Projects',
+            name='UserProfile',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('projectName', models.CharField(max_length=50, default='project1')),
-            ],
-            options={
-                'verbose_name_plural': 'Projects',
-            },
-        ),
-        migrations.CreateModel(
-            name='ProjectUser',
-            fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('created_by', models.ForeignKey(related_name='projectadmin', to=settings.AUTH_USER_MODEL)),
-                ('project_name', models.ForeignKey(to='org.Projects')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('organization', models.CharField(default=True, blank=True, max_length=100)),
+                ('phone', models.CharField(default=True, blank=True, max_length=20)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-                'verbose_name_plural': 'ProjectUser',
-            },
         ),
     ]

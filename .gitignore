@@ -2,6 +2,10 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
+djtest/__pycache__/
+org/__pycache__/
+org/migrations/__pycache__
+*.pyc
 *.py[cod]
 *$py.class
 
@@ -93,4 +97,5 @@ ENV/
 
 #Pycharm .idea files
 .idea/
+database_db
 
