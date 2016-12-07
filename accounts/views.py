@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    return render(request, 'org/home.html')
+    return render(request, 'accounts/home.html')
 
 
-@login_required(login_url='/org/login')
+@login_required(login_url='/accounts/login')
 def check_auth(request):
-    return render(request, 'org/check.html')
+    return render(request, 'accounts/check.html')
 

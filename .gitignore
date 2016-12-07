@@ -3,8 +3,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 djtest/__pycache__/
-org/__pycache__/
-org/migrations/__pycache__
+accounts/__pycache__/
+accounts/migrations/__pycache__
 *.pyc
 *.py[cod]
 *$py.class

@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'org',
+    'accounts',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -121,4 +121,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/org/login'  # for login required decorator, password change, password change done
+LOGIN_URL = '/accounts/login'  # for login required decorator, password change, password change done

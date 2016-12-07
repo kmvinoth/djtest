@@ -15,21 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from org import views
+from accounts import views
 
 urlpatterns = [
     url(r'^$', views.home),
 
-    url(r'^login$', auth_views.login, {'template_name': 'org/login.html', 'extra_context': {'next': 'check'}},
+    url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html', 'extra_context': {'next': 'check'}},
         name='auth_login'),
 
     url(r'^check$', views.check_auth, name='check'),
 
-    url(r'^logged_out$', auth_views.logout, {'template_name': 'org/logout.html'}, name='logout'),
+    url(r'^logged_out$', auth_views.logout, {'template_name': 'accounts/logout.html'}, name='logout'),
 
-    url(r'^password_change$', auth_views.password_change, {'template_name': 'org/password_change.html',
+    url(r'^password_change$', auth_views.password_change, {'template_name': 'accounts/password_change.html',
         'post_change_redirect': 'password_change_done'}, name='password_change'),
 
-    url(r'^password_change_done$', auth_views.password_change_done, {'template_name': 'org/password_change_done.html'},
+    url(r'^password_change_done$', auth_views.password_change_done, {'template_name': 'accounts/password_change_done.html'},
         name='password_change_done')
 ]
