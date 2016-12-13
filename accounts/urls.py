@@ -23,13 +23,16 @@ urlpatterns = [
     url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html', 'extra_context': {'next': 'check'}},
         name='auth_login'),
 
-    url(r'^check$', views.check_auth, name='check'),
+    url(r'^forgot_pwd$', auth_views.password_reset),
 
-    url(r'^logged_out$', auth_views.logout, {'template_name': 'accounts/logout.html'}, name='logout'),
+    url(r'^check$', views.check_auth, name='check'),
 
     url(r'^password_change$', auth_views.password_change, {'template_name': 'accounts/password_change.html',
         'post_change_redirect': 'password_change_done'}, name='password_change'),
 
     url(r'^password_change_done$', auth_views.password_change_done, {'template_name': 'accounts/password_change_done.html'},
-        name='password_change_done')
+        name='password_change_done'),
+
+    url(r'^logout$', auth_views.logout, {'template_name': 'accounts/logout.html'}, name='logout'),
+
 ]
