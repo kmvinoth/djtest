@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'debug_toolbar',
-    'rolepermissions',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,5 +126,3 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/accounts/login'  # for login required decorator, password change, password change done
 
 INTERNAL_IPS = ('127.0.0.1',)  # for django-debug-toolbar
-
-ROLEPERMISSIONS_MODULE = 'djtest.roles'  # for django-roles-permissions

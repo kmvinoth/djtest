@@ -9,13 +9,10 @@ class UserProfile(models.Model):
 
 
 class Projects(models.Model):
-   project_name = models.CharField(max_length=100, default=True, blank=True)
+    project_name = models.CharField(max_length=100, default=True, blank=True)
 
     class Meta:
-        verbose_name_plural = 'UserProfile'
-
-    def __str__(self):
-        self.user
+        verbose_name_plural = 'Projects'
 
 
 class Home(models.Model):
