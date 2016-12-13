@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'debug_toolbar',
+    'rolepermissions',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -48,6 +50,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'djtest.urls'
@@ -122,3 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/accounts/login'  # for login required decorator, password change, password change done
+
+INTERNAL_IPS = ('127.0.0.1',)  # for django-debug-toolbar
+
+ROLEPERMISSIONS_MODULE = 'djtest.roles'  # for django-roles-permissions
