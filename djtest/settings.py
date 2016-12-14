@@ -126,3 +126,13 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/accounts/login'  # for login required decorator, password change, password change done
 
 INTERNAL_IPS = ('127.0.0.1',)  # for django-debug-toolbar
+
+# for setting up local (custom) email server for password reset
+# ref: http://garmoncheg.blogspot.de/2012/07/django-resetting-passwords-with.html
+if DEBUG:
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_USE_TLS = False
+    DEFAULT_FROM_EMAIL = 'testing@example.com'
