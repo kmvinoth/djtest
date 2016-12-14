@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %} Login {% endblock %}
+
 {% block content %}
 
 {# Display error messages in color #}
@@ -27,6 +29,8 @@ li {color:red;}
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
+<p><a href={% url 'password_reset' %}> Forgot your password?</a></p>
+
 {# Display form (field and non field) error messages #}
 {#  ref: https://djangosnippets.org/snippets/2769/ #}
 {% if form.errors %}
@@ -40,7 +44,4 @@ li {color:red;}
     {{form.non_field_errors}}  {# The error message comes from AuthenticationForm(django.contrib.auth.forms) #}
 {% endif %}
 
-{# Assumes you setup the password_reset view in your URLconf #}
-{#<p><a href="{% url 'auth_views' %}">Forgot password?</a></p>#}
-<p><a href="forgot_pwd">Forgot your password?</a></p>
 {% endblock %}
