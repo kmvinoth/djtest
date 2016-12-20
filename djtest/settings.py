@@ -129,6 +129,8 @@ INTERNAL_IPS = ('127.0.0.1',)  # for django-debug-toolbar
 
 # for setting up local (custom) email server for password reset
 # ref: http://garmoncheg.blogspot.de/2012/07/django-resetting-passwords-with.html
+# to run local mail server in python for resetting password (only for development)
+# python -m smtpd -n -c DebuggingServer localhost:1025
 if DEBUG:
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = 1025
