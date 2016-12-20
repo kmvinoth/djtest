@@ -1,0 +1,58 @@
+body {
+    background-color: #f9f9f9;
+    padding-top: 100px;
+}
+
+header {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+header ul.menu {
+    margin: 0;
+}
+
+header ul.menu li.logo a{
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+a {
+    background-color: transparent;
+}
+
+header ul.menu li {
+    list-style: none;
+    display: inline;
+
+}
+
+header ul.menu li a {
+    text-decoration: none;
+    font-weight: 600;
+    padding: 15px 8px;
+    display: inline-block;
+    font-size: 1.0rem;
+}
+
+header a {
+    color: #fff;
+}
+
+h1 {
+    text-align: center;
+}
+
+body {
+    font-size: 1.8em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: sans-serif;
+    color: #222;
+}
+
+

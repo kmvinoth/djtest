@@ -2,22 +2,59 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Head section starts here -->
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} Home {% endblock %}</title>
-</head>
+    <!--Meta data information about the HTML Document -->
+    <meta name="description" content="CSS practice">
+    <meta name="author" content="Vinoth">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static "accounts/style.css" %}" rel="stylesheet" type="text/css">
 
+    <title> {% block title %} Home {% endblock %} </title>
+</head>
+<!-- Head section ends here -->
+
+<!-- Body section starts here -->
 <body>
 
-{% block content %}
-
+{% block header %}
+    <header>
+        <div class="container">
+            <ul class="menu">
+                <li class="logo"> <a href="/home"> django-accounts </a> </li>
+                <li class="menu-item"> <a href="/home"> Home </a> </li>
+                <li class="menu-item"> <a href="/about"> About </a> </li>
+                <li class="menu-item"> <a href="accounts/login"> Login </a> </li>
+                <li class="menu-item"> <a href="/contact"> Contact </a> </li>
+                <li class="menu-item"> <a href="/snippets"> Snippets </a> </li>
+                <li class="menu-item"> <a href="/subscribe"> Subscribe </a> </li>
+            </ul>
+        </div>
+    </header>
 {% endblock %}
 
+<!-- Main section starts here -->
+{% block main %}
+    <main>
+
+
+
+    </main>
+{% endblock %}
+<!-- Main section ends here -->
+
+<!-- Footer section starts here -->
 {% block footer %}
-    <hr>
-    <p>Thanks for visiting my site.</p>
+    <footer>
+        <hr>
+        <p>Thanks for visiting my site.</p>
+    </footer>
+
 {% endblock %}
+<!-- Footer section ends here -->
 
 </body>
+<!-- Body section ends here -->
 </html>
+<!-- End of the HTML document -->
