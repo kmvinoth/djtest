@@ -3,8 +3,8 @@
 {% block title %} UserDashboard {% endblock %}
 
 {% block changable %}
-    <li class="menu-item"> <a href="/profile"> Profile </a> </li>
-    <li class="menu-item"> <a href="/logout"> Logout </a> </li>
+    <li class="menu-item"> <a href="profile"> Profile </a> </li>
+    <li class="menu-item"> <a href="logout"> Logout </a> </li>
 {% endblock %}
 
 
@@ -12,10 +12,9 @@
 
     <h1> Hi {{ user }}, You are Successfully logged in</h1>
 
-    <a href="profile">Profile</a><br>
+    <p>Your profile will be created shortly.</p>
 
-    <a href="password_change">Change Password</a><br>
-
-    <a href="logout">Logout</a>
+{#    Add this functionality in User profile#}
+{#    <a href="password_change">Change Password</a><br>#}
 
 {% endblock %}
