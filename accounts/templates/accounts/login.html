@@ -2,46 +2,55 @@
 
 {% block title %} Login {% endblock %}
 
-{% block content %}
+{% block main %}
 
-{# Display error messages in color #}
-<style>
-li {color:red;}
-</style>
+    <main>
+        {# Display error messages in color #}
+        <style>
+            li {color:red;}
+        </style>
 
-<h1>Login</h1>
+        <h1>Login</h1>
 
-{# Login form #}
-<form method="post" action="{% url 'auth_login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+        {# Login form #}
+        <div class="form">
+            <form method="post" action="{% url 'auth_login' %}">
+                {% csrf_token %}
+                <fieldset class="account-info">
+                    <label>
+                        Username
+                        <input type="text" name="username">
+                    </label>
+                    <label>
+                        Password
+                        <input type="password" name="password">
+                    </label>
+                    <label>
+                        <a href={% url 'password_reset' %}> Forgot your password?</a>
+                    </label>
+                </fieldset>
+                <fieldset class="account-action">
+                    <input class="btn" type="submit" name="submit" value="Login">
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <label>
+                        <input type="checkbox" name="remember"> Stay signed in
+                    </label>
+                </fieldset>
+            </form>
+        </div>
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-
-<p><a href={% url 'password_reset' %}> Forgot your password?</a></p>
-
-{# Display form (field and non field) error messages #}
-{#  ref: https://djangosnippets.org/snippets/2769/ #}
-{% if form.errors %}
-    {# field errors #}
-    {% for field in form %}
-        {% if field.errors %}
-            <li>{{ field.label }}: {{ field.errors|striptags}}</li>
+        {# Display form (field and non field) error messages #}
+        {#  ref: https://djangosnippets.org/snippets/2769/ #}
+        {% if form.errors %}
+            {# field errors #}
+            {% for field in form %}
+                {% if field.errors %}
+                    <li>{{ field.label }}: {{ field.errors|striptags}}</li>
+                {% endif %}
+            {% endfor %}
+            {# non field errors #}
+            {{form.non_field_errors}}  {# The error message comes from AuthenticationForm(django.contrib.auth.forms) #}
         {% endif %}
-    {% endfor %}
-    {# non field errors #}
-    {{form.non_field_errors}}  {# The error message comes from AuthenticationForm(django.contrib.auth.forms) #}
-{% endif %}
 
+    </main>
 {% endblock %}
