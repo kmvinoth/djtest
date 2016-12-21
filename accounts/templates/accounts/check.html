@@ -1,8 +1,21 @@
-<h1> Hi {{ user }}, You are Successfully logged in</h1>
+{% extends "base.html" %}
+
+{% block title %} UserDashboard {% endblock %}
+
+{% block changable %}
+    <li class="menu-item"> <a href="/profile"> Profile </a> </li>
+    <li class="menu-item"> <a href="/logout"> Logout </a> </li>
+{% endblock %}
 
 
-<a href="profile">Profile</a><br>
+{% block main %}
 
-<a href="password_change">Change Password</a><br>
+    <h1> Hi {{ user }}, You are Successfully logged in</h1>
 
-<a href="logout">Logout</a>
+    <a href="profile">Profile</a><br>
+
+    <a href="password_change">Change Password</a><br>
+
+    <a href="logout">Logout</a>
+
+{% endblock %}
