@@ -5,11 +5,6 @@
 {% block main %}
 
     <main>
-        {# Display error messages in color #}
-        <style>
-            li {color:red;}
-        </style>
-
         <h1>Login</h1>
 
         {# Login form #}
@@ -41,6 +36,7 @@
 
         {# Display form (field and non field) error messages #}
         {#  ref: https://djangosnippets.org/snippets/2769/ #}
+        <div class="form-errors">
         {% if form.errors %}
             {# field errors #}
             {% for field in form %}
@@ -51,6 +47,7 @@
             {# non field errors #}
             {{form.non_field_errors}}  {# The error message comes from AuthenticationForm(django.contrib.auth.forms) #}
         {% endif %}
+        </div>
 
     </main>
 {% endblock %}

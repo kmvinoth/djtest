@@ -68,7 +68,7 @@ form {
     border-radius: 5px;
     font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
     overflow: hidden;
-    width: 240px;
+    width: 300px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -135,4 +135,8 @@ input {
     font-size: 12px;
     float: left;
     margin: 10px 0 0 20px;
+}
+.form-errors li{
+    color: red;
+    text-align: center;
 }
