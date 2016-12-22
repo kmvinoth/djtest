@@ -7,6 +7,12 @@ class UserProfile(models.Model):
     organization = models.CharField(max_length=100, default=True, blank=True)
     phone = models.CharField(max_length=20, default=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = 'Profile'
+
+    def __str__(self):
+        self.user.firstname
+
 
 class Projects(models.Model):
     project_name = models.CharField(max_length=100, default=True, blank=True)
