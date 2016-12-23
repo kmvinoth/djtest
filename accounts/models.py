@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    organization = models.CharField(max_length=100, default=True, blank=True)
-    phone = models.CharField(max_length=20, default=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    dob = models.DateField(blank=True, null=True)
+    nickname = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Profile'
