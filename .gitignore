@@ -4,6 +4,7 @@
 __pycache__/
 djtest/__pycache__/
 accounts/__pycache__/
+accounts/migrations/*.py
 accounts/migrations/__pycache__
 *.pyc
 *.py[cod]
@@ -98,5 +99,5 @@ ENV/
 
 #Pycharm .idea files
 .idea/
-database_db
+databasenew_db
 
