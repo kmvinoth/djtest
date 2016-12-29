@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html', 'extra_context': {'next': 'check'}},
         name='auth_login'),
 
+    url(r'^profile$', views.update_profile, name='profile'),
+
     url(r'^password_reset$', auth_views.password_reset,
         {'template_name': 'accounts/password_reset.html', 'email_template_name': 'accounts/password_reset_email.html',
          'subject_template_name': 'accounts/password_reset_subject.txt', 'post_reset_redirect': 'password_reset_done'},

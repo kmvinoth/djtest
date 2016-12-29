@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'djtest.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'database_db'),
+        'NAME': os.path.join(BASE_DIR, 'databasenew_db'),
     }
 }
 
