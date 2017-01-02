@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth.decorators import login_required, user_passes_test
 # required for database transactions, ref: simpleisbetterthancomplex
 from django.db import transaction
 # required for profile update, ref: simpleisbetterthancomplex
@@ -28,7 +28,7 @@ def update_profile(request):
             messages.success(request, 'Your profile was successfully updated!')
             return redirect('/accounts/profile')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Please correct the error above.')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.userprofile)
@@ -36,3 +36,9 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
+@login_required(login_url='/accounts/login')
+@user_passes_test(lambda u: u.is_staff)
+def create_project(request):
+    return HttpResponse("You can create project and you can create group")
