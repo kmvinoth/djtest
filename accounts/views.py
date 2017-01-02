@@ -26,7 +26,7 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile was successfully updated!')
-            return redirect('accounts:check')
+            return redirect('/accounts/profile')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
