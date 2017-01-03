@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from .models import User, UserProfile
 
 
@@ -13,3 +14,8 @@ class UserProfileForm(ModelForm):
         model = UserProfile
         fields = ('dob', 'nickname')
 
+
+class UserRegistrationForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'email')

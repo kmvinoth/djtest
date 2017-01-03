@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.views.generic.edit import CreateView
 from accounts import views
+from accounts.forms import UserRegistrationForm
 
 urlpatterns = [
     url(r'^$', views.home),
+
+    url(r'^register$', views.user_registration, name='user_registration'),
 
     url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html', 'extra_context': {'next': 'check'}},
         name='auth_login'),
