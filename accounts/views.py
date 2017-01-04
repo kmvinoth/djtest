@@ -24,14 +24,13 @@ def user_registration(request):
         # create a form instance and populate it with data from the request (binding data to the form):
         registration_form = UserRegistrationForm(request.POST)
         if registration_form.is_valid():
-            # print(registration_form.cleaned_data)
             # Create new User
             user = User.objects.create_user(username=registration_form.cleaned_data['username'],
                                             password=registration_form.cleaned_data['password'],
                                             email=registration_form.cleaned_data['email'])
             # Send verification email
-            # redirect to home page
-            return redirect('/')
+            # redirect to login page
+            return redirect('/accounts/login')
     # if a GET (or any other method) we'll create a blank form
     else:
         registration_form = UserRegistrationForm()
