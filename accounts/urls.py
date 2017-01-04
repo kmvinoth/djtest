@@ -15,9 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from django.views.generic.edit import CreateView
 from accounts import views
-from accounts.forms import UserRegistrationForm
 
 urlpatterns = [
     url(r'^$', views.home),
