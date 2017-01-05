@@ -15,6 +15,13 @@ class UserProfileForm(forms.ModelForm):
 
 
 class UserRegistrationForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        # Figure out how super works...!
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        # Making email field required for user registration form
+        self.fields['email'].required = True
+
     class Meta:
         model = User
         fields = ['username', 'password', 'email']
@@ -30,8 +37,8 @@ class UserRegistrationForm(forms.ModelForm):
             existing_username = User.objects.get(username__iexact=new_username)  # Remember it is a User object
         except User.DoesNotExist:
             return new_username
-        raise forms.ValidationError(('The username %(value) already exists. Please try another one.'),
-                                    params={'value': existing_username.username})
+        raise forms.ValidationError('The username %(value)s already exists. Please try another one',
+                                    params={'value': existing_username.username}, code='username exists')
 
     def clean_email(self):
         """
@@ -45,5 +52,5 @@ class UserRegistrationForm(forms.ModelForm):
             existing_email = existing_user.email
         except User.DoesNotExist:
             return new_email
-        raise forms.ValidationError(('The email %(value) address is already registered with us'),
-                                    params={'value': existing_email})
+        raise forms.ValidationError('The email %(value)s address is already registered with us',
+                                    params={'value': existing_email}, code='email exists')
