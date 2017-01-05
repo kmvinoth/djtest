@@ -31,13 +31,17 @@ def user_registration(request):
                                             email=registration_form.cleaned_data['email'])
             # Send verification email
             # redirect to login page
-            return redirect('/accounts/login')
+            return redirect('/accounts/register_success')
         else:
             return render(request, 'accounts/user_registration.html', {'registration_form': registration_form})
     # if a GET (or any other method) we'll create a blank form
     else:
         registration_form = UserRegistrationForm()
         return render(request, 'accounts/user_registration.html', {'registration_form': registration_form})
+
+
+def user_registration_success(request):
+    return render(request, 'accounts/user_registration_success.html')
 
 
 # ref: simpleisbetterthancomplex

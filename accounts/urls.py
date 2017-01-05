@@ -22,6 +22,8 @@ urlpatterns = [
 
     url(r'^register$', views.user_registration, name='user_registration'),
 
+    url(r'^register_success$', views.user_registration_success, name='user_registration_success'),
+
     url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html', 'extra_context': {'next': 'check'}},
         name='auth_login'),
 
