@@ -23,20 +23,3 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
 
-
-class Projects(models.Model):
-    project_name = models.CharField(max_length=100, default=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = 'Projects'
-
-
-class Home(models.Model):
-    home_name = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = 'Home'
-
-    def __str__(self):
-        self.home_name
-
