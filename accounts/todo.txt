@@ -1,0 +1,25 @@
+Date = 06.01.17
+
+Task Completed
+1. Login with Username
+
+2. User registration with Username and Email(required)
+
+3. Password change and Password reset using builtin authentication views.
+
+4. User profile model with one to one relation with User model created
+
+5. Logout and added CSS to the whole project.
+
+To do
+1. Login with Email instead of Username
+
+2. Register New User(create new user) with Email and send a password reset (validation) email to his email address.
+
+3. Add a Contact Form and send an email to the user(CC) and the concerned admin (say admin@zib.de)
+
+4. Change the design of all the forms(login,register,password change, reset and so on) using django-widget-tweaks and apply the CSS
+
+5. Remove the hard coded HTML in forms of the templates, use the django-rendering as much as possible using django-widget-tweaks.
+
+6. Possible add Ldap functionality.
