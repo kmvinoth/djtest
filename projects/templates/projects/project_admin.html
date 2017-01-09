@@ -3,10 +3,10 @@
 {% block title %} Projects Dashboard {% endblock %}
 
 {% block changable %}
-    <li class="menu-item"> <a href="profile"> Profile </a> </li>
-    <li class="menu-item"> <a href="{% url 'projects: project_dashboard' %}"> Projects </a> </li>
+    <li class="menu-item"> <a href="{% url 'accounts:profile' %}"> Profile </a> </li>
+    <li class="menu-item"> <a href="{% url 'projects:project_dashboard' %}"> Projects </a> </li>
     <li class="menu-item"> <a href="admin"> Admin </a> </li>
-    <li class="menu-item"> <a href="logout"> Logout </a> </li>
+    <li class="menu-item"> <a href="{% url 'accounts:logout' %}"> Logout </a> </li>
 {% endblock %}
 
 {% block main %}
