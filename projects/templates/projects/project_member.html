@@ -1,29 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %} Projects {% endblock %}
+{% block title %} Projects Dashboard {% endblock %}
 
-{% block content %}
+{% block changable %}
+    <li class="menu-item"> <a href="profile"> Profile </a> </li>
+    <li class="menu-item"> <a href="{% url 'projects: project_dashboard' %}"> Projects </a> </li>
+    <li class="menu-item"> <a href="logout"> Logout </a> </li>
+{% endblock %}
 
-    <div class="container navless-container">
-        <div class="content">
-            <p>Hi {{ user.first_name }}, Welcome to Data Deposit Portal
-            <div class="row">
-                <div class="col-sm-2 brand-holder pull-left">
-                    <h3>
-                        Menu
-                    </h3>
+{% block main %}
 
-                    <a href="/profile"> Profile </a> <br><br>
+    <main>
 
-                    <a href="/projects"> Projects </a> <br><br>
+    <p> Your projects will be displayed shortly... :)</p>
 
-                    <a href="/loggedout"> Logout </a> <br><br>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+    </main>
 
 {% endblock %}
 

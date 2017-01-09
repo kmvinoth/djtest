@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from accounts.views import login_required
 
 
+@login_required(login_url='/accounts/login')
 def project_member_view(request):
 
     # If the user is in group Project Admin (created by portal administrator),
