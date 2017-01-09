@@ -6,6 +6,9 @@ djtest/__pycache__/
 accounts/__pycache__/
 accounts/migrations/*.py
 accounts/migrations/__pycache__
+projects/__pycache__/
+projects/migrations/*.py
+projects/migrations/__pycache__
 *.pyc
 *.py[cod]
 *$py.class
