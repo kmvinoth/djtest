@@ -128,6 +128,8 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/accounts/login'  # for login required decorator, password change, password change done
 
+LOGIN_REDIRECT_URL = '/projects/project_dashboard'  # for redirecting to user project dashboard
+
 INTERNAL_IPS = ('127.0.0.1',)  # for django-debug-toolbar
 
 # for setting up local (custom) email server for password reset

@@ -24,8 +24,7 @@ urlpatterns = [
 
     url(r'^register_success$', views.user_registration_success, name='user_registration_success'),
 
-    url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html', 'extra_context': {'next': 'check'}},
-        name='auth_login'),
+    url(r'^login$', auth_views.login, {'template_name': 'accounts/login.html'}, name='auth_login'),
 
     url(r'^profile$', views.update_profile, name='profile'),
 
