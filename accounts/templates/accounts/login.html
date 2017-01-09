@@ -11,7 +11,7 @@
 
         {# Login form #}
         <div class="form">
-            <form method="post" action="{% url 'auth_login' %}">
+            <form method="post" action="{% url 'accounts:auth_login' %}">
                 {% csrf_token %}
                 <fieldset class="account-info">
                     <label>
@@ -23,18 +23,15 @@
                         <input type="password" name="password">
                     </label>
                     <label>
-                        <a href={% url 'password_reset' %}> Forgot your password?</a>
+                        <a href="{% url 'accounts:password_reset' %}"> Forgot your password?</a>
                     </label>
                     <label>
-                        <a href={% url 'user_registration' %}> Register</a>
+                        <a href="{% url 'accounts:user_registration' %}"> Register</a>
                     </label>
                 </fieldset>
                 <fieldset class="account-action">
                     <input class="btn" type="submit" name="submit" value="Login">
                     <input type="hidden" name="next" value="{{ next }}" />
-                    <label>
-                        <input type="checkbox" name="remember"> Stay signed in
-                    </label>
                 </fieldset>
             </form>
         </div>

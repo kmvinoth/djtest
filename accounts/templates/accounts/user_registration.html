@@ -10,7 +10,7 @@
 
         {# User Registration form #}
         <div class="form">
-            <form method="post" action="{% url 'user_registration' %}">
+            <form method="post" action="{% url 'accounts:user_registration' %}">
                 {% csrf_token %}
                 <fieldset class="account-info">
                     <label>

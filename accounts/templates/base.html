@@ -22,14 +22,14 @@
     <header>
         <div class="container">
             <ul class="menu">
-                <li class="logo"> <a href="/"> django-accounts </a> </li>
-                <li class="menu-item"> <a href="/"> Home </a> </li>
-                <li class="menu-item"> <a href="/about"> About </a> </li>
+                <li class="logo"> <a href="{% url 'accounts:home' %}"> django-accounts </a> </li>
+                <li class="menu-item"> <a href="{% url 'accounts:home' %}"> Home </a> </li>
+                <li class="menu-item"> <a href="{% url 'accounts:home' %}"> About </a> </li>
                 {% block changable %}
-                    <li class="menu-item"> <a href="/accounts/login"> Login </a> </li>
-                    <li class="menu-item"> <a href="/accounts/register"> Register </a> </li>
+                    <li class="menu-item"> <a href="{% url 'accounts:auth_login' %}"> Login </a> </li>
+                    <li class="menu-item"> <a href="{% url 'accounts:user_registration' %}"> Register </a> </li>
                 {% endblock %}
-                <li class="menu-item"> <a href="/contact"> Contact </a> </li>
+                <li class="menu-item"> <a href="{% url 'accounts:home' %}"> Contact </a> </li>
             </ul>
         </div>
     </header>
