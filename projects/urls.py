@@ -18,6 +18,8 @@ from projects import views
 
 urlpatterns = [
     url(r'^user_dashboard$', views.project_member_view, name='user_dashboard'),
-    url(r'^admin$', views.display_admin_projects, name='admin_projects'),
+    url(r'^admin$', views.admin_projects_view, name='admin_projects'),
+    url(r'^admin/\w+$', views.project_admin_page_view, name='project_admin_page'),
+    url(r'^admin/\w+/user_mgmt$', views.user_mgmt, name='user_mgmt'),
 
 ]

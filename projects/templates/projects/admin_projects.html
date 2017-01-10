@@ -1,13 +1,6 @@
-{% extends "base.html" %}
+{% extends "projects/project_admin.html" %}
 
 {% block title %} Admin_Projects {% endblock %}
-
-{% block changable %}
-    <li class="menu-item"> <a href="{% url 'accounts:profile' %}"> Profile </a> </li>
-    <li class="menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Projects </a> </li>
-    <li class="menu-item"> <a href="{% url 'projects:admin_projects' %}"> Admin </a> </li>
-    <li class="menu-item"> <a href="{% url 'accounts:logout' %}"> Logout </a> </li>
-{% endblock %}
 
 {% block main %}
 
@@ -17,7 +10,7 @@
 
         {% for pr in admin_projects %}
 
-            <li> <a href = "{{ pr.project_name }} "> {{ pr.project_name }}</a> </li>
+            <li> <a href = "{% url 'projects:admin_projects' %}/{{ pr.project_name }}"> {{ pr.project_name }}</a> </li>
 
         {% endfor %}
 
