@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Projects Dashboard {% endblock %}
+{% block title %} Admin_Projects {% endblock %}
 
 {% block changable %}
     <li class="menu-item"> <a href="{% url 'accounts:profile' %}"> Profile </a> </li>
@@ -13,14 +13,14 @@
 
     <main>
 
-    <p> Hi {{ user.first_name }}, Your projects will be displayed shortly... :)</p>
+        <p> Hi {{ user.first_name }}, Your are admin to the below Project(s), Click on the projects to perform administrative activities</p>
+
+        {% for pr in admin_projects %}
+
+            <li> <a href = "{{ pr.project_name }} "> {{ pr.project_name }}</a> </li>
+
+        {% endfor %}
 
     </main>
 
 {% endblock %}
-
-
-
-
-
-
