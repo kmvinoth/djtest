@@ -17,7 +17,7 @@ from django.conf.urls import url
 from projects import views
 
 urlpatterns = [
-    url(r'^project_dashboard$', views.project_member_view, name='project_dashboard'),
+    url(r'^user_dashboard$', views.project_member_view, name='user_dashboard'),
 
 
 
