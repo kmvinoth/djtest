@@ -4,16 +4,26 @@
 
 {% block changable %}
     <li class="menu-item"> <a href="{% url 'accounts:profile' %}"> Profile </a> </li>
-    <li class="menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Projects </a> </li>
-    <li class="menu-item"> <a href="{% url 'projects:admin_projects' %}"> Admin </a> </li>
     <li class="menu-item"> <a href="{% url 'accounts:logout' %}"> Logout </a> </li>
 {% endblock %}
+
 
 {% block main %}
 
     <main>
 
-    <p> Hi {{ user.first_name }}, Your projects will be displayed shortly... :)</p>
+        {% block main-menu %}
+
+            <li class="main-menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Projects </a> </li>
+            <li class="main-menu-item"> <a href="{% url 'projects:admin_projects' %}"> Admin </a> </li>
+
+        {% endblock %}
+
+        {% block main-text %}
+
+            <p> Hi {{ user.first_name }}, Your projects will be displayed shortly... :)</p>
+
+        {% endblock %}
 
     </main>
 

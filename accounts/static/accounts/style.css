@@ -22,6 +22,21 @@ header ul.menu li {
 
 }
 
+main li.main-menu-item{
+    list-style: none;
+    display: inline;
+}
+
+.main-menu-item a {
+    text-decoration: none;
+    color: #395870;
+    font-weight: 600;
+    padding: 15px 8px;
+    display: inline-block;
+    font-size: 1.0rem;
+}
+
+
 header ul.menu li a {
     text-decoration: none;
     font-weight: 600;
