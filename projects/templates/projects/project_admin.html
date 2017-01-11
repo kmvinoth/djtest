@@ -16,6 +16,11 @@
 
             <li class="main-menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Projects </a> </li>
             <li class="main-menu-item"> <a href="{% url 'projects:admin_projects' %}"> Admin </a> </li>
+            <li class="main-menu-item"> <a href="{% url 'projects:user_mgmt' %}"> User Management </a> </li>
+
+            {% block main-menu-future-add %}
+
+            {% endblock %}
 
         {% endblock %}
 

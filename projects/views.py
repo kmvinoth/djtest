@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.core.exceptions import FieldError
-from accounts.views import login_required
+from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import Project
 
 
@@ -39,18 +39,24 @@ def admin_projects_view(request):
     except FieldError:
         return HttpResponse('Some kind of problem with a model field')
 
-
-@login_required(login_url='/accounts/login')
-def project_admin_page_view(request):
-    prj_inst = Project.objects.filter(admin=request.user)
-    return render(request, 'projects/project_admin_page.html', {'project': prj_inst})
+"""
+Return new user creation page for the project admin, where the project admin can create new users
+by providing username, password and email.
+"""
 
 
 @login_required(login_url='/accounts/login')
 def user_mgmt(request):
-    pr_inst = Project.objects.filter(admin=request.user)
-    project = str(pr_inst.project)
-    return render(request, 'projects/User_management.html', {'projects': project})
+    return render(request, 'projects/user_management.html')
+
+
+@login_required(login_url='/accounts/login')
+def admin_projects_edit_view(request):
+    pass
+
+
+
+
 
 
 

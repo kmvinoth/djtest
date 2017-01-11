@@ -1,0 +1,11 @@
+{% extends "projects/project_admin.html" %}
+
+{% block title %} User Management {% endblock %}
+
+{% block main-text %}
+
+    <p> Hi {{ user.first_name }}, You can create and edit users for the Projects</p>
+
+        <li class="user-registration"> <a href = "{% url 'accounts:user_registration' %}"> Create User</a> </li>
+
+{% endblock %}
