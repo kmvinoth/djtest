@@ -36,7 +36,14 @@ main li.main-menu-item{
     font-size: 1.0rem;
 }
 
-.project-menu-item, .user-registration a {
+.project-menu-item a {
+    text-decoration: none;
+    color: #395870;
+    font-weight: 600;
+    font-size: 1.0rem;
+}
+
+.user-registration a {
     text-decoration: none;
     color: #395870;
     font-weight: 600;
