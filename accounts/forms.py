@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, UserProfile
+from .models import User, UserProfile, MyUsers
 
 
 class UserForm(forms.ModelForm):
@@ -12,6 +12,20 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['dob', 'nickname']
+
+
+class MyUsersForm(forms.ModelForm):
+
+    class Meta:
+        model = MyUsers
+        fields = ['created_by', ]
+
+    def clean_created_by(self):
+        try:
+            created_by = self.cleaned_data.get('created_by')
+            return created_by
+        except User.DoesNotExist:
+            raise forms.ValidationError('The project admin does not exist')
 
 
 class UserRegistrationForm(forms.ModelForm):

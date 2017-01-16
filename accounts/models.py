@@ -22,3 +22,16 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
+
+
+class MyUsers(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name="created_by", null=True)
+
+    def __str__(self):
+        return self.created_by
+
+    class Meta:
+        verbose_name_plural = "MyUsers"
+
+
