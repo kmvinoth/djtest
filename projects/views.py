@@ -30,7 +30,12 @@ administration activities on individual project.
 
 """
 
+# Better to use @permission required decorator to avoid code repetition, with a message permission denied
+# @permission required decorator cannot be used as such for the default django User model.
+#  see ref: https://docs.djangoproject.com/en/1.8/topics/auth/default/#topic-authorization
 
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_view(request):
     try:
@@ -44,7 +49,10 @@ Return new user creation page for the project admin, where the project admin can
 by providing username, password and email.
 """
 
+# same comment as for admin_projects_view
 
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def user_mgmt(request):
     return render(request, 'projects/user_management.html')
