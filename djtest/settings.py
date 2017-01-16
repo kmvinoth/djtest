@@ -42,7 +42,13 @@ INSTALLED_APPS = [
     'projects',
     # Third party apps
     'debug_toolbar',
+    'guardian',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
