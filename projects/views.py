@@ -33,6 +33,7 @@ administration activities on individual project.
 # Better to use @permission required decorator to avoid code repetition, with a message permission denied
 # @permission required decorator cannot be used as such for the default django User model.
 #  see ref: https://docs.djangoproject.com/en/1.8/topics/auth/default/#topic-authorization
+# @user_passes_test decorator is slow as well because you are hitting the database
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
@@ -58,6 +59,7 @@ def user_mgmt(request):
     return render(request, 'projects/user_management.html')
 
 
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_edit_view(request):
     return HttpResponse("Add users to your project and project metadata")
