@@ -18,6 +18,8 @@ def check_auth(request):
     return render(request, 'accounts/check.html')
 
 
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
 def user_registration(request):
     # This is a POST request we need to process the form data
     if request.method == 'POST':
