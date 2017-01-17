@@ -2,13 +2,17 @@
 
 {% block title %} Admin_Projects {% endblock %}
 
-{% block main-text %}
+{% block main-content %}
 
     <p> Hi {{ user.first_name }}, Your are admin to the below Project(s), Click on the projects to perform administrative activities</p>
 
     {% for pr in admin_projects %}
 
-        <li class="project-menu-item"> <a href = "{% url 'projects:admin_projects' %}/{{ pr.project_name }}"> {{ pr.project_name }}</a> </li>
+        <li class="project-menu-item">
+            <a href = "{% url 'projects:admin_projects' %}/{{ pr.project_name }}">
+                {{ pr.project_name }}
+            </a>
+        </li>
 
     {% endfor %}
 {% endblock %}
