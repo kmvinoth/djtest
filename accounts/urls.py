@@ -28,8 +28,6 @@ urlpatterns = [
 
     url(r'^profile$', views.update_profile, name='profile'),
 
-    url(r'^create_project$', views.create_project, name='create_project'),
-
     # Start the local mail server before executing this url
     # else you get connection refused error
     url(r'^password_reset$', auth_views.password_reset,

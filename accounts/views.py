@@ -86,8 +86,3 @@ def update_profile(request):
     })
 
 
-@login_required(login_url='/accounts/login')
-@user_passes_test(lambda u: u.is_staff)
-def create_project(request):
-    return HttpResponse("You can create project and you can create group")
-
