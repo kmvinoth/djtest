@@ -60,7 +60,7 @@ def user_mgmt(request):
 
 @login_required(login_url='/accounts/login')
 def admin_projects_edit_view(request):
-    pass
+    return HttpResponse("Add users to your project and project metadata")
 
 
 

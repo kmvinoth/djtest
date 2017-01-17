@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "projects/project_admin.html" %}
 
 {% block title %} Registration Success {% endblock %}
 
 
-{% block main %}
+{% block main-content %}
 
-<h1> You have been successfully registered with us, You can now login </h1>
+<h1> You have successfully created a User</h1>
 
-<a href="{% url 'accounts:auth_login' %}">Log in</a><br>
+<a href="{% url 'accounts:user_registration' %}">Create another User</a><br>
 
 {% endblock %}
