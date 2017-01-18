@@ -2,17 +2,15 @@
 
 {% block title %} Project {% endblock %}
 
-{% block main %}
+{% block main-content %}
 
-    <main>
-
-        <p> Hi {{ user.first_name }}, You are in the admin page of the {{ project.project_name }} </p>
+        <p> Hi {{ user.first_name }}, You are in the admin page of the project {{ project_name }} </p>
 
     <ul>
-        <li> <a href="{% url 'projects:user_mgmt' %}"> User Management</a> </li>
-        {# Add other links later as per requirement #}
+        <li class="main-menu-item"> <a href="/projects/admin/{{ project_name }}/add_info"> Add ProjectInfo</a> </li>
+        <li class="main-menu-item"> <a href="/projects/admin/{{ project_name }}/add_member"> Add NewMember</a> </li>
+        <li class="main-menu-item"> <a href="/projects/admin/{{ project_name }}/add_project_metadata"> Add ProjectMetadata</a> </li>
+{#         Add other links later as per requirement#}
     </ul>
-
-    </main>
 
 {% endblock %}

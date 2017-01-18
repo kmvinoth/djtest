@@ -1,7 +1,8 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse,redirect
 from django.core.exceptions import FieldError
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import Project
+from .forms import ProjectInfoForm
 
 
 """
@@ -61,8 +62,26 @@ def user_mgmt(request):
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
-def admin_projects_edit_view(request):
-    return HttpResponse("Add users to your project and project metadata")
+def admin_projects_edit_view(request, project_name):
+    return render(request, "projects/project_admin_page.html", {'project_name': project_name})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def admin_projects_add_info(request):
+    if request.method == 'POST':
+        project_info_form = ProjectInfoForm(request.POST)
+        if project_info_form.is_valid():
+            project_info_form.save()
+            return redirect('/projects/admin')
+        else:
+            error = True
+            return render(request, 'projects/project_info.html',
+                          {'project_info_form': project_info_form, 'error': error})
+    else:
+        project_info_form = ProjectInfoForm()
+        return render(request, 'projects/project_info.html',
+                      {'project_info_form': project_info_form})
 
 
 
