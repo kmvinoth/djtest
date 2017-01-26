@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 
 
 class Project(models.Model):
@@ -12,5 +13,17 @@ class Project(models.Model):
 
     class Meta:
         verbose_name_plural = 'Project'
+
+
+class ProjectUserRole(models.Model):
+    project = models.ForeignKey(Project)
+    user = models.ForeignKey(User)
+    role = models.ForeignKey(Group)
+
+    def __str__(self):
+        return self.project_name
+
+    class Meta:
+        verbose_name_plural = 'ProjectUserRole'
 
 
