@@ -1,7 +1,8 @@
-from django.shortcuts import render, HttpResponse,redirect
+from django.shortcuts import render, HttpResponse, redirect
 from django.core.exceptions import FieldError
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .models import Project
+from django import forms
+from .models import Project, User
 from .forms import ProjectInfoForm
 
 
@@ -80,8 +81,10 @@ def admin_projects_add_info(request):
                           {'project_info_form': project_info_form, 'error': error})
     else:
         project_info_form = ProjectInfoForm()
+        project_info_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
         return render(request, 'projects/project_info.html',
                       {'project_info_form': project_info_form})
+
 
 
 
