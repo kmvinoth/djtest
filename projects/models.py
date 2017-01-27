@@ -15,15 +15,15 @@ class Project(models.Model):
         verbose_name_plural = 'Project'
 
 
-class ProjectUserRole(models.Model):
+class ProjectMemberRole(models.Model):
     project = models.ForeignKey(Project)
-    user = models.ForeignKey(User)
+    member = models.ForeignKey(User)
     role = models.ForeignKey(Group)
 
     def __str__(self):
         return self.project_name
 
     class Meta:
-        verbose_name_plural = 'ProjectUserRole'
+        verbose_name_plural = 'ProjectMemberRole'
 
 

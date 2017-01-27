@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Project, ProjectUserRole
+from .models import Project, ProjectMemberRole
 
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['project_name', 'admin']
 
 
-class ProjectUserRoleAdmin(admin.ModelAdmin):
-    list_display = ['project', 'user', 'role']
+class ProjectMemberRoleAdmin(admin.ModelAdmin):
+    list_display = ['project', 'member', 'role']
 
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(ProjectUserRole, ProjectUserRoleAdmin)
+admin.site.register(ProjectMemberRole, ProjectMemberRoleAdmin)
 
 
