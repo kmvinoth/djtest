@@ -39,3 +39,15 @@ class DataObject(models.Model):
         verbose_name_plural = 'DataObject'
 
 
+class DataDeposit(models.Model):
+    object_name = models.ForeignKey(DataObject)
+    # naming convention project_object_name
+    deposit_name = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.deposit_name
+
+    class Meta:
+        verbose_name_plural = 'DataDeposit'
+
+
