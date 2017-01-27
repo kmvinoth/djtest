@@ -3,7 +3,7 @@ from django.core.exceptions import FieldError
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
 from .models import Project, User
-from .forms import ProjectInfoForm
+from .forms import ProjectInfoForm, ProjectMemberRoleForm
 
 
 """
@@ -84,6 +84,24 @@ def admin_projects_add_info(request):
         project_info_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
         return render(request, 'projects/project_info.html',
                       {'project_info_form': project_info_form})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def admin_projects_add_member(request):
+    if request.method == 'POST':
+        project_member_form = ProjectMemberRoleForm(request.POST)
+        if project_member_form.is_valid():
+            project_member_form.save()
+            return redirect('/projects/admin')
+        else:
+            error = True
+            return render(request, 'projects/project_add_member.html',
+                          {'project_member_form': project_member_form, 'error': error})
+    else:
+        project_member_form = ProjectMemberRoleForm()
+        return render(request, 'projects/project_add_member.html',
+                      {'project_member_form': project_member_form})
 
 
 
