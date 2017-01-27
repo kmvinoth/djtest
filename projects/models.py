@@ -27,3 +27,15 @@ class ProjectMemberRole(models.Model):
         verbose_name_plural = 'ProjectMemberRole'
 
 
+class DataObject(models.Model):
+    project = models.ForeignKey(Project)
+    # naming convention project_object_name
+    object_name = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.object_name
+
+    class Meta:
+        verbose_name_plural = 'DataObject'
+
+
