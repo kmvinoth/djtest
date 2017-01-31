@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.core.exceptions import FieldError
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
-from .models import Project, User
+from .models import Project, User, ProjectMemberRole
 from .forms import ProjectInfoForm, ProjectMemberRoleForm
 
 
@@ -22,9 +22,13 @@ def project_member_view(request):
 
     member_inst = request.user.groups.filter(name='Project Admin').exists()
     if member_inst:
-        return render(request, 'projects/project_admin.html')
+        admin_prjs = Project.objects.filter(admin=request.user)
+        member_prjs = ProjectMemberRole.objects.filter(member=request.user)
+        return render(request, 'projects/project_admin.html', {'member_projects': member_prjs,
+                                                               'admin_projects': admin_prjs})
     else:
-        return render(request, 'projects/project_member.html')
+        member_prjs = ProjectMemberRole.objects.filter(member=request.user)  # returns Queryset
+        return render(request, 'projects/project_member.html', {'member_projects': member_prjs})
 
 """
 Return admin projects page to the user, who has the role "ADMIN" and can perform project

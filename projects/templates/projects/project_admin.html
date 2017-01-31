@@ -15,6 +15,7 @@
         {% block main-menu %}
 
             <li class="main-menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Projects </a> </li>
+            <li class="main-menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Metadata </a> </li>
             <li class="main-menu-item"> <a href="{% url 'projects:admin_projects' %}"> Admin </a> </li>
             <li class="main-menu-item"> <a href="{% url 'projects:user_mgmt' %}"> User Management </a> </li>
 
@@ -26,7 +27,22 @@
 
         {% block main-content %}
 
-            <p> Hi {{ user.first_name }}, Your projects will be displayed shortly... :)</p>
+            {% for pr in admin_projects %}
+
+                <li class="project-menu-item">
+                    {# Try to Reference the url by name: Below is an example of bad code practice #}
+                    <a href = "{{ pr.project_name }}"> {{ pr.project_name }} </a>
+                </li>
+
+            {% endfor %}
+
+            {% for pr in member_projects %}
+
+                <li class="project-menu-item">
+                    <a href = "{{ pr.project }}"> {{ pr.project }} </a>
+                </li>
+
+            {% endfor %}
 
         {% endblock %}
 
