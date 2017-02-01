@@ -8,6 +8,7 @@
         {% csrf_token %}
         {{ project_info_form.as_p}}
         <input class="btn" type="submit" name="submit" value="Save">
+        <input class="btn" type="submit" name="edit" value="Edit">
     </form>
 
 {% endblock %}

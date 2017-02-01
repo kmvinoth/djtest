@@ -81,13 +81,20 @@ def admin_projects_add_info(request, prj_name):
             return redirect('/projects/admin')
         else:
             error = True
+            project_info_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
             return render(request, 'projects/project_info.html',
                           {'project_info_form': project_info_form, 'error': error})
     else:
-        project_info_form = ProjectInfoForm()
+        project_info_form = ProjectInfoForm(initial={'project_name': prj_name, 'admin': request.user})
         project_info_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
         return render(request, 'projects/project_info.html',
                       {'project_info_form': project_info_form})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def admin_projects_edit_info(request, prj_name):
+    pass
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
