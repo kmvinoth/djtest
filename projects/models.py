@@ -21,7 +21,7 @@ class ProjectMemberRole(models.Model):
     role = models.ForeignKey(Group)
 
     def __str__(self):
-        return self.project_name
+        return self.project.project_name
 
     class Meta:
         verbose_name_plural = 'ProjectMemberRole'
