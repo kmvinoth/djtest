@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.core.exceptions import FieldError
+from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
 from .models import Project, User, ProjectMemberRole
@@ -73,7 +73,7 @@ def admin_projects_edit_view(request, project_name):
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
-def admin_projects_add_info(request):
+def admin_projects_add_info(request, prj_name):
     if request.method == 'POST':
         project_info_form = ProjectInfoForm(request.POST)
         if project_info_form.is_valid():
@@ -92,7 +92,7 @@ def admin_projects_add_info(request):
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
-def admin_projects_add_member(request):
+def admin_projects_add_member(request, prj_name):
     if request.method == 'POST':
         project_member_form = ProjectMemberRoleForm(request.POST)
         if project_member_form.is_valid():
@@ -108,6 +108,14 @@ def admin_projects_add_member(request):
                       {'project_member_form': project_member_form})
 
 
+@login_required(login_url='/accounts/login')
+def project_info_view(request, prj_name):
+    try:
+        pr_inst = Project.objects.get(project_name=prj_name)
+        info = pr_inst.info
+        return render(request, 'projects/display_project_info.html', {'project_name': prj_name, 'info': info})
+    except ObjectDoesNotExist:
+        return HttpResponse('The project object does not exist')
 
 
 

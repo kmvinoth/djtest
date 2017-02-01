@@ -29,8 +29,8 @@
             {% for pr in admin_projects %}
 
                 <li class="project-menu-item">
-                    {# Try to Reference the url by name: Below is an example of bad code practice #}
-                    <a href = "{{ pr.project_name }}"> {{ pr.project_name }} </a>
+{#                Admin projects comes from Projects table #}
+                    <a href = "{% url 'projects:projects_info' pr.project_name %}"> {{ pr.project_name }} </a>
                 </li>
 
             {% endfor %}
@@ -38,7 +38,8 @@
             {% for pr in member_projects %}
 
                 <li class="project-menu-item">
-                    <a href = "{{ pr.project }}"> {{ pr.project }} </a>
+{#                Normal projects come from ProjectMemberRole table #}
+                    <a href = "{% url 'projects:projects_info' pr.project %}"> {{ pr.project }} </a>
                 </li>
 
             {% endfor %}

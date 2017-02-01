@@ -23,8 +23,7 @@
             {% for pr in member_projects %}
 
                 <li class="project-menu-item">
-                    {# Try to Reference the url by name: Below is an example of bad code practice #}
-                    <a href = "{{ pr.project }}"> {{ pr.project }} </a>
+                    <a href = "{% url 'projects:projects_info' pr.project %}"> {{ pr.project }} </a>
                 </li>
 
             {% endfor %}

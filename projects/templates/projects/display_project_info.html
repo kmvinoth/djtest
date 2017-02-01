@@ -1,0 +1,24 @@
+{% extends "projects/project_member.html" %}
+
+{% block main-content %}
+
+    <ul>
+        <li class="main-menu-item"> <a href="{% url 'projects:projects_info' project_name %}"> ProjectInfo </a> </li>
+        <li class="main-menu-item"> <a href="{% url 'projects:user_dashboard' %}"> Metadata </a> </li>
+    </ul>
+
+    {% block info %}
+
+        {{ info }}
+
+    {% endblock %}
+
+    {% block Metadata %}
+
+    {% endblock %}
+
+    {% block Members %}
+
+    {% endblock %}
+
+{% endblock %}
