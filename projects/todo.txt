@@ -1,0 +1,19 @@
+Date = 02.02.17
+
+Task Completed
+1. Projects app.
+
+2. Project admin functionality with Add project info, Add Member to project and can assign role to the member.
+
+3. Project member can view projects and see the project info.
+
+
+To do
+1. Edit project info and Edit Member to the project.
+
+2. Add project metadata form to the project.
+
+3. Add Project member to add deposit and data object metadata.
+
+4. Try to implement Bootstrap, CRUD using Ajax and Json
+ref : https://simpleisbetterthancomplex.com/tutorial/2016/11/15/how-to-implement-a-crud-using-ajax-and-json.html
