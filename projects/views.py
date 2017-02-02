@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
@@ -71,30 +71,36 @@ def admin_projects_edit_view(request, project_name):
     return render(request, "projects/project_admin_page.html", {'project_name': project_name})
 
 
-@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
-def admin_projects_add_info(request, prj_name):
-    if request.method == 'POST':
-        project_info_form = ProjectInfoForm(request.POST)
-        if project_info_form.is_valid():
-            project_info_form.save()
-            return redirect('/projects/admin')
-        else:
-            error = True
-            project_info_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
-            return render(request, 'projects/project_info.html',
-                          {'project_info_form': project_info_form, 'error': error})
-    else:
-        project_info_form = ProjectInfoForm(initial={'project_name': prj_name, 'admin': request.user})
-        project_info_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
-        return render(request, 'projects/project_info.html',
-                      {'project_info_form': project_info_form})
+def admin_projects_info_view(request, prj_name):
+    try:
+        pr_inst = Project.objects.get(project_name=prj_name)
+        info = pr_inst.info
+        return render(request, 'projects/project_info.html', {'project_name': prj_name, 'info': info})
+    except ObjectDoesNotExist:
+        return HttpResponse('The project object does not exist')
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_edit_info(request, prj_name):
-    pass
+    get_project = get_object_or_404(Project, project_name=prj_name)
+    if request.method == 'POST':
+        project_edit_form = ProjectInfoForm(request.POST, instance=get_project)
+        if project_edit_form.is_valid():
+            project_edit_form.save()
+            return redirect('/projects/admin')
+        else:
+            error = True
+            project_edit_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+            return render(request, 'projects/project_edit_info.html',
+                          {'project_edit_form': project_edit_form, 'error': error})
+    else:
+        project_edit_form = ProjectInfoForm(initial={'project_name': prj_name, 'admin': request.user},
+                                            instance=get_project)
+        project_edit_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+        return render(request, 'projects/project_edit_info.html',
+                      {'project_edit_form': project_edit_form})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')

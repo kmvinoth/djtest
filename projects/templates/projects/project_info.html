@@ -1,14 +1,8 @@
-{% extends "projects/project_admin.html" %}
+{% extends "projects/project_admin_page.html" %}
 
 {% block title %} Project_info {% endblock %}
 
-{% block main-content %}
-
-    <form method="post", action=" ">
-        {% csrf_token %}
-        {{ project_info_form.as_p}}
-        <input class="btn" type="submit" name="submit" value="Save">
-        <input class="btn" type="submit" name="edit" value="Edit">
-    </form>
-
+{% block info %}
+    <p>{{ info}}</p>
+    <a href="{% url 'projects:admin_projects_edit_info' project_name %}"> Edit </a>
 {% endblock %}
