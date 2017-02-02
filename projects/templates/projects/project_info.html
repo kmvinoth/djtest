@@ -2,7 +2,7 @@
 
 {% block title %} Project_info {% endblock %}
 
-{% block info %}
+{% block main-content %}
     <p>{{ info}}</p>
-    <a href="{% url 'projects:admin_projects_edit_info' project_name %}"> Edit </a>
+    <a href="{% url 'projects:admin_projects_edit_info' project_name %}"> Edit info </a>
 {% endblock %}

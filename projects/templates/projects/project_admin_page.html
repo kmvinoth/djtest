@@ -4,25 +4,26 @@
 
 {% block main-content %}
 
-        <p> Hi {{ user.first_name }}, You are in the admin page of the project {{ project_name }} </p>
+    <p> Hi {{ user.first_name }}, You are in the admin page of the project {{ project_name }} </p>
 
     <ul>
         <li class="main-menu-item"> <a href="{% url 'projects:admin_projects_info' project_name %}"> ProjectInfo</a> </li>
         <li class="main-menu-item"> <a href="{% url 'projects:admin_projects_add_member' project_name %}"> Members</a> </li>
         <li class="main-menu-item"> <a href="/projects/admin/{{ project_name }}/add_project_metadata"> Add ProjectMetadata</a> </li>
-{#         Add other links later as per requirement#}
+        {#         Add other links later as per requirement#}
     </ul>
 
-    {% block info %}
-
-    {% endblock %}
-
-    {% block Metadata %}
-
-    {% endblock %}
-
-    {% block Members %}
-
-    {% endblock %}
+{% block info %}
 
 {% endblock %}
+
+{% block Metadata %}
+
+{% endblock %}
+
+{% block Members %}
+
+{% endblock %}
+
+{% endblock %}
+

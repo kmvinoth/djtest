@@ -1,0 +1,13 @@
+{% extends "projects/project_admin_page.html" %}
+
+{% block title %} Project_edit_info {% endblock %}
+
+{% block main-content %}
+
+    <form method="post", action=" ">
+        {% csrf_token %}
+        {{ project_edit_form.as_p}}
+        <input class="btn" type="submit" name="submit" value="Save">
+    </form>
+
+{% endblock %}
