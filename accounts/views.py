@@ -48,6 +48,7 @@ def user_registration(request):
             # redirect to login page
             return redirect('/accounts/register_success')
         else:
+            my_user_form.fields['created_by'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
             return render(request, 'accounts/user_registration.html',
                           {'registration_form': registration_form, 'my_user_form': my_user_form})
     # if a GET (or any other method) we'll create a blank form
