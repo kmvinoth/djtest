@@ -3,7 +3,7 @@ from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
 from .models import Project, User, ProjectMemberRole
-from .forms import ProjectInfoForm, ProjectMemberRoleForm
+from .forms import ProjectInfoForm, ProjectMemberRoleForm, ProjectMemberRoleEditForm
 
 
 """
@@ -119,6 +119,41 @@ def admin_projects_add_member(request, prj_name):
         project_member_form = ProjectMemberRoleForm()
         return render(request, 'projects/project_add_member.html',
                       {'project_member_form': project_member_form})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def admin_projects_edit_member(request, prj_name, member):
+    prj_inst = Project.objects.get(project_name=prj_name)
+    mem_inst = User.objects.get(username=member)
+    get_prj = get_object_or_404(ProjectMemberRole, project=prj_inst, member=mem_inst)
+    if request.method == 'POST':
+        project_member_edit_form = ProjectMemberRoleEditForm(request.POST, instance=get_prj)
+        if project_member_edit_form.is_valid():
+            project_member_edit_form.save()
+            return redirect('/projects/admin')
+        else:
+            error = True
+            return render(request, 'projects/project_edit_member.html',
+                          {'project_member_edit_form': project_member_edit_form, 'error': error})
+    else:
+        project_member_edit_form = ProjectMemberRoleEditForm(initial={'project': prj_inst, 'member': mem_inst},
+                                                             instance=get_prj)
+        return render(request, 'projects/project_edit_member.html',
+                      {'project_member_edit_form': project_member_edit_form, 'project_name': prj_name,
+                       'member_name': member})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def list_project_members(request, prj_name):
+    try:
+        prj_inst = Project.objects.get(project_name=prj_name)
+        lst_mem_inst = ProjectMemberRole.objects.filter(project=prj_inst.id)
+        return render(request, 'projects/project_list_members.html', {'project_name': prj_name,
+                                                                      'lst_members': lst_mem_inst})
+    except ObjectDoesNotExist:
+        return HttpResponse('The project object does not exist')
 
 
 @login_required(login_url='/accounts/login')

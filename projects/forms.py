@@ -21,3 +21,13 @@ class ProjectMemberRoleForm(forms.ModelForm):
     class Meta:
         model = ProjectMemberRole
         fields = ['project', 'member', 'role']
+
+
+class ProjectMemberRoleEditForm(forms.ModelForm):
+
+    # Make the Project field and the Member field Read only to the project admin,
+    # he can only edit the role of the memeber in the project
+    # Hint do it by altering the form __init__ method
+    class Meta:
+        model = ProjectMemberRole
+        fields = ['project', 'member', 'role']

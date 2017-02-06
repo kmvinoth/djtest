@@ -1,0 +1,21 @@
+{% extends "projects/project_admin.html" %}
+
+{% block title %} Project_lst_member {% endblock %}
+
+{% block main-content %}
+
+    {% block sub-menu-future-add %}
+
+        <li class="project-menu-item"> <a href="{% url 'projects:admin_projects_add_member' project_name %} "> + Add Member</a> </li>
+
+    {% endblock %}
+
+
+
+    {% for mem_inst in lst_members %}
+                                {# Try to use the url template tag later#}
+        <li class="project-menu-item"> <a href="{{mem_inst.member}}"> {{mem_inst.member}} </a> </li>
+
+    {% endfor %}
+
+{% endblock %}
