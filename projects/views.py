@@ -94,13 +94,13 @@ def admin_projects_edit_info(request, prj_name):
             error = True
             project_edit_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
             return render(request, 'projects/project_edit_info.html',
-                          {'project_edit_form': project_edit_form, 'error': error})
+                          {'project_edit_form': project_edit_form, 'error': error, 'project_name': prj_name})
     else:
         project_edit_form = ProjectInfoForm(initial={'project_name': prj_name, 'admin': request.user},
                                             instance=get_project)
         project_edit_form.fields['admin'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
         return render(request, 'projects/project_edit_info.html',
-                      {'project_edit_form': project_edit_form})
+                      {'project_edit_form': project_edit_form, 'project_name': prj_name})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
@@ -114,11 +114,11 @@ def admin_projects_add_member(request, prj_name):
         else:
             error = True
             return render(request, 'projects/project_add_member.html',
-                          {'project_member_form': project_member_form, 'error': error})
+                          {'project_member_form': project_member_form, 'error': error, 'project_name': prj_name})
     else:
         project_member_form = ProjectMemberRoleForm()
         return render(request, 'projects/project_add_member.html',
-                      {'project_member_form': project_member_form})
+                      {'project_member_form': project_member_form, 'project_name': prj_name})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')

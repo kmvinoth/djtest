@@ -1,8 +1,8 @@
-{% extends "projects/project_admin.html" %}
+{% extends "projects/project_admin_page.html" %}
 
 {% block title %} Project_add_member {% endblock %}
 
-{% block main-content %}
+{% block Members %}
 
     <form method="post", action=" ">
         {% csrf_token %}
