@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Apps developed locally
     'accounts',
     'projects',
+    'metadata',
     # Third party apps
     'debug_toolbar',
     'guardian',
