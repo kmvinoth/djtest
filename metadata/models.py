@@ -9,7 +9,7 @@ class ProjectMetadata(models.Model):
     dummy_pmd_field2 = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.project
+        return self.project.project_name
 
     class Meta:
         verbose_name_plural = 'ProjectMetadata'
@@ -21,7 +21,7 @@ class DataObjectMetadata(models.Model):
     dummy_domd_field2 = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.data_object
+        return self.data_object.object_name
 
     class Meta:
         verbose_name_plural = 'DataObjectMetadata'
@@ -33,7 +33,7 @@ class DataDepositMetadata(models.Model):
     dummy_ddmd_field2 = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.data_deposit
+        return self.data_deposit.deposit_name
 
     class Meta:
         verbose_name_plural = 'DataDepositMetadata'
@@ -45,7 +45,7 @@ class CompleteMetadata(models.Model):
     data_deposit_md = models.ForeignKey(DataDepositMetadata)
 
     def __str__(self):
-        return self.project_md
+        return self.project_md.project.project_name
 
     class Meta:
         verbose_name_plural = 'CompleteMetadata'
