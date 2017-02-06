@@ -1,0 +1,11 @@
+{% extends "projects/project_admin_page.html" %}
+
+{% block Metadata %}
+
+    <form method="post", action=" ">
+        {% csrf_token %}
+        {{ project_metadata_form.as_p}}
+        <input class="btn" type="submit" name="submit" value="Save">
+    </form>
+
+{% endblock %}

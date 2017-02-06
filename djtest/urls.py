@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls', app_name='accounts', namespace='accounts')),
     url(r'^projects/', include('projects.urls', app_name='projects', namespace='projects')),
+    url(r'^metadata/', include('metadata.urls', app_name='metadata', namespace='metadata')),
 ]
 # for Django debug toolbar
 if settings.DEBUG:

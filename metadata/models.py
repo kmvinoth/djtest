@@ -1,6 +1,5 @@
 from django.db import models
 from projects.models import Project, DataObject, DataDeposit
-# Create your models here.
 
 
 class ProjectMetadata(models.Model):
