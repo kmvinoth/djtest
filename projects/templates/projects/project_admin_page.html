@@ -9,7 +9,7 @@
     <ul>
         <li class="main-menu-item"> <a href="{% url 'projects:admin_projects_info' project_name %}"> ProjectInfo</a> </li>
         <li class="main-menu-item"> <a href="{% url 'projects:list_project_members' project_name %}"> Members</a> </li>
-        <li class="main-menu-item"> <a href="{% url 'metadata:add_project_metadata' %}"> ProjectMetadata</a> </li>
+        <li class="main-menu-item"> <a href="{% url 'metadata:add_project_metadata' project_name %}"> ProjectMetadata</a> </li>
         {#         Add other links later as per requirement#}
     </ul>
 

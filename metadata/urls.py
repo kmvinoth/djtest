@@ -17,5 +17,5 @@ from django.conf.urls import url
 from metadata import views
 
 urlpatterns = [
-    url(r'^add_project_metadata$', views.add_project_metadata, name='add_project_metadata'),
+    url(r'^(\w+)/add_project_metadata$', views.add_project_metadata, name='add_project_metadata'),
 ]
