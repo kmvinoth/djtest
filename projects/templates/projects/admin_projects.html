@@ -9,7 +9,7 @@
     {% for pr in admin_projects %}
 
         <li class="project-menu-item">
-            <a href = "{% url 'projects:admin_projects' %}/{{ pr.project_name }}">
+            <a href = "{% url 'projects:admin_projects_info' pr.project_name %}">
                 {{ pr.project_name }}
             </a>
         </li>
