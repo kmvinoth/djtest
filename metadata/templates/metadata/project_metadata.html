@@ -1,0 +1,9 @@
+{% extends "projects/project_admin_page.html" %}
+
+{% block Metadata %}
+
+    <p>You don't have any project metadata added to the project {{ project_name }}, If you would like to add one click on the link below.</p>
+
+    <li class="main-menu-item"> <a href="{% url 'metadata:add_project_metadata' project_name %}"> Add ProjectMetadata</a> </li>
+
+{% endblock %}
