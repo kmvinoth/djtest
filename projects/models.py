@@ -15,20 +15,20 @@ class Project(models.Model):
         verbose_name_plural = 'Project'
 
 
-class ProjectMemberRole(models.Model):
-    project = models.ForeignKey(Project)
-    member = models.ForeignKey(User)
-    role = models.ForeignKey(Group)
+class DataDeposit(models.Model):
+    project = models.ForeignKey(Project, null=True, blank=True)
+    # naming convention project_object_name
+    deposit_name = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.project.project_name
+        return self.deposit_name
 
     class Meta:
-        verbose_name_plural = 'ProjectMemberRole'
+        verbose_name_plural = 'DataDeposit'
 
 
 class DataObject(models.Model):
-    project = models.ForeignKey(Project)
+    deposit = models.ForeignKey(DataDeposit, null=True, blank=True)
     # naming convention project_object_name
     object_name = models.CharField(max_length=100, null=True, blank=True)
 
@@ -39,15 +39,15 @@ class DataObject(models.Model):
         verbose_name_plural = 'DataObject'
 
 
-class DataDeposit(models.Model):
-    object_name = models.ForeignKey(DataObject)
-    # naming convention project_object_name
-    deposit_name = models.CharField(max_length=100, null=True, blank=True)
+class ProjectMemberRole(models.Model):
+    project = models.ForeignKey(Project)
+    member = models.ForeignKey(User)
+    role = models.ForeignKey(Group)
 
     def __str__(self):
-        return self.deposit_name
+        return self.project.project_name
 
     class Meta:
-        verbose_name_plural = 'DataDeposit'
+        verbose_name_plural = 'ProjectMemberRole'
 
 

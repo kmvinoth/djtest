@@ -10,12 +10,13 @@ class ProjectMemberRoleAdmin(admin.ModelAdmin):
     list_display = ['project', 'member', 'role']
 
 
-class DataObjectAdmin(admin.ModelAdmin):
-    list_display = ['project', 'object_name']
-
-
 class DataDepositAdmin(admin.ModelAdmin):
-    list_display = ['object_name', 'deposit_name']
+    list_display = ['project', 'deposit_name']
+
+
+class DataObjectAdmin(admin.ModelAdmin):
+    list_display = ['deposit', 'object_name']
+
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectMemberRole, ProjectMemberRoleAdmin)
