@@ -1,0 +1,11 @@
+{% extends "projects/display_project_info.html" %}
+
+{% block Metadata %}
+
+
+    <ul class="project-menu-item">
+        <li> <a href = "{% url 'metadata:add_deposit_metadata' project_name %}"> Create new deposit </a> <br> </li>
+        <li> <a href = "hi"> Edit existing deposit </a> <br> </li>
+    </ul>
+
+    {% endblock %}
