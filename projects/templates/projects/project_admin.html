@@ -39,15 +39,6 @@
 
             {% endfor %}
 
-            {% for pr in member_projects %}
-
-                <li class="project-menu-item">
-{#                Normal projects come from ProjectMemberRole table #}
-                    <a href = "{% url 'projects:projects_info' pr.project %}"> {{ pr.project }} </a>
-                </li>
-
-            {% endfor %}
-
         {% endblock %}
 
     </main>
