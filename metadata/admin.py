@@ -7,11 +7,11 @@ class ProjectMetadataAdmin(admin.ModelAdmin):
 
 
 class DataObjectMetadataAdmin(admin.ModelAdmin):
-    list_display = ['data_object', 'dummy_domd_field1', 'dummy_domd_field2']
+    list_display = ['data_deposit', 'user', 'dummy_domd_field1', 'dummy_domd_field2']
 
 
 class DataDepositMetadataAdmin(admin.ModelAdmin):
-    list_display = ['data_deposit', 'dummy_ddmd_field1', 'dummy_ddmd_field2']
+    list_display = ['project', 'user', 'dummy_ddmd_field1', 'dummy_ddmd_field2']
 
 
 class CompleteMetadataAdmin(admin.ModelAdmin):
