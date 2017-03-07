@@ -5,4 +5,4 @@ from .models import ProjectMetadata
 class ProjectMetadataForm(forms.ModelForm):
     class Meta:
         model = ProjectMetadata
-        fields = ['project', 'user', 'label']
+        fields = ['project', 'form_fields']
