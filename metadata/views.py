@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .forms import ProjectMetadataForm, DepositMetadataForm
-from .models import ProjectMetadata, DataDepositMetadata, DataObjectMetadata
+from .forms import ProjectMetadataForm
+from .models import ProjectMetadata
 from projects.models import Project
 
 
@@ -62,21 +62,4 @@ def admin_projects_edit_project_metadata(request, prj_name):
 def member_metadata_view(request, prj_name):
     prj = Project.objects.get(project_name=prj_name)
     return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj})
-
-
-@login_required(login_url='/accounts/login')
-def add_deposit_metadata(request, prj_name):
-    if request.method == 'POST':
-        deposit_metadata_form = DepositMetadataForm(request.POST)
-        if deposit_metadata_form.is_valid():
-            deposit_metadata_form.save()
-            return redirect('/projects/user_dashboard')
-        else:
-            error = True
-            return render(request, 'metadata/add_deposit_metadata.html',
-                          {'deposit_metadata_form': deposit_metadata_form, 'error': error, 'project_name': prj_name})
-    else:
-        deposit_metadata_form = DepositMetadataForm()
-        return render(request, 'metadata/add_deposit_metadata.html',
-                      {'deposit_metadata_form': deposit_metadata_form, 'project_name': prj_name})
 
