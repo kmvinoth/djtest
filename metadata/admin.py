@@ -3,7 +3,7 @@ from .models import ProjectMetadata
 
 
 class ProjectMetadataAdmin(admin.ModelAdmin):
-    list_display = ['project', 'dummy_pmd_field1', 'dummy_pmd_field2']
+    list_display = ['project', 'user']
 
 
 admin.site.register(ProjectMetadata, ProjectMetadataAdmin)
