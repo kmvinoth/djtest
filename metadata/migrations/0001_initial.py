@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import metadata.fields
 
 
 class Migration(migrations.Migration):
@@ -11,45 +12,28 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='CompleteMetadata',
+            name='MetadataAttributes',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('label', models.CharField(max_length=50)),
+                ('key', metadata.fields.KeySlugField(blank=True)),
+                ('type', models.CharField(default='text', max_length=10, choices=[('text', 'Text'), ('int', 'Integer')])),
+                ('meta_data_type', models.CharField(default='mandatory', max_length=10, choices=[('mandatory', 'Mandatory'), ('custom', 'Custom')])),
+                ('meta_data_level', models.CharField(default='project_md', max_length=10, choices=[('project_md', 'Project_MD'), ('deposit_md', 'Deposit_MD'), ('object_md', 'Object_MD')])),
             ],
             options={
-                'verbose_name_plural': 'CompleteMetadata',
+                'verbose_name_plural': 'MetaDataAttributes',
             },
         ),
         migrations.CreateModel(
-            name='DataDepositMetadata',
+            name='Value',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
-                ('dummy_ddmd_field1', models.CharField(max_length=20)),
-                ('dummy_ddmd_field2', models.CharField(max_length=20)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('val', models.CharField(max_length=50, blank=True)),
+                ('md_attributes', models.ForeignKey(to='metadata.MetadataAttributes')),
             ],
             options={
-                'verbose_name_plural': 'DataDepositMetadata',
-            },
-        ),
-        migrations.CreateModel(
-            name='DataObjectMetadata',
-            fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
-                ('dummy_domd_field1', models.CharField(max_length=20)),
-                ('dummy_domd_field2', models.CharField(max_length=20)),
-            ],
-            options={
-                'verbose_name_plural': 'DataObjectMetadata',
-            },
-        ),
-        migrations.CreateModel(
-            name='ProjectMetadata',
-            fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
-                ('dummy_pmd_field1', models.CharField(max_length=20)),
-                ('dummy_pmd_field2', models.CharField(max_length=20)),
-            ],
-            options={
-                'verbose_name_plural': 'ProjectMetadata',
+                'verbose_name_plural': 'Value',
             },
         ),
     ]

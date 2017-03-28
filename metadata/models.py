@@ -1,26 +1,64 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from projects.models import Project, User
 
+from .fields import KeySlugField
 
-class MetaDataAttributes(models.Model):
-    key = models.CharField(default='key', max_length=50)
-    label = models.CharField(default='label', max_length=50)
-    value = models.CharField(default='value', max_length=50)
-    type = models.CharField(default='type', max_length=50)
 
-    def __str__(self):
-        return self.label
+class MetadataAttributes(models.Model):
+
+    DATA_TYPE_CHOICES = (('text', 'Text'), ('int', 'Integer'))
+    MD_TYPE_CHOICES = (('mandatory', 'Mandatory'), ('custom', 'Custom'))
+    MD_LEVEL_CHOICES = (('project_md', 'Project_MD'), ('deposit_md', 'Deposit_MD'), ('object_md', 'Object_MD'),)
+
+    label = models.CharField(max_length=50)
+    key = KeySlugField(max_length=50, db_index=True, blank=True)
+    type = models.CharField(max_length=10, choices=DATA_TYPE_CHOICES, default='text')
+    # Remember to do type validation later
+    meta_data_type = models.CharField(max_length=10, choices=MD_TYPE_CHOICES, default='mandatory')
+    meta_data_level = models.CharField(max_length=10, choices=MD_LEVEL_CHOICES, default='project_md')
 
     class Meta:
         verbose_name_plural = 'MetaDataAttributes'
 
+    def __str__(self):
+        return self.label
 
-class ProjectMetadata(models.Model):
-    project = models.ForeignKey(Project, blank=True, null=True)
-    form_fields = models.ForeignKey(MetaDataAttributes, blank=True, null=True)
+    def save(self, *args, **kwargs):
+        """
+        Saves the Attribute and auto-generates a key(slug) field if one wasn't
+        provided.
+        """
+        if not self.key:
+            self.key = KeySlugField.create_slug_from_name(self.label)
+        self.full_clean()
+        super(MetadataAttributes, self).save(*args, **kwargs)
+
+
+class Value(models.Model):
+    project = models.ForeignKey(Project)
+    md_attributes = models.ForeignKey(MetadataAttributes)
+    val = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
-        return self.project.project_name
+        return self.val
 
     class Meta:
-        verbose_name_plural = 'ProjectMetadata'
+        verbose_name_plural = 'Value'
+
+
+@receiver(post_save, sender=Project)
+def create_entry_in_value(sender, instance, created, **kwargs):
+    """
+    Whenever a project is created, the value table gets populated with all the static metadata attributes
+    """
+
+    if created:
+        attributes = MetadataAttributes.objects.all()
+        for attr in attributes:
+            Value.objects.create(project=instance, md_attributes=attr)
+    else:
+        print('Not created')
+

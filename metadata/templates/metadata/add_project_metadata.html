@@ -2,10 +2,20 @@
 
 {% block Metadata %}
 
-    <form method="post", action=" ">
-        {% csrf_token %}
-        {{ project_metadata_form.as_p}}
-        <input class="btn" type="submit" name="submit" value="Save">
-    </form>
+    <form method="post" action=""> {% csrf_token %}
+
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+        {{ form.id }}
+        {{ form.md_attributes}}: {{ form.val }} <br><br>
+    {% endfor %}
+
+    <a href="home.html">Add New Md Field</a><br><br>
+
+     <input class="btn" type="submit" name="submit" value="Save"><br>
+
+</form>
+
 
 {% endblock %}

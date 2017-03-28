@@ -1,17 +1,16 @@
 from django.contrib import admin
-from .models import ProjectMetadata, MetaDataAttributes
+from .models import MetadataAttributes, Value
 
 
-class ProjectMetadataAdmin(admin.ModelAdmin):
-    list_display = ['project', 'form_fields']
+class MetadataAttributesAdmin(admin.ModelAdmin):
+    list_display = ['label', 'key', 'type']
 
 
-class MetaDataAttributesAdmin(admin.ModelAdmin):
-    list_display = ['key', 'label', 'value', 'type']
+class ValueAdmin(admin.ModelAdmin):
+    list_display = ['project', 'md_attributes', 'val']
 
 
-admin.site.register(ProjectMetadata, ProjectMetadataAdmin)
-admin.site.register(MetaDataAttributes, MetaDataAttributesAdmin)
-
+admin.site.register(MetadataAttributes, MetadataAttributesAdmin)
+admin.site.register(Value, ValueAdmin)
 
 

@@ -102,5 +102,5 @@ ENV/
 
 #Pycharm .idea files
 .idea/
-database_db
+new_database_db
 
