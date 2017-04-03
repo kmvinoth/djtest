@@ -10,4 +10,12 @@
 
     </form>
 
+
+    <p class="project-menu-item"> Already defined md fields </p>
+    {% for label in lst_defined_label %}
+
+        <ul> <li>  {{ label.label}} </li> </ul>
+
+    {% endfor %}
+
 {% endblock %}

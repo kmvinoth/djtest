@@ -51,8 +51,10 @@ def add_custom_md_attributes(request, prj_name):
 
     else:
         custom_md_form = MetadataAttributesForm()
+        lst_custom_md_fields = MetadataAttributes.objects.filter(meta_data_level='deposit_md', meta_data_type='custom')
         return render(request, 'metadata/add_custom_md_fields.html', {'custom_md_form': custom_md_form,
-                                                                      'project_name': prj_name})
+                                                                      'project_name': prj_name,
+                                                                      'lst_defined_label': lst_custom_md_fields})
 
 
 @login_required(login_url='/accounts/login')
