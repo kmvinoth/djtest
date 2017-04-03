@@ -2,10 +2,8 @@
 
 {% block Metadata %}
 
-
     <ul class="project-menu-item">
-        <li> <a href = "{% url 'metadata:add_deposit_metadata' project_name %}"> Create new deposit </a> <br> </li>
-        <li> <a href = "hi"> Edit existing deposit </a> <br> </li>
+        <li> <a href = "{% url 'metadata:create_deposit_session' project_name %}"> Create new deposit </a> <br> </li>
     </ul>
 
     {% endblock %}

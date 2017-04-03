@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import MetadataForm, value_inline_form_set, MetadataAttributesForm
 from .models import Value, MetadataAttributes
 from projects.models import Project
+from projects.forms import DepositForm
 
 
 # @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
@@ -55,6 +56,20 @@ def add_custom_md_attributes(request, prj_name):
         return render(request, 'metadata/add_custom_md_fields.html', {'custom_md_form': custom_md_form,
                                                                       'project_name': prj_name,
                                                                       'lst_defined_label': lst_custom_md_fields})
+
+
+@login_required(login_url='/accounts/login')
+def create_deposit_session(request, prj_name):
+    if request.method == 'POST':
+        deposit_form = DepositForm(request.POST)
+        if deposit_form.is_valid():
+            deposit_form.save()
+        return redirect('/projects/user_dashboard')
+
+    else:
+        deposit_form = DepositForm()
+        return render(request, 'metadata/create_deposit.html', {'deposit_form': deposit_form,
+                                                                'project_name': prj_name})
 
 
 @login_required(login_url='/accounts/login')
