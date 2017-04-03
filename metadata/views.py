@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .forms import MetadataForm, value_inline_form_set
+from .forms import MetadataForm, value_inline_form_set, MetadataAttributesForm
 from .models import Value, MetadataAttributes
 from projects.models import Project
 
@@ -38,13 +38,21 @@ def add_project_metadata(request, prj_name):
                                                                       'project_name': prj_name})
 
 
+# Only project admin can add cutom metadata fields
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def add_custom_md_attributes(request, prj_name):
-    pass
 
+    if request.method == 'POST':
+        custom_md_form = MetadataAttributesForm(request.POST)
+        if custom_md_form.is_valid():
+            custom_md_form.save()
+        return redirect('/projects/admin')
 
-
+    else:
+        custom_md_form = MetadataAttributesForm()
+        return render(request, 'metadata/add_custom_md_fields.html', {'custom_md_form': custom_md_form,
+                                                                      'project_name': prj_name})
 
 
 @login_required(login_url='/accounts/login')

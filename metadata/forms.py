@@ -1,5 +1,5 @@
 from django import forms
-from .models import Value, Project
+from .models import Value, Project, MetadataAttributes
 from django.forms import inlineformset_factory
 
 value_inline_form_set = inlineformset_factory(Project,  Value, fields=('md_attributes', 'val',),
@@ -14,3 +14,9 @@ class MetadataForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MetadataForm, self).__init__(*args, **kwargs)
         self.fields['project'].queryset = Project.objects.filter(project_name='OPUS')
+
+
+class MetadataAttributesForm(forms.ModelForm):
+    class Meta:
+        model = MetadataAttributes
+        fields = '__all__'
