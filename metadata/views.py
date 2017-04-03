@@ -38,6 +38,15 @@ def add_project_metadata(request, prj_name):
                                                                       'project_name': prj_name})
 
 
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def add_custom_md_attributes(request, prj_name):
+    pass
+
+
+
+
+
 @login_required(login_url='/accounts/login')
 def member_metadata_view(request, prj_name):
     prj = Project.objects.get(project_name=prj_name)
