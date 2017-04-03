@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, ProjectMemberRole
+from .models import Project, ProjectMemberRole, Deposit
 
 
 class ProjectInfoForm(forms.ModelForm):
@@ -21,6 +21,12 @@ class ProjectMemberRoleForm(forms.ModelForm):
     class Meta:
         model = ProjectMemberRole
         fields = ['project', 'member', 'role']
+
+
+class DepositForm(forms.ModelForm):
+    class Meta:
+        model = Deposit
+        fields = '__all__'
 
 
 class ProjectMemberRoleEditForm(forms.ModelForm):
