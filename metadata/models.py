@@ -68,7 +68,7 @@ def create_entry_in_value(sender, instance, created, **kwargs):
     """
 
     if created:
-        attributes = MetadataAttributes.objects.all()
+        attributes = MetadataAttributes.objects.filter(meta_data_level='project_md', meta_data_type='mandatory')
         for attr in attributes:
             Value.objects.create(project=instance, md_attributes=attr)
     else:
@@ -83,7 +83,7 @@ def create_entry_in_deposit_value(sender, instance, created, **kwargs):
     """
 
     if created:
-        attributes = MetadataAttributes.objects.filter(meta_data_level='deposit_md')
+        attributes = MetadataAttributes.objects.filter(meta_data_level='deposit_md', meta_data_type='mandatory')
         for attr in attributes:
             DepositValue.objects.create(deposit=instance, md_attributes=attr)
     else:
