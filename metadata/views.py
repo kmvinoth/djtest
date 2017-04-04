@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import MetadataForm, value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm
 from .models import Value, MetadataAttributes, DepositValue
@@ -72,7 +73,7 @@ def create_deposit_session(request, prj_name):
         if deposit_form.is_valid():
             deposit_form.save()
             # Lesson learned : always use the 'namespace:urlname' in HttpResponseRedirect
-        return HttpResponseRedirect(reverse('metadata:add_deposit', args=[prj_name]))
+        return HttpResponseRedirect(reverse('metadata:lst_deposit', args=[prj_name]))
 
     else:
         deposit_form = DepositForm()
@@ -97,6 +98,13 @@ def add_deposit_metadata(request, prj_name):
         return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                       'project_name': prj_name})
 
-# @login_required(login_url='/accounts/login')
-# def edit_deposit_session(request, prj_name):
-#     edit_deposit = DepositValue.objects.all()
+
+@login_required(login_url='/accounts/login')
+def lst_deposit_session(request, prj_name):
+    try:
+        prj_inst = Project.objects.get(project_name=prj_name)
+        edit_deposit_lst = Deposit.objects.filter(project_id=prj_inst.id, user=request.user)
+        return render(request, 'metadata/lst_previous_deposit.html', {'project_name': prj_name,
+                                                                      'deposit_lst': edit_deposit_lst})
+    except ObjectDoesNotExist:
+        return HttpResponse('The project object does not exist')

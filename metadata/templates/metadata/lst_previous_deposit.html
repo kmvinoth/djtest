@@ -1,0 +1,12 @@
+{% extends "projects/display_project_info.html" %}
+
+{% block Metadata %}
+
+    {% for deposit in deposit_lst %}
+                                {# Try to use the url template tag later#}
+        <li class="project-menu-item"> <a href="{{deposit.deposit_name}}"> {{deposit.deposit_name}} </a> </li>
+
+    {% endfor %}
+
+{% endblock %}
+
