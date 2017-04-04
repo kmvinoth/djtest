@@ -26,9 +26,9 @@ urlpatterns = [
     url(r'^(\w+)/(\w+)/edit_deposit$', views.edit_deposit_session, name='edit_deposit'),
 
 
+    url(r'^(\w+)/(\w+)/data_object_dashboard$', views.data_object_dashboard, name='object_dashboard'),
     url(r'^(\w+)/(\w+)/create_data_object$', views.create_dataobject, name='create_data_object'),
     url(r'^(\w+)/(\w+)/add_dataobject_metadata$', views.add_dataobject_metadata, name='add_dataobject'),
-
-
+    url(r'^(\w+)/(\w+)/(\w+)/edit_data_object_metadata$', views.edit_data_object, name='edit_dataobject'),
 
 ]

@@ -1,0 +1,18 @@
+{% extends "projects/display_project_info.html" %}
+
+{% block Metadata %}
+
+    <ul class="project-menu-item">
+        <li> <a href = "{% url 'metadata:create_data_object' project_name deposit_name%}"> Create new dataobject </a> <br> </li>
+    </ul>
+
+    <p>Below is the list of dataobject's created by you ({{ user }}), you can edit the object by clicking the
+        individual data object link </p>
+
+    {% for object in dataobject_lst %}
+                                {# Try to use the url template tag later#}
+        <li class="project-menu-item"> <a href="{{object.data_object_name}}/edit_data_object_metadata"> {{object.data_object_name}} </a> </li>
+
+    {% endfor %}
+
+    {% endblock %}
