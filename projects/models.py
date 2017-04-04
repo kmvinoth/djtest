@@ -30,6 +30,7 @@ class Deposit(models.Model):
 class DataObject(models.Model):
     deposit = models.ForeignKey(Deposit)
     data_object_name = models.CharField(default='some_name', max_length=20)
+    user = models.ForeignKey(User, blank=True, null=True)
 
     def __str__(self):
         return self.data_object_name

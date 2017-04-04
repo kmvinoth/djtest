@@ -61,6 +61,18 @@ class DepositValue(models.Model):
         verbose_name_plural = 'DepositValue'
 
 
+class DataobjectValue(models.Model):
+    dataobject = models.ForeignKey(DataObject)
+    md_attributes = models.ForeignKey(MetadataAttributes)
+    val = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.val
+
+    class Meta:
+        verbose_name_plural = 'DataobjectValue'
+
+
 @receiver(post_save, sender=Project)
 def create_entry_in_value(sender, instance, created, **kwargs):
     """
@@ -72,13 +84,13 @@ def create_entry_in_value(sender, instance, created, **kwargs):
         for attr in attributes:
             Value.objects.create(project=instance, md_attributes=attr)
     else:
-        print('Not created')
+        print('project metadata attribute not created')
 
 
 @receiver(post_save, sender=Deposit)
 def create_entry_in_deposit_value(sender, instance, created, **kwargs):
     """
-    Whenever a Deposit is created, the value table gets populated with all the static deposit
+    Whenever a Deposit is created, the deposit_value table gets populated with all the static deposit
     metadata attributes
     """
 
@@ -87,5 +99,20 @@ def create_entry_in_deposit_value(sender, instance, created, **kwargs):
         for attr in attributes:
             DepositValue.objects.create(deposit=instance, md_attributes=attr)
     else:
-        print('Not created')
+        print('deposit metadata attribute not created')
+
+
+@receiver(post_save, sender=DataObject)
+def create_entry_in_dataobject_value(sender, instance, created, **kwargs):
+    """
+    Whenever a DataObject is created, the dataobject_value table gets populated with all the static deposit
+    metadata attributes
+    """
+
+    if created:
+        attributes = MetadataAttributes.objects.filter(meta_data_level='object_md', meta_data_type='mandatory')
+        for attr in attributes:
+            DataobjectValue.objects.create(dataobject=instance, md_attributes=attr)
+    else:
+        print('dataobject metadata attribute not created')
 
