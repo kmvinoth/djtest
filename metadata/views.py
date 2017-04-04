@@ -1,9 +1,9 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from django.core.exceptions import FieldError, ObjectDoesNotExist
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .forms import MetadataForm, value_inline_form_set, MetadataAttributesForm
-from .models import Value, MetadataAttributes
-from projects.models import Project
+from .forms import MetadataForm, value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm
+from .models import Value, MetadataAttributes, DepositValue
+from projects.models import Project, Deposit
 from projects.forms import DepositForm
 
 
@@ -59,12 +59,20 @@ def add_custom_md_attributes(request, prj_name):
 
 
 @login_required(login_url='/accounts/login')
+def member_metadata_view(request, prj_name):
+    prj = Project.objects.get(project_name=prj_name)
+    return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj})
+
+
+@login_required(login_url='/accounts/login')
 def create_deposit_session(request, prj_name):
+    print(prj_name)
     if request.method == 'POST':
         deposit_form = DepositForm(request.POST)
         if deposit_form.is_valid():
             deposit_form.save()
-        return redirect('/projects/user_dashboard')
+            # Lesson learned : always use the 'namespace:urlname' in HttpResponseRedirect
+        return HttpResponseRedirect(reverse('metadata:add_deposit', args=[prj_name]))
 
     else:
         deposit_form = DepositForm()
@@ -72,8 +80,23 @@ def create_deposit_session(request, prj_name):
                                                                 'project_name': prj_name})
 
 
-@login_required(login_url='/accounts/login')
-def member_metadata_view(request, prj_name):
-    prj = Project.objects.get(project_name=prj_name)
-    return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj})
+def add_deposit_metadata(request, prj_name):
+    prj_inst = Project.objects.get(project_name=prj_name)
+    deposit_inst = Deposit.objects.get(project_id=prj_inst.id)
+    if request.method == 'POST':
+        deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
+        if deposit_value_formset.is_valid():
+            deposit_value_formset.save()
+            return redirect('/projects/admin')
+        else:
+            deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+            return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                          'project_name': prj_name})
+    else:
+        deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+        return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                      'project_name': prj_name})
 
+# @login_required(login_url='/accounts/login')
+# def edit_deposit_session(request, prj_name):
+#     edit_deposit = DepositValue.objects.all()

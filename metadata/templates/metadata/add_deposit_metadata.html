@@ -4,10 +4,17 @@
 
     <p>Enter the deposit metadata for the project {{ project_name }}</p>
 
-    <form method="post", action=" ">
-        {% csrf_token %}
-        {{ deposit_metadata_form.as_p}}
-        <input class="btn" type="submit" name="submit" value="Save">
+    <form method="post" action=""> {% csrf_token %}
+
+        {{ deposit_formset.management_form }}
+
+        {% for form in deposit_formset %}
+            {{ form.id}}
+            {{ form.md_attributes}}: {{ form.val }} <br><br>
+        {% endfor %}
+
+        <input class="btn" type="submit" name="submit" value="Save"><br>
+
     </form>
 
 {% endblock %}

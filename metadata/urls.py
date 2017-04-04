@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^(\w+)/add_custom_md_attributes$', views.add_custom_md_attributes, name='add_custom_md_attributes'),
     url(r'^(\w+)/create_deposit$', views.create_deposit_session, name='create_deposit_session'),
     url(r'^(\w+)/member_md_dashboard$', views.member_metadata_view, name='member_metadata_view'),
+    url(r'^(\w+)/add_deposit_metadata$', views.add_deposit_metadata, name='add_deposit'),
 
 
 ]

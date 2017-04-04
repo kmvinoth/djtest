@@ -1,8 +1,11 @@
 from django import forms
-from .models import Value, Project, MetadataAttributes
+from .models import Value, Project, MetadataAttributes, Deposit, DepositValue
 from django.forms import inlineformset_factory
 
 value_inline_form_set = inlineformset_factory(Project,  Value, fields=('md_attributes', 'val',),
+                                                  max_num=0, can_delete=False, extra=0)
+
+deposit_value_inline_form_set = inlineformset_factory(Deposit, DepositValue, fields=('md_attributes', 'val',),
                                                   max_num=0, can_delete=False, extra=0)
 
 
@@ -13,7 +16,7 @@ class MetadataForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MetadataForm, self).__init__(*args, **kwargs)
-        self.fields['project'].queryset = Project.objects.filter(project_name='OPUS')
+        # self.fields['project'].queryset = Project.objects.filter(project_name='OPUS')
 
 
 class MetadataAttributesForm(forms.ModelForm):
