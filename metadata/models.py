@@ -61,7 +61,7 @@ class DepositValue(models.Model):
         verbose_name_plural = 'DepositValue'
 
 
-class DataobjectValue(models.Model):
+class DataObjectValue(models.Model):
     dataobject = models.ForeignKey(DataObject)
     md_attributes = models.ForeignKey(MetadataAttributes)
     val = models.CharField(max_length=50, blank=True)
@@ -112,7 +112,7 @@ def create_entry_in_dataobject_value(sender, instance, created, **kwargs):
     if created:
         attributes = MetadataAttributes.objects.filter(meta_data_level='object_md', meta_data_type='mandatory')
         for attr in attributes:
-            DataobjectValue.objects.create(dataobject=instance, md_attributes=attr)
+            DataObjectValue.objects.create(dataobject=instance, md_attributes=attr)
     else:
         print('dataobject metadata attribute not created')
 

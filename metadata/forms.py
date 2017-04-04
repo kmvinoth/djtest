@@ -1,5 +1,5 @@
 from django import forms
-from .models import Value, Project, MetadataAttributes, Deposit, DepositValue, DataObject, DataobjectValue
+from .models import Value, Project, MetadataAttributes, Deposit, DepositValue, DataObject, DataObjectValue
 from django.forms import inlineformset_factory
 
 value_inline_form_set = inlineformset_factory(Project,  Value, fields=('md_attributes', 'val',),
@@ -8,7 +8,7 @@ value_inline_form_set = inlineformset_factory(Project,  Value, fields=('md_attri
 deposit_value_inline_form_set = inlineformset_factory(Deposit, DepositValue, fields=('md_attributes', 'val',),
                                                       max_num=0, can_delete=False, extra=0)
 
-data_object_value_inline_form_set = inlineformset_factory(DataObject, DataobjectValue, fields=('md_attributes', 'val',),
+data_object_value_inline_form_set = inlineformset_factory(DataObject, DataObjectValue, fields=('md_attributes', 'val',),
                                                           max_num=0, can_delete=False, extra=0)
 
 

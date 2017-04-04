@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MetadataAttributes, Value, DepositValue, DataobjectValue
+from .models import MetadataAttributes, Value, DepositValue, DataObjectValue
 
 
 class MetadataAttributesAdmin(admin.ModelAdmin):
@@ -14,13 +14,13 @@ class DepositValueAdmin(admin.ModelAdmin):
     list_display = ['deposit', 'md_attributes', 'val']
 
 
-class DataobjectValueAdmin(admin.ModelAdmin):
+class DataObjectValueAdmin(admin.ModelAdmin):
     list_display = ['dataobject', 'md_attributes', 'val']
 
 
 admin.site.register(MetadataAttributes, MetadataAttributesAdmin)
 admin.site.register(Value, ValueAdmin)
 admin.site.register(DepositValue, DepositValueAdmin)
-admin.site.register(DataobjectValue, DataobjectValueAdmin)
+admin.site.register(DataObjectValue, DataObjectValueAdmin)
 
 
