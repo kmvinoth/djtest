@@ -84,7 +84,7 @@ def add_deposit_metadata(request, prj_name):
         deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
         if deposit_value_formset.is_valid():
             deposit_value_formset.save()
-            return redirect('/projects/admin')
+            return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
         else:
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
@@ -95,17 +95,6 @@ def add_deposit_metadata(request, prj_name):
                                                                       'project_name': prj_name})
 
 
-# @login_required(login_url='/accounts/login')
-# def lst_deposit_session(request, prj_name):
-#     try:
-#         prj_inst = Project.objects.get(project_name=prj_name)
-#         edit_deposit_lst = Deposit.objects.filter(project_id=prj_inst.id, user=request.user)
-#         return render(request, 'metadata/lst_previous_deposit.html', {'project_name': prj_name,
-#                                                                       'deposit_lst': edit_deposit_lst})
-#     except ObjectDoesNotExist:
-#         return HttpResponse('The project object does not exist')
-
-
 @login_required(login_url='/accounts/login')
 def edit_deposit_session(request, prj_name, dep_name):
     deposit_inst = Deposit.objects.get(deposit_name=dep_name)
@@ -113,7 +102,7 @@ def edit_deposit_session(request, prj_name, dep_name):
         deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
         if deposit_value_formset.is_valid():
             deposit_value_formset.save()
-            return redirect('/projects/admin')
+            return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
         else:
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
