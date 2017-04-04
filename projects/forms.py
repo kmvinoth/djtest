@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, ProjectMemberRole, Deposit
+from .models import Project, ProjectMemberRole, Deposit, DataObject
 
 
 class ProjectInfoForm(forms.ModelForm):
@@ -26,6 +26,12 @@ class ProjectMemberRoleForm(forms.ModelForm):
 class DepositForm(forms.ModelForm):
     class Meta:
         model = Deposit
+        fields = '__all__'
+
+
+class DataobjectForm(forms.ModelForm):
+    class Meta:
+        model = DataObject
         fields = '__all__'
 
 

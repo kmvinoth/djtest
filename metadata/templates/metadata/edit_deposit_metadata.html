@@ -2,9 +2,9 @@
 
 {% block Metadata %}
 
-    <li class="main-menu-item"> <a href="{% url 'metadata:member_metadata_view' project_name %}"> Create Data Object </a> </li>
+    <li class="main-menu-item"> <a href="{% url 'metadata:create_data_object' project_name deposit_name %}"> Create Data Object </a> </li>
 
-    <p>You are in the deposit metadata session "{{ deposit_name }}" of the project {{ project_name }}</p>
+    <p>You are in the deposit session "{{ deposit_name }}" of the project {{ project_name }}</p>
 
     <form method="post" action=""> {% csrf_token %}
 

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import MetadataForm, value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm
 from .models import Value, MetadataAttributes, DepositValue
 from projects.models import Project, Deposit
-from projects.forms import DepositForm
+from projects.forms import DepositForm, DataobjectForm
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
@@ -124,3 +124,45 @@ def edit_deposit_session(request, prj_name, dep_name):
         return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                        'project_name': prj_name,
                                                                        'deposit_name': dep_name})
+
+# ###########################################################################################################################################################################
+"""
+ Below are the code for Data object
+
+"""
+
+
+@login_required(login_url='/accounts/login')
+def create_dataobject(request, prj_name, dep_name):
+    print(prj_name)
+    if request.method == 'POST':
+        dataobject_form = DataobjectForm(request.POST)
+        if dataobject_form.is_valid():
+            dataobject_form.save()
+            # Lesson learned : always use the 'namespace:urlname' in HttpResponseRedirect
+        return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name]))
+
+    else:
+        dataobject_form = DataobjectForm()
+        return render(request, 'metadata/create_dataobject.html', {'dataobject_form': dataobject_form,
+                                                                   'project_name': prj_name,
+                                                                   'deposit_name': dep_name})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
