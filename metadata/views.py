@@ -2,9 +2,10 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, 
 from django.core.urlresolvers import reverse
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
-from .forms import MetadataForm, value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm
+from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
+    data_object_value_inline_form_set
 from .models import Value, MetadataAttributes, DepositValue
-from projects.models import Project, Deposit
+from projects.models import Project, Deposit, DataObject
 from projects.forms import DepositForm, DataobjectForm
 
 
@@ -125,6 +126,7 @@ def edit_deposit_session(request, prj_name, dep_name):
                                                                        'project_name': prj_name,
                                                                        'deposit_name': dep_name})
 
+# Code for Data Deposit ends here #
 # ###########################################################################################################################################################################
 """
  Below are the code for Data object
@@ -140,13 +142,35 @@ def create_dataobject(request, prj_name, dep_name):
         if dataobject_form.is_valid():
             dataobject_form.save()
             # Lesson learned : always use the 'namespace:urlname' in HttpResponseRedirect
-        return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name]))
+        return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name, dep_name]))
 
     else:
         dataobject_form = DataobjectForm()
         return render(request, 'metadata/create_dataobject.html', {'dataobject_form': dataobject_form,
                                                                    'project_name': prj_name,
                                                                    'deposit_name': dep_name})
+
+
+@login_required(login_url='/accounts/login')
+def add_dataobject_metadata(request, prj_name, dep_name):
+    # Get the last object of the deposit table, because that is recently added
+    data_object_inst = DataObject.objects.last()
+    if request.method == 'POST':
+        data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
+                                                                      instance=data_object_inst)
+        if data_object_value_formset.is_valid():
+            data_object_value_formset.save()
+            return redirect('/projects/admin')
+        else:
+            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+            return render(request, 'metadata/add_data_object_metadata.html',
+                          {'data_object_formset': data_object_value_formset, 'project_name': prj_name,
+                           'deposit_name': dep_name})
+    else:
+        data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+        return render(request, 'metadata/add_data_object_metadata.html',
+                      {'data_object_formset': data_object_value_formset, 'project_name': prj_name,
+                       'deposit_name': dep_name})
 
 
 
