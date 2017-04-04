@@ -4,7 +4,16 @@
 
     <ul class="project-menu-item">
         <li> <a href = "{% url 'metadata:create_deposit_session' project_name %}"> Create new deposit </a> <br> </li>
-        <li> <a href = "{% url 'metadata:lst_deposit' project_name %}"> Edit Deposit </a> <br> </li>
+{#        <li> <a href = "{% url 'metadata:lst_deposit' project_name %}"> Edit Deposit </a> <br> </li>#}
     </ul>
+
+    <p>Below is the list of deposits created by you ({{ user }}), you can edit the deposit's by clicking the
+        individual deposit link </p>
+
+    {% for deposit in deposit_lst %}
+                                {# Try to use the url template tag later#}
+        <li class="project-menu-item"> <a href="{{deposit.deposit_name}}/edit_deposit"> {{deposit.deposit_name}} </a> </li>
+
+    {% endfor %}
 
     {% endblock %}

@@ -8,17 +8,6 @@ from projects.models import Project, Deposit
 from projects.forms import DepositForm
 
 
-# @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
-# @login_required(login_url='/accounts/login')
-# def project_metadata(request, prj_name):
-#     try:
-#         prj = Project.objects.get(project_name=prj_name)
-#         get_project = ProjectMetadata.objects.get(project=prj.id)
-#         return admin_projects_edit_project_metadata(request, prj_name)
-#     except ProjectMetadata.DoesNotExist:
-#         return render(request, 'metadata/project_metadata.html', {'project_name': prj_name})
-
-
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def add_project_metadata(request, prj_name):
@@ -40,7 +29,7 @@ def add_project_metadata(request, prj_name):
                                                                       'project_name': prj_name})
 
 
-# Only project admin can add cutom metadata fields
+# Only project admin can add custom metadata fields
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def add_custom_md_attributes(request, prj_name):
@@ -61,8 +50,14 @@ def add_custom_md_attributes(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def member_metadata_view(request, prj_name):
-    prj = Project.objects.get(project_name=prj_name)
-    return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj})
+    try:
+        prj = Project.objects.get(project_name=prj_name)
+        deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
+        return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj,
+                                                                           'deposit_lst': deposit_lst})
+
+    except ObjectDoesNotExist:
+        return HttpResponse('The project object does not exist')
 
 
 @login_required(login_url='/accounts/login')
@@ -100,15 +95,15 @@ def add_deposit_metadata(request, prj_name):
                                                                       'project_name': prj_name})
 
 
-@login_required(login_url='/accounts/login')
-def lst_deposit_session(request, prj_name):
-    try:
-        prj_inst = Project.objects.get(project_name=prj_name)
-        edit_deposit_lst = Deposit.objects.filter(project_id=prj_inst.id, user=request.user)
-        return render(request, 'metadata/lst_previous_deposit.html', {'project_name': prj_name,
-                                                                      'deposit_lst': edit_deposit_lst})
-    except ObjectDoesNotExist:
-        return HttpResponse('The project object does not exist')
+# @login_required(login_url='/accounts/login')
+# def lst_deposit_session(request, prj_name):
+#     try:
+#         prj_inst = Project.objects.get(project_name=prj_name)
+#         edit_deposit_lst = Deposit.objects.filter(project_id=prj_inst.id, user=request.user)
+#         return render(request, 'metadata/lst_previous_deposit.html', {'project_name': prj_name,
+#                                                                       'deposit_lst': edit_deposit_lst})
+#     except ObjectDoesNotExist:
+#         return HttpResponse('The project object does not exist')
 
 
 @login_required(login_url='/accounts/login')
