@@ -18,6 +18,7 @@ class Project(models.Model):
 class Deposit(models.Model):
     project = models.ForeignKey(Project)
     deposit_name = models.CharField(default='some_name', max_length=20)
+    user = models.ForeignKey(User, blank=True, null=True)
 
     def __str__(self):
         return self.deposit_name
