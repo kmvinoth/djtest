@@ -73,7 +73,7 @@ def create_deposit_session(request, prj_name):
         if deposit_form.is_valid():
             deposit_form.save()
             # Lesson learned : always use the 'namespace:urlname' in HttpResponseRedirect
-        return HttpResponseRedirect(reverse('metadata:lst_deposit', args=[prj_name]))
+        return HttpResponseRedirect(reverse('metadata:add_deposit', args=[prj_name]))
 
     else:
         deposit_form = DepositForm()
@@ -83,8 +83,8 @@ def create_deposit_session(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def add_deposit_metadata(request, prj_name):
-    prj_inst = Project.objects.get(project_name=prj_name)
-    deposit_inst = Deposit.objects.get(project_id=prj_inst.id)
+    # Get the last object of the deposit table, because that is recently added
+    deposit_inst = Deposit.objects.last()
     if request.method == 'POST':
         deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
         if deposit_value_formset.is_valid():
