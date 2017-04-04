@@ -81,6 +81,7 @@ def create_deposit_session(request, prj_name):
                                                                 'project_name': prj_name})
 
 
+@login_required(login_url='/accounts/login')
 def add_deposit_metadata(request, prj_name):
     prj_inst = Project.objects.get(project_name=prj_name)
     deposit_inst = Deposit.objects.get(project_id=prj_inst.id)
