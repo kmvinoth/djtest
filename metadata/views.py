@@ -121,11 +121,11 @@ def edit_deposit_session(request, prj_name, dep_name):
             return redirect('/projects/admin')
         else:
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
-            return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
-                                                                          'project_name': prj_name,
-                                                                          'deposit_name': dep_name})
+            return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                           'project_name': prj_name,
+                                                                           'deposit_name': dep_name})
     else:
         deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
-        return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
-                                                                      'project_name': prj_name,
-                                                                      'deposit_name': dep_name})
+        return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                       'project_name': prj_name,
+                                                                       'deposit_name': dep_name})

@@ -1,0 +1,20 @@
+{% extends "projects/display_project_info.html" %}
+
+{% block Metadata %}
+
+    <p>You are editing the deposit metadata of the session {{ deposit_name }} of the project {{ project_name }}</p>
+
+    <form method="post" action=""> {% csrf_token %}
+
+        {{ deposit_formset.management_form }}
+
+        {% for form in deposit_formset %}
+            {{ form.id}}
+            {{ form.md_attributes}}: {{ form.val }} <br><br>
+        {% endfor %}
+
+        <input class="btn" type="submit" name="submit" value="Save"><br>
+
+    </form>
+
+{% endblock %}
