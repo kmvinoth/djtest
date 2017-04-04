@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^(\w+)/member_md_dashboard$', views.member_metadata_view, name='member_metadata_view'),
     url(r'^(\w+)/add_deposit_metadata$', views.add_deposit_metadata, name='add_deposit'),
     url(r'^(\w+)/lst_deposit$', views.lst_deposit_session, name='lst_deposit'),
+    url(r'^(\w+)/(\w+)/edit_deposit$', views.edit_deposit_session, name='edit_deposit'),
 
 ]

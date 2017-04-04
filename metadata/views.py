@@ -109,3 +109,23 @@ def lst_deposit_session(request, prj_name):
                                                                       'deposit_lst': edit_deposit_lst})
     except ObjectDoesNotExist:
         return HttpResponse('The project object does not exist')
+
+
+@login_required(login_url='/accounts/login')
+def edit_deposit_session(request, prj_name, dep_name):
+    deposit_inst = Deposit.objects.get(deposit_name=dep_name)
+    if request.method == 'POST':
+        deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
+        if deposit_value_formset.is_valid():
+            deposit_value_formset.save()
+            return redirect('/projects/admin')
+        else:
+            deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+            return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                          'project_name': prj_name,
+                                                                          'deposit_name': dep_name})
+    else:
+        deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+        return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                      'project_name': prj_name,
+                                                                      'deposit_name': dep_name})
