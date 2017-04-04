@@ -160,7 +160,7 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                                                                       instance=data_object_inst)
         if data_object_value_formset.is_valid():
             data_object_value_formset.save()
-            return redirect('/projects/admin')
+            return HttpResponseRedirect(reverse('metadata:object_dashboard', args=[prj_name, dep_name]))
         else:
             data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
             return render(request, 'metadata/add_data_object_metadata.html',
@@ -181,7 +181,7 @@ def edit_data_object(request, prj_name, dep_name, object_name):
                                                                       instance=data_object_inst)
         if data_object_value_formset.is_valid():
             data_object_value_formset.save()
-            return redirect('/projects/admin')
+            return HttpResponseRedirect(reverse('metadata:object_dashboard', args=[prj_name, dep_name]))
         else:
             data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
             return render(request, 'metadata/edit_data_object_metadata.html',
