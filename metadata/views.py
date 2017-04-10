@@ -1,10 +1,10 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.exceptions import FieldError, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
     data_object_value_inline_form_set
-from .models import Value, MetadataAttributes, DepositValue
+from .models import MetadataAttributes
 from projects.models import Project, Deposit, DataObject
 from projects.forms import DepositForm, DataobjectForm
 
@@ -12,6 +12,12 @@ from projects.forms import DepositForm, DataobjectForm
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def add_project_metadata(request, prj_name):
+
+    """
+    Check's the logged(in) user has a role 'Project Admin' and then render the form related to the Project metadata
+    (i.e Value Table), so that the Project admin can add all the Metadata related to the Project
+    """
+
     prj_inst = Project.objects.get(project_name=prj_name)
     if request.method == 'POST':
         value_formset = value_inline_form_set(request.POST, request.FILES, instance=prj_inst)
@@ -20,7 +26,7 @@ def add_project_metadata(request, prj_name):
             return redirect('/projects/admin')
         else:
             error = True
-            print(error)
+            # print(error)
             value_formset = value_inline_form_set(instance=prj_inst)
             return render(request, 'metadata/add_project_metadata.html', {'formset': value_formset, 'error': error,
                                                                           'project_name': prj_name})
@@ -30,10 +36,14 @@ def add_project_metadata(request, prj_name):
                                                                       'project_name': prj_name})
 
 
-# Only project admin can add custom metadata fields
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def add_custom_md_attributes(request, prj_name):
+    """
+    Check's the logged(in) user has a role 'Project Admin' and allow him to add custom meta data attributes
+    (i.e Attributes Table) to the project. These meta data attributes are available only for 'Data Deposit'
+    and 'Data Object'.
+    """
 
     if request.method == 'POST':
         custom_md_form = MetadataAttributesForm(request.POST)
@@ -51,6 +61,9 @@ def add_custom_md_attributes(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def member_metadata_view(request, prj_name):
+    """
+    Metadata dashboard for the project member, where the member can create a New Deposit and edit an existing Deposit
+    """
     try:
         prj = Project.objects.get(project_name=prj_name)
         deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
@@ -62,7 +75,11 @@ def member_metadata_view(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def create_deposit_session(request, prj_name):
-    print(prj_name)
+    # print(prj_name)
+    """
+    Let's the Project member to create a deposit session for the Project, once a deposit session has been created
+    the member is redirected to the page 'add Deposit metadata'.
+    """
     if request.method == 'POST':
         deposit_form = DepositForm(request.POST)
         if deposit_form.is_valid():
@@ -78,6 +95,10 @@ def create_deposit_session(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def add_deposit_metadata(request, prj_name):
+    """
+    Let's the Project member to add the deposit meta data related to the project, redirected page once a deposit session
+    is created by the member.
+    """
     # Get the last object of the deposit table, because that is recently added
     deposit_inst = Deposit.objects.last()
     if request.method == 'POST':
@@ -97,6 +118,9 @@ def add_deposit_metadata(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def edit_deposit_session(request, prj_name, dep_name):
+    """
+    Let's the Project member to edit the deposit meta data related to the project.
+    """
     deposit_inst = Deposit.objects.get(deposit_name=dep_name)
     if request.method == 'POST':
         deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
@@ -114,16 +138,18 @@ def edit_deposit_session(request, prj_name, dep_name):
                                                                        'project_name': prj_name,
                                                                        'deposit_name': dep_name})
 
-# Code for Data Deposit ends here #
-# ###########################################################################################################################################################################
-"""
- Below are the code for Data object
+""" ################################   The code for the Deposit ends here ###########################################"""
 
-"""
+
+""" ################################ The code for Data object Start's from here #################################### """
 
 
 @login_required(login_url='/accounts/login')
 def data_object_dashboard(request, prj_name, dep_name):
+    """
+    DataObject dashboard for the project member, where the member can create a New Data object
+    to an existing Deposit or edit an existing data object which is already created for the deposit.
+    """
     try:
         deposit_inst = Deposit.objects.get(deposit_name=dep_name)
         data_object_lst = DataObject.objects.filter(deposit_id=deposit_inst.id, user=request.user)
@@ -136,7 +162,11 @@ def data_object_dashboard(request, prj_name, dep_name):
 
 @login_required(login_url='/accounts/login')
 def create_dataobject(request, prj_name, dep_name):
-    print(prj_name)
+    # print(prj_name)
+    """
+    Let's the Project member to create a Data Object for the Project, once a data object has been created
+    the member is redirected to the page 'add DataObject metadata'.
+    """
     if request.method == 'POST':
         dataobject_form = DataobjectForm(request.POST)
         if dataobject_form.is_valid():
@@ -153,6 +183,10 @@ def create_dataobject(request, prj_name, dep_name):
 
 @login_required(login_url='/accounts/login')
 def add_dataobject_metadata(request, prj_name, dep_name):
+    """
+    Let's the Project member to add the Data object meta data related to the project, redirected page once a data object
+    is created by the member.
+    """
     # Get the last object of the deposit table, because that is recently added
     data_object_inst = DataObject.objects.last()
     if request.method == 'POST':
@@ -175,6 +209,9 @@ def add_dataobject_metadata(request, prj_name, dep_name):
 
 @login_required(login_url='/accounts/login')
 def edit_data_object(request, prj_name, dep_name, object_name):
+    """
+    Let's the Project member to edit the Data object meta data related to the project.
+    """
     data_object_inst = DataObject.objects.get(data_object_name=object_name)
     if request.method == 'POST':
         data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
