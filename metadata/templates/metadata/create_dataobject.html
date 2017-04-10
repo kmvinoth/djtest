@@ -8,7 +8,10 @@
 
         {{ dataobject_form.as_p }}
 
-        <input class="btn" type="submit" name="submit" value="Save"><br>
+        <input class="btn" type="submit" name="submit" value="Save"><br><br>
+
+    <input class="btn" formaction="{% url 'metadata:object_dashboard' project_name deposit_name%}"
+           type="submit" name="submit" value="Cancel">
 
     </form>
 
