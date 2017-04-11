@@ -31,12 +31,12 @@ class Deposit(models.Model):
         """
         Create a unique deposit name by taking the project name and the username
         """
-        deposit_string = self.project.project_name + ' ' + self.user.username + ' ' + 'deposit'
+        deposit_string = self.project.project_name + '_' + self.user.username + '_' + 'deposit'
         deposit_name = slugify(deposit_string)
         unique_slug = deposit_name
         num = 1
         while Deposit.objects.filter(deposit_name=unique_slug).exists():
-            unique_slug = '{}-{}'.format(deposit_name, num)
+            unique_slug = '{}_{}'.format(deposit_name, num)
             num += 1
         return unique_slug
 
@@ -62,14 +62,14 @@ class DataObject(models.Model):
         """
         Create a unique data object name by taking the deposit name
         """
-        data_object_string = self.deposit.deposit_name + ' ' + 'object'
+        data_object_string = self.deposit.deposit_name + '_' + 'object'
         data_object_name = slugify(data_object_string)
         unique_slug = data_object_name
         num = 1
         # Since unique slug already exists(i.e deposit-number) the while loop is not executed and it will always return
         # deposit_name + object (Add further logic depends on the situation)
         while DataObject.objects.filter(data_object_name=unique_slug).exists():
-            unique_slug = '{}-{}'.format(data_object_name, num)
+            unique_slug = '{}_{}'.format(data_object_name, num)
             num += 1
         return unique_slug
 
