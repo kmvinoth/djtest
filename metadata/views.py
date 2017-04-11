@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.shortcuts import get_object_or_404
 from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
     data_object_value_inline_form_set
 from .models import MetadataAttributes
@@ -67,7 +69,7 @@ def member_metadata_view(request, prj_name):
     try:
         prj = Project.objects.get(project_name=prj_name)
         deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
-        return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj,
+        return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj.project_name,
                                                                            'deposit_lst': deposit_lst})
     except ObjectDoesNotExist:
         return HttpResponse('The project object does not exist')
@@ -121,22 +123,28 @@ def edit_deposit_session(request, prj_name, dep_name):
     """
     Let's the Project member to edit the deposit meta data related to the project.
     """
-    deposit_inst = Deposit.objects.get(deposit_name=dep_name)
-    if request.method == 'POST':
-        deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
-        if deposit_value_formset.is_valid():
-            deposit_value_formset.save()
-            return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+    try:
+        deposit_inst = get_object_or_404(Deposit, deposit_name=dep_name)
+        print(dep_name)
+        # deposit_inst = Deposit.objects.get(deposit_name=dep_name)
+        print(deposit_inst.deposit_name)
+        if request.method == 'POST':
+            deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
+            if deposit_value_formset.is_valid():
+                deposit_value_formset.save()
+                return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+            else:
+                deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+                return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
+                                                                               'project_name': prj_name,
+                                                                               'deposit_name': dep_name})
         else:
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                            'project_name': prj_name,
                                                                            'deposit_name': dep_name})
-    else:
-        deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
-        return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
-                                                                       'project_name': prj_name,
-                                                                       'deposit_name': dep_name})
+    except ObjectDoesNotExist:
+        return Http404
 
 """ ################################   The code for the Deposit ends here ###########################################"""
 
