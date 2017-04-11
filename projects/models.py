@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Project(models.Model):
@@ -49,5 +51,18 @@ class ProjectMemberRole(models.Model):
 
     class Meta:
         verbose_name_plural = 'ProjectMemberRole'
+
+
+@receiver(post_save, sender=Deposit)
+def create_data_object(sender, instance, created, **kwargs):
+    """
+    Signal for creating data object once a deposit has been created
+    """
+
+    if created:
+        DataObject.objects.create(deposit=instance)
+
+    else:
+        print('deposit metadata attribute not created')
 
 
