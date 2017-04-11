@@ -134,15 +134,19 @@ def edit_deposit_session(request, prj_name, dep_name):
                 deposit_value_formset.save()
                 return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
             else:
+                session_form = DepositForm(instance=deposit_inst)
                 deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
                 return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                                'project_name': prj_name,
-                                                                               'deposit_name': dep_name})
+                                                                               'deposit_name': dep_name,
+                                                                               'session_form': session_form})
         else:
+            session_form = DepositForm(instance=deposit_inst)
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                            'project_name': prj_name,
-                                                                           'deposit_name': dep_name})
+                                                                           'deposit_name': dep_name,
+                                                                           'session_form': session_form})
     except ObjectDoesNotExist:
         return Http404
 

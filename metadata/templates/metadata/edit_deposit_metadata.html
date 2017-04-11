@@ -2,10 +2,17 @@
 
 {% block Metadata %}
 
-    <li class="main-menu-item"> <a href="{% url 'metadata:object_dashboard' project_name deposit_name %}">
-        Upload Data Object for the session "{{ deposit_name }}" </a> </li>
+{#    <p>You are in the deposit session "{{ deposit_name }}" of the project {{ project_name }}</p>#}
 
-    <p>You are in the deposit session "{{ deposit_name }}" of the project {{ project_name }}</p>
+    <p> Deposit Session Details (Not Editable) </p>
+
+    <form> {% csrf_token %}
+
+    {{ session_form.as_p }}
+
+     </form>
+
+    <p> Deposit Metadata </p>
 
     <form method="post" action=""> {% csrf_token %}
 
@@ -21,5 +28,8 @@
                type="submit" name="submit" value="Cancel">
 
     </form>
+
+    <li class="main-menu-item"> <a href="{% url 'metadata:object_dashboard' project_name deposit_name %}">
+        Upload Data Object for the session "{{ deposit_name }}" </a> </li>
 
 {% endblock %}
