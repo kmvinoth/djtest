@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.text import slugify
 
 
 class Project(models.Model):
@@ -19,11 +20,30 @@ class Project(models.Model):
 
 class Deposit(models.Model):
     project = models.ForeignKey(Project)
-    deposit_name = models.CharField(default='some_name', max_length=20)
+    deposit_name = models.SlugField(max_length=50, db_index=True, blank=True, unique=True)
     user = models.ForeignKey(User, blank=True, null=True)
 
     def __str__(self):
         return self.deposit_name
+
+    # ref : http://fazle.me/auto-generating-unique-slug-in-django/
+    def _get_unique_deposit_name(self):
+        """
+        Create a unique deposit name by taking the project name and the username
+        """
+        deposit_string = self.project.project_name + ' ' + self.user.username + ' ' + 'deposit'
+        deposit_name = slugify(deposit_string)
+        unique_slug = deposit_name
+        num = 1
+        while Deposit.objects.filter(deposit_name=unique_slug).exists():
+            unique_slug = '{}-{}'.format(deposit_name, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.deposit_name:
+            self.deposit_name = self._get_unique_deposit_name()
+        super().save()
 
     class Meta:
         verbose_name_plural = 'Deposit'
@@ -31,11 +51,32 @@ class Deposit(models.Model):
 
 class DataObject(models.Model):
     deposit = models.ForeignKey(Deposit)
-    data_object_name = models.CharField(default='some_name', max_length=20)
+    data_object_name = models.SlugField(max_length=50, db_index=True, blank=True, unique=True)
     user = models.ForeignKey(User, blank=True, null=True)
 
     def __str__(self):
         return self.data_object_name
+
+    # ref : http://fazle.me/auto-generating-unique-slug-in-django/
+    def _get_unique_data_object_name(self):
+        """
+        Create a unique data object name by taking the deposit name
+        """
+        data_object_string = self.deposit.deposit_name + ' ' + 'object'
+        data_object_name = slugify(data_object_string)
+        unique_slug = data_object_name
+        num = 1
+        # Since unique slug already exists(i.e deposit-number) the while loop is not executed and it will always return
+        # deposit_name + object (Add further logic depends on the situation)
+        while DataObject.objects.filter(data_object_name=unique_slug).exists():
+            unique_slug = '{}-{}'.format(data_object_name, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.data_object_name:
+            self.data_object_name = self._get_unique_data_object_name()
+        super().save()
 
     class Meta:
         verbose_name_plural = 'DataObject'
