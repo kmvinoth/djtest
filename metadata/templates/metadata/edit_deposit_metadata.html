@@ -12,7 +12,8 @@
 
      </form>
 
-    <p> Deposit Metadata </p>
+    <p> Deposit Metadata : Once, all the metadata fields have been successfully validated you will be redirected to
+     the Data Object Page, Where you can Upload the object</p>
 
     <form method="post" action=""> {% csrf_token %}
 
@@ -29,7 +30,7 @@
 
     </form>
 
-    <li class="main-menu-item"> <a href="{% url 'metadata:object_dashboard' project_name deposit_name %}">
-        Upload Data Object for the session "{{ deposit_name }}" </a> </li>
+{#    <li class="main-menu-item"> <a href="{% url 'metadata:object_dashboard' project_name deposit_name %}">#}
+{#        Upload Data Object for the session "{{ deposit_name }}" </a> </li>#}
 
 {% endblock %}

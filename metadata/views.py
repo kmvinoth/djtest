@@ -103,19 +103,25 @@ def add_deposit_metadata(request, prj_name):
     """
     # Get the last object of the deposit table, because that is recently added
     deposit_inst = Deposit.objects.last()
+    # get the deposit name from the deposit instance for HttpResponseRedirect
+    dep_name = deposit_inst.deposit_name
     if request.method == 'POST':
         deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
         if deposit_value_formset.is_valid():
             deposit_value_formset.save()
-            return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+            return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name, dep_name]))
         else:
+            session_form = DepositForm(instance=deposit_inst)
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
-                                                                          'project_name': prj_name})
+                                                                          'project_name': prj_name,
+                                                                          'session_form': session_form})
     else:
+        session_form = DepositForm(instance=deposit_inst)
         deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
         return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
-                                                                      'project_name': prj_name})
+                                                                      'project_name': prj_name,
+                                                                      'session_form': session_form})
 
 
 @login_required(login_url='/accounts/login')
@@ -125,14 +131,11 @@ def edit_deposit_session(request, prj_name, dep_name):
     """
     try:
         deposit_inst = get_object_or_404(Deposit, deposit_name=dep_name)
-        print(dep_name)
-        # deposit_inst = Deposit.objects.get(deposit_name=dep_name)
-        print(deposit_inst.deposit_name)
         if request.method == 'POST':
             deposit_value_formset = deposit_value_inline_form_set(request.POST, request.FILES, instance=deposit_inst)
             if deposit_value_formset.is_valid():
                 deposit_value_formset.save()
-                return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+                return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name, dep_name]))
             else:
                 session_form = DepositForm(instance=deposit_inst)
                 deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
@@ -206,7 +209,7 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                                                                       instance=data_object_inst)
         if data_object_value_formset.is_valid():
             data_object_value_formset.save()
-            return HttpResponseRedirect(reverse('metadata:object_dashboard', args=[prj_name, dep_name]))
+            return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
         else:
             data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
             return render(request, 'metadata/add_data_object_metadata.html',

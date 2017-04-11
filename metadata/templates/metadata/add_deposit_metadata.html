@@ -2,7 +2,18 @@
 
 {% block Metadata %}
 
-    <p>Enter the deposit metadata for the project {{ project_name }}</p>
+{#    <p>Enter the deposit metadata for the project {{ project_name }}</p>#}
+
+    <p> Deposit Session Details (Not Editable) </p>
+
+    <form> {% csrf_token %}
+
+    {{ session_form.as_p }}
+
+     </form>
+
+    <p> Deposit Metadata : Once, all the metadata fields have been successfully validated you will be redirected to
+     the Data Object Page, Where you can Upload the object</p>
 
     <form method="post" action=""> {% csrf_token %}
 
