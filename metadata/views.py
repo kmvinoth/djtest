@@ -160,6 +160,77 @@ def edit_deposit_session(request, prj_name, dep_name):
 
 
 @login_required(login_url='/accounts/login')
+def add_dataobject_metadata(request, prj_name, dep_name):
+    """
+    Let's the Project member to add the Data object meta data related to the project, redirected page once a data object
+    is created by the member.
+    """
+    # Get the last object of the deposit table, because that is recently added
+    try:
+        deposit_inst = get_object_or_404(Deposit, deposit_name=dep_name)
+        data_object_inst = DataObject.objects.get(deposit_id=deposit_inst.id)
+        if request.method == 'POST':
+            data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
+                                                                          instance=data_object_inst)
+            if data_object_value_formset.is_valid():
+                data_object_value_formset.save()
+                return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+            else:
+                session_form = DepositForm(instance=deposit_inst)
+                data_object_form = DataobjectForm(instance=data_object_inst)
+                deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+                data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+                return render(request, 'metadata/add_data_object_metadata.html',
+                              {'data_object_formset': data_object_value_formset,
+                               'project_name': prj_name,
+                               'deposit_name': dep_name,
+                               'deposit_formset': deposit_value_formset,
+                               'session_form': session_form,
+                               'object_form': data_object_form
+                               })
+        else:
+            session_form = DepositForm(instance=deposit_inst)
+            data_object_form = DataobjectForm(instance=data_object_inst)
+            deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+            return render(request, 'metadata/add_data_object_metadata.html',
+                          {'data_object_formset': data_object_value_formset,
+                           'project_name': prj_name,
+                           'deposit_name': dep_name,
+                           'deposit_formset': deposit_value_formset,
+                           'session_form': session_form,
+                           'object_form': data_object_form
+                           })
+
+    except ObjectDoesNotExist:
+        return Http404
+
+
+@login_required(login_url='/accounts/login')
+def edit_data_object(request, prj_name, dep_name, object_name):
+    """
+    Let's the Project member to edit the Data object meta data related to the project.
+    """
+    data_object_inst = DataObject.objects.get(data_object_name=object_name)
+    if request.method == 'POST':
+        data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
+                                                                      instance=data_object_inst)
+        if data_object_value_formset.is_valid():
+            data_object_value_formset.save()
+            return HttpResponseRedirect(reverse('metadata:object_dashboard', args=[prj_name, dep_name]))
+        else:
+            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+            return render(request, 'metadata/edit_data_object_metadata.html',
+                          {'object_formset': data_object_value_formset, 'project_name': prj_name,
+                           'deposit_name': dep_name, 'object_name': object_name})
+    else:
+        data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+        return render(request, 'metadata/edit_data_object_metadata.html',
+                      {'object_formset': data_object_value_formset, 'project_name': prj_name,
+                       'deposit_name': dep_name, 'object_name': object_name})
+
+
+@login_required(login_url='/accounts/login')
 def data_object_dashboard(request, prj_name, dep_name):
     """
     DataObject dashboard for the project member, where the member can create a New Data object
@@ -196,54 +267,7 @@ def create_dataobject(request, prj_name, dep_name):
                                                                    'deposit_name': dep_name})
 
 
-@login_required(login_url='/accounts/login')
-def add_dataobject_metadata(request, prj_name, dep_name):
-    """
-    Let's the Project member to add the Data object meta data related to the project, redirected page once a data object
-    is created by the member.
-    """
-    # Get the last object of the deposit table, because that is recently added
-    data_object_inst = DataObject.objects.last()
-    if request.method == 'POST':
-        data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
-                                                                      instance=data_object_inst)
-        if data_object_value_formset.is_valid():
-            data_object_value_formset.save()
-            return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
-        else:
-            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
-            return render(request, 'metadata/add_data_object_metadata.html',
-                          {'data_object_formset': data_object_value_formset, 'project_name': prj_name,
-                           'deposit_name': dep_name})
-    else:
-        data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
-        return render(request, 'metadata/add_data_object_metadata.html',
-                      {'data_object_formset': data_object_value_formset, 'project_name': prj_name,
-                       'deposit_name': dep_name})
 
-
-@login_required(login_url='/accounts/login')
-def edit_data_object(request, prj_name, dep_name, object_name):
-    """
-    Let's the Project member to edit the Data object meta data related to the project.
-    """
-    data_object_inst = DataObject.objects.get(data_object_name=object_name)
-    if request.method == 'POST':
-        data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
-                                                                      instance=data_object_inst)
-        if data_object_value_formset.is_valid():
-            data_object_value_formset.save()
-            return HttpResponseRedirect(reverse('metadata:object_dashboard', args=[prj_name, dep_name]))
-        else:
-            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
-            return render(request, 'metadata/edit_data_object_metadata.html',
-                          {'object_formset': data_object_value_formset, 'project_name': prj_name,
-                           'deposit_name': dep_name, 'object_name': object_name})
-    else:
-        data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
-        return render(request, 'metadata/edit_data_object_metadata.html',
-                      {'object_formset': data_object_value_formset, 'project_name': prj_name,
-                       'deposit_name': dep_name, 'object_name': object_name})
 
 
 

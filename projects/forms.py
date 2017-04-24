@@ -32,7 +32,7 @@ class DepositForm(forms.ModelForm):
 class DataobjectForm(forms.ModelForm):
     class Meta:
         model = DataObject
-        fields = '__all__'
+        fields = ['data_object_name']
 
 
 class ProjectMemberRoleEditForm(forms.ModelForm):

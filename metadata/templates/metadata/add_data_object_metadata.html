@@ -2,7 +2,30 @@
 
 {% block Metadata %}
 
-    <p>Enter the object metadata for the session "{{ deposit_name }}" project {{ project_name }}</p>
+    <p> Deposit Session Details (Not Editable) </p>
+
+    <form> {% csrf_token %}
+
+    {{ session_form.as_p }}
+
+    {{ object_form.as_p }}
+
+     </form>
+
+    <p> Deposit Metadata </p>
+
+    <form method="post" action=""> {% csrf_token %}
+
+        {{ deposit_formset.management_form }}
+
+        {% for form in deposit_formset %}
+            {{ form.id}}
+            {{ form.md_attributes}}: {{ form.val }} <br><br>
+        {% endfor %}
+
+    </form>
+
+    <p>Object Metadata </p>
 
     <form method="post" action=""> {% csrf_token %}
 
@@ -18,5 +41,7 @@
                type="submit" name="submit" value="Cancel">
 
     </form>
+
+
 
 {% endblock %}
