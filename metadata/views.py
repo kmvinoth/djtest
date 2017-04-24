@@ -168,6 +168,7 @@ def add_dataobject_metadata(request, prj_name, dep_name):
     # Get the last object of the deposit table, because that is recently added
     try:
         deposit_inst = get_object_or_404(Deposit, deposit_name=dep_name)
+        # The below query has to be changed to filter when you have more than one data object for a deposit
         data_object_inst = DataObject.objects.get(deposit_id=deposit_inst.id)
         if request.method == 'POST':
             data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
