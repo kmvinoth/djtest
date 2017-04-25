@@ -25,10 +25,10 @@ class MetadataAttributes(models.Model):
 
     label = models.CharField(max_length=50)
     key = KeySlugField(max_length=50, db_index=True, blank=True)
-    type = models.IntegerField(choices=DATA_TYPE_CHOICES, default='TEXT')
+    type = models.IntegerField(choices=DATA_TYPE_CHOICES, default=TEXT)
     # Remember to do type validation later
-    meta_data_type = models.IntegerField(choices=MD_TYPE_CHOICES, default='MANDATORY')
-    meta_data_level = models.IntegerField(choices=MD_LEVEL_CHOICES, default='PROJECT_MD')
+    meta_data_type = models.IntegerField(choices=MD_TYPE_CHOICES, default=MANDATORY)
+    meta_data_level = models.IntegerField(choices=MD_LEVEL_CHOICES, default=PROJECT_MD)
 
     class Meta:
         verbose_name_plural = 'MetaDataAttributes'
@@ -90,7 +90,8 @@ def create_entry_in_value(sender, instance, created, **kwargs):
     """
 
     if created:
-        attributes = MetadataAttributes.objects.filter(meta_data_level='project_md', meta_data_type='mandatory')
+        attributes = MetadataAttributes.objects.filter(meta_data_level=MetadataAttributes.PROJECT_MD,
+                                                       meta_data_type=MetadataAttributes.MANDATORY)
         for attr in attributes:
             Value.objects.create(project=instance, md_attributes=attr)
     else:
@@ -105,7 +106,7 @@ def create_entry_in_deposit_value(sender, instance, created, **kwargs):
     """
 
     if created:
-        attributes = MetadataAttributes.objects.filter(meta_data_level='deposit_md')
+        attributes = MetadataAttributes.objects.filter(meta_data_level=MetadataAttributes.DEPOSIT_MD)
         for attr in attributes:
             DepositValue.objects.create(deposit=instance, md_attributes=attr)
     else:
@@ -120,7 +121,7 @@ def create_entry_in_dataobject_value(sender, instance, created, **kwargs):
     """
 
     if created:
-        attributes = MetadataAttributes.objects.filter(meta_data_level='object_md')
+        attributes = MetadataAttributes.objects.filter(meta_data_level=MetadataAttributes.OBJECT_MD)
         for attr in attributes:
             DataObjectValue.objects.create(dataobject=instance, md_attributes=attr)
     else:

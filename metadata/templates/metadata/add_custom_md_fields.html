@@ -14,10 +14,17 @@
     </form>
 
 
-    <p class="project-menu-item"> Already defined md fields </p>
-    {% for label in lst_defined_label %}
+    <p class="project-menu-item"> Already defined Deposit Metadata fields </p>
+    {% for label in lst_deposit_label %}
 
-        <ul> <li>  {{ label.label}} </li> </ul>
+        <ul> <li>  {{ label.label}} ({{label.get_meta_data_type_display }}) </li> </ul>
+
+    {% endfor %}
+
+    <p class="project-menu-item"> Already defined DataObject Metadata fields </p>
+    {% for label in lst_object_label %}
+
+        <ul> <li>  {{ label.label}} ({{label.get_meta_data_type_display }}) </li> </ul>
 
     {% endfor %}
 
