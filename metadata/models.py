@@ -9,16 +9,25 @@ from .fields import KeySlugField
 
 class MetadataAttributes(models.Model):
 
-    DATA_TYPE_CHOICES = (('text', 'Text'), ('int', 'Integer'))
-    MD_TYPE_CHOICES = (('mandatory', 'Mandatory'), ('custom', 'Custom'))
-    MD_LEVEL_CHOICES = (('project_md', 'Project_MD'), ('deposit_md', 'Deposit_MD'), ('object_md', 'Object_MD'),)
+    TEXT = 1
+    INT = 2
+    DATA_TYPE_CHOICES = ((TEXT, 'Text'), (INT, 'Integer'))
+
+    MANDATORY = 1
+    CUSTOMARY = 2
+    MD_TYPE_CHOICES = ((MANDATORY, 'Mandatory'), (CUSTOMARY, 'Custom'))
+
+    PROJECT_MD = 1
+    DEPOSIT_MD = 2
+    OBJECT_MD = 3
+    MD_LEVEL_CHOICES = ((PROJECT_MD, 'Project_md'), (DEPOSIT_MD, 'Deposit_md'), (OBJECT_MD, 'Object_md'),)
 
     label = models.CharField(max_length=50)
     key = KeySlugField(max_length=50, db_index=True, blank=True)
-    type = models.CharField(max_length=10, choices=DATA_TYPE_CHOICES, default='text')
+    type = models.IntegerField(choices=DATA_TYPE_CHOICES, default='TEXT')
     # Remember to do type validation later
-    meta_data_type = models.CharField(max_length=10, choices=MD_TYPE_CHOICES, default='mandatory')
-    meta_data_level = models.CharField(max_length=10, choices=MD_LEVEL_CHOICES, default='project_md')
+    meta_data_type = models.IntegerField(choices=MD_TYPE_CHOICES, default='MANDATORY')
+    meta_data_level = models.IntegerField(choices=MD_LEVEL_CHOICES, default='PROJECT_MD')
 
     class Meta:
         verbose_name_plural = 'MetaDataAttributes'
