@@ -21,6 +21,7 @@ class MetadataAttributes(models.Model):
     DEPOSIT_MD = 2
     OBJECT_MD = 3
     MD_LEVEL_CHOICES = ((PROJECT_MD, 'Project_md'), (DEPOSIT_MD, 'Deposit_md'), (OBJECT_MD, 'Object_md'),)
+    # ref(encapsulation) : http://www.b-list.org/weblog/2007/nov/02/handle-choices-right-way/
 
     label = models.CharField(max_length=50)
     key = KeySlugField(max_length=50, db_index=True, blank=True)
