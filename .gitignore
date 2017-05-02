@@ -9,6 +9,8 @@ accounts/migrations/__pycache__
 projects/__pycache__/
 projects/migrations/*.py
 projects/migrations/__pycache__
+metadata/migrations/*.py
+metadata/migrations/__pycache__
 *.pyc
 *.py[cod]
 *$py.class
