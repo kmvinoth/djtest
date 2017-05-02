@@ -32,24 +32,23 @@ git clone git@git.zib.de:rdm-deposit/djtest.git
 
 7. python manage.py runserver
 
-This will start the Django development server on the internal IP at port 8000(default)
-Click on the link  http://127.0.0.1:8000/ to see the development server running and quit the server with Ctrl + C
+    This will start the Django development server on the internal IP at port 8000(default)
+    Click on the link  http://127.0.0.1:8000/ to see the development server running and quit the server with Ctrl + C
 
 8. python manage.py makemigrations 
 
-This will create all necessary models and you need to run this command every-time you make a change to the the model
+    This will create all necessary models and you need to run this command every-time you make a change to the the model
  
 9. python manage.py migrate
 
-This will create the database(final_database_db) tables for all the models which are stored in migrations.
+    This will create the database(final_database_db) tables for all the models which are stored in migrations.
 
 ## Creating the Portal(web) admin
 
 10. python manage.py createsuperuser
 
-This will create the superuser(admin to the portal) and follow the instructions on the terminal (self-explanatory)
-
-you can access the admin site using http://127.0.0.1:8000/admin enter the admin credentials for login
+    This will create the superuser(admin to the portal) and follow the instructions on the terminal (self-explanatory)
+    you can access the admin site using http://127.0.0.1:8000/admin enter the admin credentials for login
 
 ## Create roles (groups)
 
@@ -71,6 +70,8 @@ you can access the admin site using http://127.0.0.1:8000/admin enter the admin 
 
 ## Deactivating Virtual Environment
 
-Once you have finished working on the project, commit the changes to git with a commit message. Then you can deactivate the virtual environment
-
 15. deactivate
+
+    Once you have finished working on the project, commit the changes to git with a commit message. Then you can deactivate the virtual environment
+
+
