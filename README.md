@@ -15,19 +15,18 @@ git clone git@git.zib.de:rdm-deposit/djtest.git
 
 3. virtualenv venv
 
-virtualenv venv will create a folder (venv) in the current directory which will contain all the Python executable files,
-and a copy of the pip library which you can use to install other packages.
+    virtualenv venv will create a folder (venv) in the current directory which will contain all the Python executable files,
+    and a copy of the pip library which you can use to install other packages.
 
 4. virtualenv -p /usr/bin/python3.4 venv
 
-Select Python3.4 as your interpreter
-(Note : This project will work only for Python 3.0 and above)
+    Select Python3.4 as your interpreter (Note : This project will work only for Python 3.0 and above)
 
 5. source venv/bin/activate  (activating virtual environment)
 
 ## Install requirements
 
-6. $ pip install -r requirements.txt
+6. pip install -r requirements.txt
 
 ## Running the Django Project
 
@@ -44,30 +43,30 @@ This will create all necessary models and you need to run this command every-tim
 
 This will create the database(final_database_db) tables for all the models which are stored in migrations.
 
-   ## Creating the Portal(web) admin
+## Creating the Portal(web) admin
 
-   10. python manage.py createsuperuser
+10. python manage.py createsuperuser
 
-   This will create the superuser(admin to the portal) and follow the instructions on the terminal (self-explanatory)
+This will create the superuser(admin to the portal) and follow the instructions on the terminal (self-explanatory)
 
-   you can access the admin site using http://127.0.0.1:8000/admin enter the admin credentials for login
+you can access the admin site using http://127.0.0.1:8000/admin enter the admin credentials for login
 
-   ## Create roles (groups)
+## Create roles (groups)
 
-   11. In the web Admin page, Under Authentication and Authorization section, Click on Groups to create new roles (groups) such as 
+11. In the web Admin page, Under Authentication and Authorization section, Click on Groups to create new roles (groups) such as 
     'Project Admin', 'Transfer Curator' etc and assign the corresponding permissions.
 
-   ## Create Users
+## Create Users
 
-   12. In the web Admin page, Under Authentication and Authorization section, Click on Users to create new users and assign them roles.
+12. In the web Admin page, Under Authentication and Authorization section, Click on Users to create new users and assign them roles.
 
-   ## Create Project
+## Create a New Project
 
-   13. In the web Admin page, Under Projects Section, Click on Project and create a new project and assign a project admin for the newly created project.
+13. In the web Admin page, Under Projects Section, Click on Project and create a new project and assign a project admin for the newly created project.
    
-   ## Add Mandatory metadata Attributes
+## Add Mandatory metadata Attributes
 
-   14. In the web Admin page, Under Metadata Section, Click on MetaDataAttributes and add Project metadata fields. 
+14. In the web Admin page, Under Metadata Section, Click on MetaDataAttributes and add Project metadata fields. 
    (This has to done only for the first time, for subsequent projects the (project)metadata fields will be automatically added)
 
 ## Deactivating Virtual Environment
