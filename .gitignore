@@ -10,6 +10,7 @@ projects/__pycache__/
 projects/migrations/*.py
 projects/migrations/__pycache__
 metadata/migrations/*.py
+metadata.json
 metadata/migrations/__pycache__
 *.pyc
 *.py[cod]

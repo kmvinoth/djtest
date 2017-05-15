@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
     data_object_value_inline_form_set
@@ -209,8 +210,10 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                 # As of now the Json file is in Invalid format, try to fix this
 
                 # return JsonResponse(dep_md_data.data, safe=False)
-
+                messages.success(request, 'Your file was successfully uploaded and the associated metadata was '
+                                          'successfully serialized')
                 return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+
             else:
                 session_form = DepositForm(instance=deposit_inst)
                 data_object_form = DataobjectForm(instance=data_object_inst)
