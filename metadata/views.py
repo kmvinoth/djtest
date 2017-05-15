@@ -1,14 +1,17 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import get_object_or_404
 from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
     data_object_value_inline_form_set
-from .models import MetadataAttributes
+from .models import MetadataAttributes, Value, DepositValue, DataObjectValue
+from .serializer import ValueSerializer, DepositValueSerializer, DataObjectValueSerializer
 from projects.models import Project, Deposit, DataObject
 from projects.forms import DepositForm, DataobjectForm
+
+import json
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
@@ -179,6 +182,34 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                                                                           instance=data_object_inst)
             if data_object_value_formset.is_valid():
                 data_object_value_formset.save()
+
+                pr_qs = Value.objects.filter(project__project_name=prj_name)
+
+                pr_md_data = ValueSerializer(pr_qs, many=True)
+
+                dep_qs = DepositValue.objects.filter(deposit__deposit_name=dep_name)
+
+                dep_md_data = DepositValueSerializer(dep_qs, many=True)
+
+                dobj_qs = DataObjectValue.objects.filter(dataobject__data_object_name=data_object_inst.data_object_name)
+
+                dobj_md_data = DataObjectValueSerializer(dobj_qs, many=True)
+
+                # Open the file and write the project metadata
+                with open('metadata.json', 'w') as outfile:
+                    json.dump(pr_md_data.data, outfile)
+
+                # Append the file with deposit metadata
+                with open('metadata.json', 'a') as outfile:
+                    json.dump(dep_md_data.data, outfile)
+
+                # Append the file with dataobject metadata
+                with open('metadata.json', 'a') as outfile:
+                    json.dump(dobj_md_data.data, outfile)
+                # As of now the Json file is in Invalid format, try to fix this
+
+                # return JsonResponse(dep_md_data.data, safe=False)
+
                 return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
             else:
                 session_form = DepositForm(instance=deposit_inst)
