@@ -209,9 +209,6 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                     json.dump(dobj_md_data.data, outfile)
                 # As of now the Json file is in Invalid format, try to fix this
 
-                # return JsonResponse(dep_md_data.data, safe=False)
-                messages.success(request, 'Your file was successfully uploaded and the associated metadata was '
-                                          'successfully serialized')
                 return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
 
             else:
@@ -243,46 +240,6 @@ def add_dataobject_metadata(request, prj_name, dep_name):
 
     except ObjectDoesNotExist:
         return Http404
-
-
-@login_required(login_url='/accounts/login')
-def edit_data_object(request, prj_name, dep_name, object_name):
-    """
-    Let's the Project member to edit the Data object meta data related to the project.
-    """
-    data_object_inst = DataObject.objects.get(data_object_name=object_name)
-    if request.method == 'POST':
-        data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
-                                                                      instance=data_object_inst)
-        if data_object_value_formset.is_valid():
-            data_object_value_formset.save()
-            return HttpResponseRedirect(reverse('metadata:object_dashboard', args=[prj_name, dep_name]))
-        else:
-            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
-            return render(request, 'metadata/edit_data_object_metadata.html',
-                          {'object_formset': data_object_value_formset, 'project_name': prj_name,
-                           'deposit_name': dep_name, 'object_name': object_name})
-    else:
-        data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
-        return render(request, 'metadata/edit_data_object_metadata.html',
-                      {'object_formset': data_object_value_formset, 'project_name': prj_name,
-                       'deposit_name': dep_name, 'object_name': object_name})
-
-
-@login_required(login_url='/accounts/login')
-def data_object_dashboard(request, prj_name, dep_name):
-    """
-    DataObject dashboard for the project member, where the member can create a New Data object
-    to an existing Deposit or edit an existing data object which is already created for the deposit.
-    """
-    try:
-        deposit_inst = Deposit.objects.get(deposit_name=dep_name)
-        data_object_lst = DataObject.objects.filter(deposit_id=deposit_inst.id, user=request.user)
-        return render(request, 'metadata/dataobject_dashboard.html', {'project_name': prj_name,
-                                                                      'dataobject_lst': data_object_lst,
-                                                                      'deposit_name': dep_name})
-    except ObjectDoesNotExist:
-        return HttpResponse('The project object does not exist')
 
 
 @login_required(login_url='/accounts/login')
