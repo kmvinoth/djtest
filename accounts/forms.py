@@ -1,20 +1,37 @@
+"""
+This Module contains the Model Forms for the accounts app.
+
+UserForm = Used for update_profile (View), ProfileForm = Used (for fields not defined in UserForm) update_profile (View)
+UserRegistrationForm = Used in user_registration (view), MyUsersForm = Used in user_registration (view)
+
+"""
+
 from django import forms
 from .models import User, UserProfile, MyUsers
 
 
 class UserForm(forms.ModelForm):
+    """
+    UserForm uses default Django User fields
+    """
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
 
 
 class UserProfileForm(forms.ModelForm):
+    """
+    UserProfileForm define custom defined fields for Profile
+    """
     class Meta:
         model = UserProfile
         fields = ['dob', 'nickname']
 
 
 class MyUsersForm(forms.ModelForm):
+    """
+    MyUsersForm for project admin to identify who created the User
+    """
 
     class Meta:
         model = MyUsers
@@ -29,9 +46,12 @@ class MyUsersForm(forms.ModelForm):
 
 
 class UserRegistrationForm(forms.ModelForm):
+    """
+    UserRegistrationForm for User Creation
+    """
 
     def __init__(self, *args, **kwargs):
-        # Figure out how super works...!
+
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         # Making email field required for user registration form
         self.fields['email'].required = True
@@ -43,7 +63,7 @@ class UserRegistrationForm(forms.ModelForm):
     def clean_username(self):
         """
         Check the new username versus the existing username in the database and throws a validation error
-        if it matches, if not return's the cleaned username (new_username)
+        if it matches, else return's the cleaned username (new_username)
         """
 
         new_username = self.cleaned_data.get('username')
@@ -57,7 +77,7 @@ class UserRegistrationForm(forms.ModelForm):
     def clean_email(self):
         """
         Check the new email versus the existing email in the database and throws a validation error
-        if it matches, if not return's the cleaned email (new_email)
+        if it matches, else return's the cleaned email (new_email)
         """
 
         new_email = self.cleaned_data.get('email')

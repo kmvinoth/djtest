@@ -1,12 +1,12 @@
 """
 This module contains the following View functions
 
-:home
-:user_registration
-:user_registration_sucess
-:update_profile
+home,
+update_profile,
+user_registration,
+user_registration_success
 
-For Other Views such as login, password reset, password change and logout see the urls.py in accounts app for more
+For other Views such as login, password reset, password change and logout see the urls.py in accounts app for more
 information.
 """
 
@@ -24,8 +24,6 @@ from .forms import UserForm, UserProfileForm, UserRegistrationForm, MyUsersForm
 def home(request):
     """
     Home view render's the default Homepage template
-    :param request:
-    :return:
     """
     return render(request, 'accounts/home.html')
 
@@ -45,8 +43,6 @@ def user_registration(request):
 
     @login_required : Checks the User is logged in else redirects to login page
     @user_passes_test: Checks the User has the role Project Admin else (Permission Denied page not yet implemented).
-    :param request:
-    :return:
     """
     # This is a POST request we need to process the form data
     if request.method == 'POST':
@@ -90,8 +86,6 @@ def user_registration(request):
 def user_registration_success(request):
     """
     Redirect view once the User registration is Successful
-    :param request:
-    :return:
     """
     return render(request, 'accounts/user_registration_success.html')
 
@@ -102,8 +96,6 @@ def user_registration_success(request):
 def update_profile(request):
     """
     Update's the User Profile
-    :param request:
-    :return:
     """
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
