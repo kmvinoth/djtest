@@ -1,3 +1,15 @@
+"""
+This module contains the following View functions
+
+:home
+:user_registration
+:user_registration_sucess
+:update_profile
+
+For Other Views such as login, password reset, password change and logout see the urls.py in accounts app for more
+information.
+"""
+
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 # required for database transactions, ref: simpleisbetterthancomplex
@@ -10,6 +22,11 @@ from .forms import UserForm, UserProfileForm, UserRegistrationForm, MyUsersForm
 
 
 def home(request):
+    """
+    Home view render's the default Homepage template
+    :param request:
+    :return:
+    """
     return render(request, 'accounts/home.html')
 
 
@@ -21,6 +38,16 @@ def check_auth(request):
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def user_registration(request):
+    """
+    This view let's the project admin to create (local) User's for the project. Once a User is created, the User will be
+    available to all the Project Admin irrespective of the project.
+    It is important to note that the User is not yet added to the project
+
+    @login_required : Checks the User is logged in else redirects to login page
+    @user_passes_test: Checks the User has the role Project Admin else (Permission Denied page not yet implemented).
+    :param request:
+    :return:
+    """
     # This is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request (binding data to the form):
@@ -61,6 +88,11 @@ def user_registration(request):
 
 
 def user_registration_success(request):
+    """
+    Redirect view once the User registration is Successful
+    :param request:
+    :return:
+    """
     return render(request, 'accounts/user_registration_success.html')
 
 
@@ -68,6 +100,11 @@ def user_registration_success(request):
 @login_required(login_url='/accounts/login')
 @transaction.atomic
 def update_profile(request):
+    """
+    Update's the User Profile
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, instance=request.user.userprofile)
