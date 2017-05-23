@@ -6,7 +6,7 @@ from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
 from .models import Project, User, ProjectMemberRole
-from .forms import ProjectInfoForm, ProjectMemberRoleForm, ProjectMemberRoleEditForm
+from .forms import ProjectInfoForm, ProjectMemberRoleForm
 
 
 @login_required(login_url='/accounts/login')
@@ -141,7 +141,7 @@ def admin_projects_edit_member(request, prj_name, member):
     mem_inst = User.objects.get(username=member)
     get_prj = get_object_or_404(ProjectMemberRole, project=prj_inst, member=mem_inst)
     if request.method == 'POST':
-        project_member_edit_form = ProjectMemberRoleEditForm(request.POST, instance=get_prj)
+        project_member_edit_form = ProjectMemberRoleForm(request.POST, instance=get_prj)
         if project_member_edit_form.is_valid():
             project_member_edit_form.save()
             return redirect('/projects/admin')
@@ -150,8 +150,8 @@ def admin_projects_edit_member(request, prj_name, member):
             return render(request, 'projects/project_edit_member.html',
                           {'project_member_edit_form': project_member_edit_form, 'error': error})
     else:
-        project_member_edit_form = ProjectMemberRoleEditForm(initial={'project': prj_inst, 'member': mem_inst},
-                                                             instance=get_prj)
+        project_member_edit_form = ProjectMemberRoleForm(initial={'project': prj_inst, 'member': mem_inst},
+                                                         instance=get_prj)
         return render(request, 'projects/project_edit_member.html',
                       {'project_member_edit_form': project_member_edit_form, 'project_name': prj_name,
                        'member_name': member})
