@@ -1,3 +1,6 @@
+"""
+This module contains all the View functions related to the project
+"""
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -6,19 +9,16 @@ from .models import Project, User, ProjectMemberRole
 from .forms import ProjectInfoForm, ProjectMemberRoleForm, ProjectMemberRoleEditForm
 
 
-"""
-Return projects page (project Dashboard) to the user after successful login.
+@login_required(login_url='/accounts/login')
+def project_member_view(request):
+    """
+    Return projects page (project Dashboard) to the user after successful login.
 
-    If the user is in group Project Admin (created by portal administrator),
+    If the user is in group Project Admin (created by portal(superuser) administrator),
     the user get's the Admin (project admin) link in his page,
     so that he can do admin activities for the specified project
     else the user gets the normal project member view.
-
-"""
-
-
-@login_required(login_url='/accounts/login')
-def project_member_view(request):
+    """
 
     member_inst = request.user.groups.filter(name='Project Admin').exists()
     if member_inst:
@@ -30,11 +30,6 @@ def project_member_view(request):
         member_prjs = ProjectMemberRole.objects.filter(member=request.user)  # returns Queryset
         return render(request, 'projects/project_member.html', {'member_projects': member_prjs})
 
-"""
-Return admin projects page to the user, who has the role "ADMIN" and can perform project
-administration activities on individual project.
-
-"""
 
 # Better to use @permission required decorator to avoid code repetition, with a message permission denied
 # @permission required decorator cannot be used as such for the default django User model.
@@ -45,34 +40,42 @@ administration activities on individual project.
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_view(request):
+    """
+    Return admin projects page to the user, who has the role "Project Admin" and can perform project
+    administration activities on individual project.
+    """
     try:
-        admin_prjs = Project.objects.filter(admin=request.user)  # returns Queryset
+        admin_prjs = Project.objects.filter(admin=request.user)
         return render(request, 'projects/admin_projects.html', {'admin_projects': admin_prjs})
     except FieldError:
         return HttpResponse('Some kind of problem with a model field')
-
-"""
-Return new user creation page for the project admin, where the project admin can create new users
-by providing username, password and email.
-"""
-
-# same comment as for admin_projects_view
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def user_mgmt(request):
+    """
+    Return new user creation page for the project admin, where the project admin can create new users
+    by providing username, password and email.
+    """
     return render(request, 'projects/user_management.html')
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_edit_view(request, project_name):
+    """
+    Return the (specific) project admin page which contain links to Info, Members, Project Metadata, Custom MD Field
+    """
     return render(request, "projects/project_admin_page.html", {'project_name': project_name})
 
 
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_info_view(request, prj_name):
+    """
+    Return project info page where the project admin can add some information about the project
+    """
     try:
         pr_inst = Project.objects.get(project_name=prj_name)
         info = pr_inst.info
@@ -84,6 +87,9 @@ def admin_projects_info_view(request, prj_name):
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_edit_info(request, prj_name):
+    """
+    Return project info page where the project admin can edit project information, only text
+    """
     get_project = get_object_or_404(Project, project_name=prj_name)
     if request.method == 'POST':
         project_edit_form = ProjectInfoForm(request.POST, instance=get_project)
@@ -106,6 +112,10 @@ def admin_projects_edit_info(request, prj_name):
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_add_member(request, prj_name):
+    """
+    Return ProjectMemberForm(page) where project admin can add Users to the project, which he/she has created using User
+    Management
+    """
     if request.method == 'POST':
         project_member_form = ProjectMemberRoleForm(request.POST)
         if project_member_form.is_valid():
@@ -124,6 +134,9 @@ def admin_projects_add_member(request, prj_name):
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def admin_projects_edit_member(request, prj_name, member):
+    """
+    Return ProjectMemberForm(page) where project admin can edit the member role in a particular project
+    """
     prj_inst = Project.objects.get(project_name=prj_name)
     mem_inst = User.objects.get(username=member)
     get_prj = get_object_or_404(ProjectMemberRole, project=prj_inst, member=mem_inst)
@@ -147,6 +160,9 @@ def admin_projects_edit_member(request, prj_name, member):
 @user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
 @login_required(login_url='/accounts/login')
 def list_project_members(request, prj_name):
+    """
+    List the members of the project
+    """
     try:
         prj_inst = Project.objects.get(project_name=prj_name)
         lst_mem_inst = ProjectMemberRole.objects.filter(project=prj_inst.id)
@@ -158,6 +174,9 @@ def list_project_members(request, prj_name):
 
 @login_required(login_url='/accounts/login')
 def project_info_view(request, prj_name):
+    """
+    Return project info page for the members of the project, they can't edit anything here.
+    """
     try:
         pr_inst = Project.objects.get(project_name=prj_name)
         info = pr_inst.info
