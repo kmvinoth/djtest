@@ -1,3 +1,8 @@
+"""
+
+This module contains the models necessary for the projects app
+
+"""
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
@@ -7,6 +12,11 @@ from django.utils.text import slugify
 
 
 class Project(models.Model):
+    """
+
+    A Project Model for creating a Project with name, admin and some info
+
+    """
     project_name = models.CharField(max_length=100)
     admin = models.ForeignKey(User, blank=True, null=True)
     info = models.TextField(max_length=500, default='Add some info about your project')
@@ -19,6 +29,11 @@ class Project(models.Model):
 
 
 class Deposit(models.Model):
+    """
+
+    A Deposit Model for creating a Deposit Session
+
+    """
     project = models.ForeignKey(Project)
     deposit_name = models.SlugField(max_length=50, db_index=True, blank=True, unique=True)
     user = models.ForeignKey(User, blank=True, null=True)
@@ -29,7 +44,9 @@ class Deposit(models.Model):
     # ref : http://fazle.me/auto-generating-unique-slug-in-django/
     def _get_unique_deposit_name(self):
         """
+
         Create a unique deposit name by taking the project name and the username
+
         """
         deposit_string = self.project.project_name + '_' + self.user.username + '_' + 'deposit'
         deposit_name = slugify(deposit_string)
@@ -50,6 +67,11 @@ class Deposit(models.Model):
 
 
 class DataObject(models.Model):
+    """
+
+    A DataObject model for creating a dataobject inside a Deposit Session
+
+    """
     deposit = models.ForeignKey(Deposit)
     data_object_name = models.SlugField(max_length=50, db_index=True, blank=True, unique=True)
     user = models.ForeignKey(User, blank=True, null=True)
@@ -83,6 +105,11 @@ class DataObject(models.Model):
 
 
 class ProjectMemberRole(models.Model):
+    """
+
+    Model for assigning role to a member of the project
+
+    """
     project = models.ForeignKey(Project)
     member = models.ForeignKey(User)
     role = models.ForeignKey(Group)
@@ -94,10 +121,15 @@ class ProjectMemberRole(models.Model):
         verbose_name_plural = 'ProjectMemberRole'
 
 
+"""  Signal functions, these will be later moved to signal.py inside projects app """
+
+
 @receiver(post_save, sender=Deposit)
 def create_data_object(sender, instance, created, **kwargs):
     """
-    Signal for creating data object once a deposit has been created
+
+    Signal for creating dataobject once a deposit session has been created
+
     """
 
     if created:
