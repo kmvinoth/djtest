@@ -25,8 +25,7 @@
 
     </form>
 
-    <p>Object Metadata : Once you click Save & Next, you will be redirected to the (Serialize) page, where you can <br>
-        review your metadata entries and do a final check before serializing the metadata and closing the deposit session. </p>
+    <p>Object Metadata </p>
 
     <form method="post" action=""> {% csrf_token %}
 
@@ -37,9 +36,9 @@
             {{ form.md_attributes}}: {{ form.val }} <br><br>
         {% endfor %}
 
-        <input class="btn" type="submit" name="submit" value="Save & Next"><br><br>
-        <input class="btn" formaction="{% url 'metadata:member_metadata_view' project_name %}"
-               type="submit" name="submit" value="Cancel">
+        <input class="btn" type="submit" name="submit" value="Serialize & Close Session "><br><br>
+{#        <input class="btn" formaction="{% url 'metadata:add_dataobject' project_name deposit_name %}"#}
+{#               type="submit" name="submit" value="Previous">#}
 
     </form>
 

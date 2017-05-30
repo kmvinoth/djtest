@@ -173,7 +173,6 @@ def add_dataobject_metadata(request, prj_name, dep_name):
     Let's the Project member to add the Data object meta data related to the project, redirected page once a data object
     is created by the member.
     """
-    # Get the last object of the deposit table, because that is recently added
     try:
         deposit_inst = get_object_or_404(Deposit, deposit_name=dep_name)
         # The below query has to be changed to filter when you have more than one data object for a deposit
@@ -183,33 +182,7 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                                                                           instance=data_object_inst)
             if data_object_value_formset.is_valid():
                 data_object_value_formset.save()
-
-                pr_qs = Value.objects.filter(project__project_name=prj_name)
-
-                pr_md_data = ValueSerializer(pr_qs, many=True)
-
-                dep_qs = DepositValue.objects.filter(deposit__deposit_name=dep_name)
-
-                dep_md_data = DepositValueSerializer(dep_qs, many=True)
-
-                dobj_qs = DataObjectValue.objects.filter(dataobject__data_object_name=data_object_inst.data_object_name)
-
-                dobj_md_data = DataObjectValueSerializer(dobj_qs, many=True)
-
-                # Open the file and write the project metadata
-                with open('metadata.json', 'w') as outfile:
-                    json.dump(pr_md_data.data, outfile)
-
-                # Append the file with deposit metadata
-                with open('metadata.json', 'a') as outfile:
-                    json.dump(dep_md_data.data, outfile)
-
-                # Append the file with dataobject metadata
-                with open('metadata.json', 'a') as outfile:
-                    json.dump(dobj_md_data.data, outfile)
-                # As of now the Json file is in Invalid format, try to fix this
-
-                return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
+                return HttpResponseRedirect(reverse('metadata:serialize_delete', args=[prj_name, dep_name]))
 
             else:
                 session_form = DepositForm(instance=deposit_inst)
@@ -263,23 +236,79 @@ def create_dataobject(request, prj_name, dep_name):
                                                                    'deposit_name': dep_name})
 
 
+@login_required(login_url='/accounts/login')
+def serialize_delete_metadata(request, prj_name, dep_name):
+    """
+    This View Serializes the deposit metadata and closes the deposit session.
+    """
+    try:
+        deposit_inst = get_object_or_404(Deposit, deposit_name=dep_name)
+        # The below query has to be changed to filter when you have more than one data object for a deposit
+        data_object_inst = DataObject.objects.get(deposit_id=deposit_inst.id)
+        if request.method == 'POST':
+            data_object_value_formset = data_object_value_inline_form_set(request.POST, request.FILES,
+                                                                          instance=data_object_inst)
+            if data_object_value_formset.is_valid():
+                data_object_value_formset.save()
 
+                pr_qs = Value.objects.filter(project__project_name=prj_name)
 
+                pr_md_data = ValueSerializer(pr_qs, many=True)
 
+                dep_qs = DepositValue.objects.filter(deposit__deposit_name=dep_name)
 
+                dep_md_data = DepositValueSerializer(dep_qs, many=True)
 
+                dobj_qs = DataObjectValue.objects.filter(dataobject__data_object_name=data_object_inst.data_object_name)
 
+                dobj_md_data = DataObjectValueSerializer(dobj_qs, many=True)
 
+                # Open the file and write the project metadata
+                with open('metadata.json', 'w') as outfile:
+                    json.dump(pr_md_data.data, outfile)
 
+                # Append the file with deposit metadata
+                with open('metadata.json', 'a') as outfile:
+                    json.dump(dep_md_data.data, outfile)
 
+                # Append the file with dataobject metadata
+                with open('metadata.json', 'a') as outfile:
+                    json.dump(dobj_md_data.data, outfile)
+                # As of now the Json file is in Invalid format, try to fix this
 
+                # Closing the Deposit session by deleting the deposit
+                Deposit.objects.filter(deposit_name=dep_name).delete()
 
+                return HttpResponseRedirect(reverse('metadata:member_metadata_view', args=[prj_name]))
 
+            else:
+                session_form = DepositForm(instance=deposit_inst)
+                data_object_form = DataobjectForm(instance=data_object_inst)
+                deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+                data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+                return render(request, 'metadata/serialize_and_delete.html',
+                              {'data_object_formset': data_object_value_formset,
+                               'project_name': prj_name,
+                               'deposit_name': dep_name,
+                               'deposit_formset': deposit_value_formset,
+                               'session_form': session_form,
+                               'object_form': data_object_form
+                               })
+        else:
+            session_form = DepositForm(instance=deposit_inst)
+            data_object_form = DataobjectForm(instance=data_object_inst)
+            deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
+            data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
+            return render(request, 'metadata/serialize_and_delete.html',
+                          {'data_object_formset': data_object_value_formset,
+                           'project_name': prj_name,
+                           'deposit_name': dep_name,
+                           'deposit_formset': deposit_value_formset,
+                           'session_form': session_form,
+                           'object_form': data_object_form
+                           })
 
-
-
-
-
-
+    except ObjectDoesNotExist:
+        return Http404
 
 
