@@ -77,7 +77,7 @@ def member_metadata_view(request, prj_name):
     try:
         prj = Project.objects.get(project_name=prj_name)
         deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
-        deposit_status = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED, user=request.user)
+        deposit_status = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED, user=request.user, project=prj)
         print(deposit_status)
         return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj.project_name,
                                                                            'deposit_lst': deposit_lst,

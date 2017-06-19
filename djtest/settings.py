@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'metadata',
     # Third party apps
     'debug_toolbar',
-    'guardian',
     'rest_framework',
+    # 'guardian',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'djtest.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'final_database_db'),
+        'NAME': os.path.join(BASE_DIR, 'DDP_database_db'),
     }
 }
 

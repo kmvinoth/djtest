@@ -80,6 +80,7 @@ class DepositSessionStatus(models.Model):
     CLOSED = 0
     STATUS_CHOICES = ((OPEN, 'Open'), (CLOSED, 'Closed'))
 
+    project = models.ForeignKey(Project)
     deposit_name = models.CharField(max_length=100, default="SampleName")
     status = models.IntegerField(choices=STATUS_CHOICES, default=OPEN)
     user = models.ForeignKey(User, blank=True, null=True)
@@ -170,7 +171,8 @@ def create_deposit_status(sender, instance, created, **kwargs):
     """
 
     if created:
-        DepositSessionStatus.objects.create(deposit_name=instance.deposit_name)
+        DepositSessionStatus.objects.create(deposit_name=instance.deposit_name, user=instance.user,
+                                            project=instance.project)
 
     else:
         print('deposit session status not created')
