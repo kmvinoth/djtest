@@ -77,7 +77,7 @@ def member_metadata_view(request, prj_name):
     try:
         prj = Project.objects.get(project_name=prj_name)
         deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
-        deposit_status = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED)
+        deposit_status = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED, user=request.user)
         print(deposit_status)
         return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj.project_name,
                                                                            'deposit_lst': deposit_lst,
@@ -255,11 +255,7 @@ def serialize_delete_metadata(request, prj_name, dep_name):
                 data_object_value_formset.save()
 
                 close_deposit_session = DepositSessionStatus.objects.get(deposit_name=dep_name)
-                # print(dep_name)
-                # print(close_deposit_session.deposit_name)
-
                 close_deposit_session.status = DepositSessionStatus.CLOSED
-                # print(close_deposit_session.status)
                 close_deposit_session.save()
 
                 pr_qs = Value.objects.filter(project__project_name=prj_name)
