@@ -10,10 +10,21 @@
     <p>Below is the list of deposits created by you ({{ user }}), you can edit the deposit's by clicking the
         individual deposit link </p>
 
+    <p>Open Deposit Session </p>
+
     {% for deposit in deposit_lst %}
 
         <li class="project-menu-item"> <a href = " {% url 'metadata:edit_deposit' project_name deposit.deposit_name %}" > {{deposit.deposit_name}} </a> </li>
 
     {% endfor %}
+
+    <p>Closed Deposit Session </p>
+
+    {% for closed_deposit in deposit_status %}
+
+        <li class="project-menu-item"> {{ closed_deposit.deposit_name }} </li>
+
+    {% endfor %}
+
 
     {% endblock %}

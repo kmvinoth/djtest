@@ -66,6 +66,27 @@ class Deposit(models.Model):
         verbose_name_plural = 'Deposit'
 
 
+class DepositSessionStatus(models.Model):
+    """
+
+        A DepositSessionStatus model for displaying the status of the Deposit session.
+
+        Should have added another field (Status) to the deposit model.Since the DepositSession is purged from
+        the database once the user closes the session, it is necessary to have
+        a separate table to know the status of the deposit session.
+
+    """
+    OPEN = 1
+    CLOSED = 0
+    STATUS_CHOICES = ((OPEN, 'Open'), (CLOSED, 'Closed'))
+
+    deposit_name = models.CharField(max_length=100, default="SampleName")
+    status = models.IntegerField(choices=STATUS_CHOICES, default=OPEN)
+
+    class Meta:
+        verbose_name_plural = 'DepositSessionStatus'
+
+
 class DataObject(models.Model):
     """
 
@@ -137,5 +158,20 @@ def create_data_object(sender, instance, created, **kwargs):
 
     else:
         print('deposit metadata attribute not created')
+
+
+@receiver(post_save, sender=Deposit)
+def create_deposit_status(sender, instance, created, **kwargs):
+    """
+
+    Signal for creating Deposit Session status once a deposit session has been created
+
+    """
+
+    if created:
+        DepositSessionStatus.objects.create(deposit_name=instance.deposit_name)
+
+    else:
+        print('deposit session status not created')
 
 

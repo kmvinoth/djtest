@@ -9,7 +9,7 @@ from .forms import value_inline_form_set, deposit_value_inline_form_set, Metadat
     data_object_value_inline_form_set
 from .models import MetadataAttributes, Value, DepositValue, DataObjectValue
 from .serializer import ValueSerializer, DepositValueSerializer, DataObjectValueSerializer
-from projects.models import Project, Deposit, DataObject
+from projects.models import Project, Deposit, DataObject, DepositSessionStatus
 from projects.forms import DepositForm, DataobjectForm
 
 import json
@@ -77,8 +77,11 @@ def member_metadata_view(request, prj_name):
     try:
         prj = Project.objects.get(project_name=prj_name)
         deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
+        deposit_status = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED)
+        print(deposit_status)
         return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj.project_name,
-                                                                           'deposit_lst': deposit_lst})
+                                                                           'deposit_lst': deposit_lst,
+                                                                           'deposit_status': deposit_status})
     except ObjectDoesNotExist:
         return HttpResponse('The project object does not exist')
 
@@ -250,6 +253,14 @@ def serialize_delete_metadata(request, prj_name, dep_name):
                                                                           instance=data_object_inst)
             if data_object_value_formset.is_valid():
                 data_object_value_formset.save()
+
+                close_deposit_session = DepositSessionStatus.objects.get(deposit_name=dep_name)
+                # print(dep_name)
+                # print(close_deposit_session.deposit_name)
+
+                close_deposit_session.status = DepositSessionStatus.CLOSED
+                # print(close_deposit_session.status)
+                close_deposit_session.save()
 
                 pr_qs = Value.objects.filter(project__project_name=prj_name)
 
