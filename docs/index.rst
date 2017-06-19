@@ -38,7 +38,7 @@ Project Admin
 
 Project Member
 --------------
-* **Initiate**(Create) a **Deposit session**.
+* **Initiate(Create)** a **Deposit session**.
 * **Add** and **Edit** Deposit metadata.
 * **Add DataObject** metadata (no edit option).
 * **File upload** (not implemented as of now).
