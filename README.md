@@ -58,15 +58,16 @@ git clone git@git.zib.de:rdm-deposit/djtest.git
 ## Create Users
 
 12. In the web Admin page, Under Authentication and Authorization section, Click on Users to create new users and assign them roles.
-
-## Create a New Project
-
-13. In the web Admin page, Under Projects Section, Click on Project and create a new project and assign a project admin for the newly created project.
    
 ## Add Mandatory metadata Attributes
 
-14. In the web Admin page, Under Metadata Section, Click on MetaDataAttributes and add Project metadata fields. 
+13. In the web Admin page, Under Metadata Section, Click on MetaDataAttributes and add Project metadata fields. 
    (This has to done only for the first time, for subsequent projects the (project)metadata fields will be automatically added)
+   
+## Create a New Project 
+
+14. In the web Admin page, Under Projects Section, Click on Project and create a new project and assign a project admin for the newly created project.
+    Note. Don't create a project before all the Project metadata attributes for the project has been defined. 
 
 ## Deactivating Virtual Environment
 
