@@ -13,6 +13,7 @@ urlpatterns = [
     # Passing the project name as an argument to the view function
     url(r'^admin/(\w+)$', views.admin_projects_edit_view, name='admin_projects_edit'),
     url(r'^admin/(\w+)/info$', views.admin_projects_info_view, name='admin_projects_info'),
+    url(r'^admin/(\w+)/project_activity$', views.admin_projects_activity, name='admin_project_activity'),
     url(r'^admin/(\w+)/edit_info$', views.admin_projects_edit_info, name='admin_projects_edit_info'),
     url(r'^admin/(\w+)/lst_member$', views.list_project_members, name='list_project_members'),
     url(r'^admin/(\w+)/add_member$', views.admin_projects_add_member, name='admin_projects_add_member'),

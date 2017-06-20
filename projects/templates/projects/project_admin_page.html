@@ -8,6 +8,7 @@
 
     <ul>
         <li class="main-menu-item"> <a href="{% url 'projects:admin_projects_info' project_name %}"> ProjectInfo</a> </li>
+        <li class="main-menu-item"> <a href="{% url 'projects:admin_project_activity' project_name %}"> ProjectActivity</a> </li>
         <li class="main-menu-item"> <a href="{% url 'projects:list_project_members' project_name %}"> Members</a> </li>
         <li class="main-menu-item"> <a href="{% url 'metadata:add_project_metadata' project_name %}"> ProjectMetadata</a> </li>
         <li class="main-menu-item"> <a href="{% url 'metadata:add_custom_md_attributes' project_name %}"> Add Custom Md Field</a> </li>
@@ -15,6 +16,10 @@
     </ul>
 
 {% block info %}
+
+{% endblock %}
+
+{% block project_activity %}
 
 {% endblock %}
 

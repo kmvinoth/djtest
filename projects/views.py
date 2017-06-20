@@ -5,7 +5,7 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django import forms
-from .models import Project, User, ProjectMemberRole
+from .models import Project, User, ProjectMemberRole, DepositSessionStatus
 from .forms import ProjectInfoForm, ProjectMemberRoleForm
 
 
@@ -80,6 +80,20 @@ def admin_projects_info_view(request, prj_name):
         pr_inst = Project.objects.get(project_name=prj_name)
         info = pr_inst.info
         return render(request, 'projects/project_info.html', {'project_name': prj_name, 'info': info})
+    except ObjectDoesNotExist:
+        return HttpResponse('The project object does not exist')
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Project Admin').exists(), login_url='/projects/user_dashboard')
+@login_required(login_url='/accounts/login')
+def admin_projects_activity(request, prj_name):
+    """
+    Return project activity page where the project admin can see information about the deposit session like who created
+    the deposit, what is the status and so on for the project
+    """
+    try:
+        pr_activity = DepositSessionStatus.objects.filter(project__project_name=prj_name)
+        return render(request, 'projects/project_activity.html', {'project_name': prj_name, 'pr_activity': pr_activity})
     except ObjectDoesNotExist:
         return HttpResponse('The project object does not exist')
 

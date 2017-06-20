@@ -1,0 +1,34 @@
+{% extends "projects/project_admin_page.html" %}
+
+{% block title %} Project_Activity {% endblock %}
+
+
+{% block project_activity %}
+
+    <p>Below is the table where the project admin finds information about deposit sessions of the project. </p>
+
+        <table style="width: auto">
+       {#Column Headings#}
+        <tr>
+        <th>Project</th>
+        <th>Deposit Name</th>
+        <th>User</th>
+        <th>Status</th>
+        </tr>
+
+        {% for project in pr_activity%}
+
+            <tr>
+
+            <td>  {{ project.project }}      </td>
+            <td>  {{ project.deposit_name }} </td>
+            <td>  {{ project.user }}        </td>
+            <td>  {{ project.get_status_display }}  </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </table>
+
+{% endblock %}
