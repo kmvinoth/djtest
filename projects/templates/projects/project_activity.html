@@ -14,6 +14,7 @@
         <th>Deposit Name</th>
         <th>User</th>
         <th>Status</th>
+{#        <th>Date</th>#}
         </tr>
 
         {% for project in pr_activity%}
@@ -24,6 +25,7 @@
             <td>  {{ project.deposit_name }} </td>
             <td>  {{ project.user }}        </td>
             <td>  {{ project.get_status_display }}  </td>
+{#            <td>  {{ project.created_on }}  </td>#}
 
             </tr>
 
