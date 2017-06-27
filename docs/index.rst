@@ -54,7 +54,13 @@ Examples
 
 Details
 =======
+The project is made up of three apps. Below is the short description of what each app does.
 
+* **Accounts** : All the data related to the User is handled here.
+* **Projects** : Data related to the Project, DepositSession and the DataObject are handled here.
+* **Metadata** : Metadata information of the Project, DepositSession and the DataObject are handled here.
+
+If you want to see the what the modules of each app does, please consult the **Module Index** at the bottom of the page.
 
 .. toctree::
    :maxdepth: 2
