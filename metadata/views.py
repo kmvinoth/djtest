@@ -314,7 +314,14 @@ def serialize_delete_metadata(request, prj_name, dep_name):
                 # Append the file with dataobject metadata
                 with open('metadata.json', 'a') as outfile:
                     json.dump(dobj_md_data.data, outfile)
-                # As of now the Json file is in Invalid format, try to fix this
+
+                # Working with the json file to get in the right format
+                with open('metadata.json', 'r') as outfile:
+                    new_file = outfile.read()
+                    new_file = new_file.replace('][', ',')
+
+                with open('metadata.json', 'w') as outfile:
+                    outfile.write(new_file)
 
                 # Closing the Deposit session by deleting the deposit
                 Deposit.objects.filter(deposit_name=dep_name).delete()
