@@ -4,12 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
+from django import forms
 from django.shortcuts import get_object_or_404
 from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
     data_object_value_inline_form_set
 from .models import MetadataAttributes, Value, DepositValue, DataObjectValue
 from .serializer import ValueSerializer, DepositValueSerializer, DataObjectValueSerializer
-from projects.models import Project, Deposit, DataObject, DepositSessionStatus
+from projects.models import Project, Deposit, DataObject, DepositSessionStatus, User
 from projects.forms import DepositForm, DataobjectForm
 
 import json
@@ -102,6 +103,9 @@ def create_deposit_session(request, prj_name):
 
     else:
         deposit_form = DepositForm()
+        deposit_form.fields['project'] = forms.ModelChoiceField(
+            Project.objects.filter(project_name=prj_name))
+        deposit_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
         return render(request, 'metadata/create_deposit.html', {'deposit_form': deposit_form,
                                                                 'project_name': prj_name})
 
@@ -123,12 +127,22 @@ def add_deposit_metadata(request, prj_name):
             return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name, dep_name]))
         else:
             session_form = DepositForm(instance=deposit_inst)
+            # Filter the session form fields project and user, so that it is useful for the user which project he is
+            # currently working.
+            session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+            session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                           'project_name': prj_name,
                                                                           'session_form': session_form})
     else:
         session_form = DepositForm(instance=deposit_inst)
+        # Filter the session form fields project and user, so that it is useful for the user which project he is
+        # currently working.
+        session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+        session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
         deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
         return render(request, 'metadata/add_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                       'project_name': prj_name,
@@ -149,6 +163,11 @@ def edit_deposit_session(request, prj_name, dep_name):
                 return HttpResponseRedirect(reverse('metadata:add_dataobject', args=[prj_name, dep_name]))
             else:
                 session_form = DepositForm(instance=deposit_inst)
+                # Filter the session form fields project and user, so that it is useful for the user which project he is
+                # currently working.
+                session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+                session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
                 deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
                 return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                                'project_name': prj_name,
@@ -156,6 +175,11 @@ def edit_deposit_session(request, prj_name, dep_name):
                                                                                'session_form': session_form})
         else:
             session_form = DepositForm(instance=deposit_inst)
+            # Filter the session form fields project and user, so that it is useful for the user which project he is
+            # currently working.
+            session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+            session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             return render(request, 'metadata/edit_deposit_metadata.html', {'deposit_formset': deposit_value_formset,
                                                                            'project_name': prj_name,
@@ -189,6 +213,10 @@ def add_dataobject_metadata(request, prj_name, dep_name):
 
             else:
                 session_form = DepositForm(instance=deposit_inst)
+                # Filter the session form fields project and user, so that it is useful for the user which project he is
+                # currently working.
+                session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+                session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
                 data_object_form = DataobjectForm(instance=data_object_inst)
                 deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
                 data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
@@ -202,6 +230,11 @@ def add_dataobject_metadata(request, prj_name, dep_name):
                                })
         else:
             session_form = DepositForm(instance=deposit_inst)
+            # Filter the session form fields project and user, so that it is useful for the user which project he is
+            # currently working.
+            session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+            session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
             data_object_form = DataobjectForm(instance=data_object_inst)
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
@@ -290,6 +323,11 @@ def serialize_delete_metadata(request, prj_name, dep_name):
 
             else:
                 session_form = DepositForm(instance=deposit_inst)
+                # Filter the session form fields project and user, so that it is useful for the user which project he is
+                # currently working.
+                session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+                session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
                 data_object_form = DataobjectForm(instance=data_object_inst)
                 deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
                 data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
@@ -303,6 +341,11 @@ def serialize_delete_metadata(request, prj_name, dep_name):
                                })
         else:
             session_form = DepositForm(instance=deposit_inst)
+            # Filter the session form fields project and user, so that it is useful for the user which project he is
+            # currently working.
+            session_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+            session_form.fields['user'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
+
             data_object_form = DataobjectForm(instance=data_object_inst)
             deposit_value_formset = deposit_value_inline_form_set(instance=deposit_inst)
             data_object_value_formset = data_object_value_inline_form_set(instance=data_object_inst)
