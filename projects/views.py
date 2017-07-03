@@ -137,10 +137,15 @@ def admin_projects_add_member(request, prj_name):
             return redirect('/projects/admin')
         else:
             error = True
+            project_member_form.fields['project'] = forms.ModelChoiceField(
+                                                    Project.objects.filter(project_name=prj_name))
+            project_member_form.fields['member'] = forms.ModelChoiceField(User.objects.exclude(username=request.user))
             return render(request, 'projects/project_add_member.html',
                           {'project_member_form': project_member_form, 'error': error, 'project_name': prj_name})
     else:
         project_member_form = ProjectMemberRoleForm()
+        project_member_form.fields['project'] = forms.ModelChoiceField(Project.objects.filter(project_name=prj_name))
+        project_member_form.fields['member'] = forms.ModelChoiceField(User.objects.exclude(username=request.user))
         return render(request, 'projects/project_add_member.html',
                       {'project_member_form': project_member_form, 'project_name': prj_name})
 
@@ -161,11 +166,17 @@ def admin_projects_edit_member(request, prj_name, member):
             return redirect('/projects/admin')
         else:
             error = True
+            project_member_edit_form.fields['project'] = forms.ModelChoiceField(
+                Project.objects.filter(project_name=prj_name))
+            project_member_edit_form.fields['member'] = forms.ModelChoiceField(User.objects.exclude(username=request.user))
             return render(request, 'projects/project_edit_member.html',
                           {'project_member_edit_form': project_member_edit_form, 'error': error})
     else:
         project_member_edit_form = ProjectMemberRoleForm(initial={'project': prj_inst, 'member': mem_inst},
                                                          instance=get_prj)
+        project_member_edit_form.fields['project'] = forms.ModelChoiceField(
+            Project.objects.filter(project_name=prj_name))
+        project_member_edit_form.fields['member'] = forms.ModelChoiceField(User.objects.exclude(username=request.user))
         return render(request, 'projects/project_edit_member.html',
                       {'project_member_edit_form': project_member_edit_form, 'project_name': prj_name,
                        'member_name': member})
