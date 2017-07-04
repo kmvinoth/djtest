@@ -7,30 +7,80 @@
 
     <p>Below is the table where the project admin finds information about deposit sessions of the project. </p>
 
-        <table style="width: auto">
-       {#Column Headings#}
+    <p> Open Deposit Sessions </p>
+
+    <table style="width: auto">
+        {#Column Headings#}
         <tr>
-        <th>Project</th>
-        <th>Deposit Name</th>
-        <th>User</th>
-        <th>Status</th>
-{#        <th>Date</th>#}
+            <th>Project</th>
+            <th>Deposit Name</th>
+            <th>Created On</th>
+            <th>Status</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Phone</th>
         </tr>
 
-        {% for project in pr_activity%}
+    {% for project in pr_activity %}
+
+{#        The Status field is Integerfield with choices 'OPEN' and 'CLOSED' represented by 1 and 2 respectively, if you want #}
+{#        to change to string like 'open' or ''closed', change the Status Field in the model (Project app (models.py) ) to Charfield and#}
+{#        use the string 'open' or 'closed' for the if block.#}
+
+        {% if project.status == 1 %}
 
             <tr>
-
-            <td>  {{ project.project }}      </td>
-            <td>  {{ project.deposit_name }} </td>
-            <td>  {{ project.user }}        </td>
-            <td>  {{ project.get_status_display }}  </td>
-{#            <td>  {{ project.created_on }}  </td>#}
-
+                <td>  {{ project.project }}      </td>
+                <td>  {{ project.deposit_name }} </td>
+                <td>  {{ project.created_on }}  </td>
+                <td>  {{ project.get_status_display }}  </td>
+                <td>  {{ project.user }}        </td>
+                <td>  {{ project.user.email }}        </td>
             </tr>
 
-        {% endfor %}
+        {% endif %}
 
-        </table>
+    {% endfor %}
+
+    </table>
+
+    <p> Closed Deposit Sessions </p>
+
+    <table style="width: auto">
+        {#Column Headings#}
+        <tr>
+            <th>Project</th>
+            <th>Deposit Name</th>
+            <th>Created On</th>
+            <th>Closed On</th>
+            <th>Status</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+
+    {% for project in pr_activity %}
+
+{#        The Status field is Integerfield with choices 'OPEN' and 'CLOSED' represented by 1 and 2 respectively, if you want #}
+{#        to change to string like 'open' or ''closed', change the Status Field in the model (Project app (models.py) ) to Charfield and#}
+{#        use the string 'open' or 'closed' for the if block.#}
+
+        {% if project.status == 0 %}
+
+            <tr>
+                <td>  {{ project.project }}      </td>
+                <td>  {{ project.deposit_name }} </td>
+                <td>  {{ project.created_on }}  </td>
+                <td>  {{ project.closed_on }}  </td>
+                <td>  {{ project.get_status_display }}  </td>
+                <td>  {{ project.user }}        </td>
+                <td>  {{ project.user.email }}        </td>
+            </tr>
+
+        {% endif %}
+
+    {% endfor %}
+
+    </table>
 
 {% endblock %}

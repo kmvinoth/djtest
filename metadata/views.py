@@ -77,12 +77,14 @@ def member_metadata_view(request, prj_name):
     """
     try:
         prj = Project.objects.get(project_name=prj_name)
-        deposit_lst = Deposit.objects.filter(project_id=prj.id, user=request.user)
-        deposit_status = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED, user=request.user, project=prj)
-        print(deposit_status)
+
+        deposit_open = DepositSessionStatus.objects.filter(status=DepositSessionStatus.OPEN, user=request.user,
+                                                           project=prj)
+        deposit_closed = DepositSessionStatus.objects.filter(status=DepositSessionStatus.CLOSED, user=request.user,
+                                                             project=prj)
         return render(request, 'metadata/member_metadata_dashboard.html', {'project_name': prj.project_name,
-                                                                           'deposit_lst': deposit_lst,
-                                                                           'deposit_status': deposit_status})
+                                                                           'deposit_closed': deposit_closed,
+                                                                           'deposit_open': deposit_open})
     except ObjectDoesNotExist:
         return HttpResponse('The project object does not exist')
 
