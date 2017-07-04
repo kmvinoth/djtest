@@ -45,14 +45,8 @@ class MyUsers(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     """
     Whenever a User Model is created a User profile is created.
-
     ref : https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html
 
-    :param sender:
-    :param instance:
-    :param created:
-    :param kwargs:
-    :return:
     """
 
     if created:
@@ -63,9 +57,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     """
     Whenever a User Model is saved a User profile is saved.
-    :param sender:
-    :param instance:
-    :param kwargs:
-    :return:
+
     """
     instance.userprofile.save()

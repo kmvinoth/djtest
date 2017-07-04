@@ -61,14 +61,6 @@ def user_registration(request):
             my_user_inst.user = user
             # Once the user attribute has been assigned then save the form.
             my_user_inst.save()
-
-            # Some debugging
-            # print(my_user_form.cleaned_data)
-            # print(registration_form.cleaned_data)
-
-            # later functionality to be added
-            # Send verification email
-            # redirect to login page
             return redirect('/accounts/register_success')
         else:
             my_user_form.fields['created_by'] = forms.ModelChoiceField(User.objects.filter(username=request.user))
