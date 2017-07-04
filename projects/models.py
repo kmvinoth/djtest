@@ -85,6 +85,7 @@ class DepositSessionStatus(models.Model):
     status = models.IntegerField(choices=STATUS_CHOICES, default=OPEN)
     user = models.ForeignKey(User, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
+    closed_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'DepositSessionStatus'
