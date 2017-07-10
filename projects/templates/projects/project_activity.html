@@ -23,11 +23,7 @@
 
     {% for project in pr_activity %}
 
-{#        The Status field is Integerfield with choices 'OPEN' and 'CLOSED' represented by 1 and 2 respectively, if you want #}
-{#        to change to string like 'open' or ''closed', change the Status Field in the model (Project app (models.py) ) to Charfield and#}
-{#        use the string 'open' or 'closed' for the if block.#}
-
-        {% if project.status == 1 %}
+        {% if project.status == 'OPEN' %}
 
             <tr>
                 <td>  {{ project.project }}      </td>
@@ -61,11 +57,7 @@
 
     {% for project in pr_activity %}
 
-{#        The Status field is Integerfield with choices 'OPEN' and 'CLOSED' represented by 1 and 2 respectively, if you want #}
-{#        to change to string like 'open' or ''closed', change the Status Field in the model (Project app (models.py) ) to Charfield and#}
-{#        use the string 'open' or 'closed' for the if block.#}
-
-        {% if project.status == 0 %}
+        {% if project.status == 'CLOSED' %}
 
             <tr>
                 <td>  {{ project.project }}      </td>
