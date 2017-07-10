@@ -76,13 +76,13 @@ class DepositSessionStatus(models.Model):
         a separate table to know the status of the deposit session.
 
     """
-    OPEN = 1
-    CLOSED = 0
+    OPEN = 'OPEN'
+    CLOSED = 'CLOSED'
     STATUS_CHOICES = ((OPEN, 'Open'), (CLOSED, 'Closed'))
 
     project = models.ForeignKey(Project)
     deposit_name = models.CharField(max_length=100, default="SampleName")
-    status = models.IntegerField(choices=STATUS_CHOICES, default=OPEN)
+    status = models.CharField(choices=STATUS_CHOICES, default=OPEN, max_length=15)
     user = models.ForeignKey(User, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     closed_on = models.DateTimeField(auto_now=True)
