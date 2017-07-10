@@ -9,26 +9,26 @@ from .fields import KeySlugField
 
 class MetadataAttributes(models.Model):
 
-    TEXT = 1
-    INT = 2
+    TEXT = 'Text'
+    INT = 'Integer'
     DATA_TYPE_CHOICES = ((TEXT, 'Text'), (INT, 'Integer'))
 
-    MANDATORY = 1
-    CUSTOMARY = 2
+    MANDATORY = 'Mandatory'
+    CUSTOMARY = 'Customary'
     MD_TYPE_CHOICES = ((MANDATORY, 'Mandatory'), (CUSTOMARY, 'Custom'))
 
-    PROJECT_MD = 1
-    DEPOSIT_MD = 2
-    OBJECT_MD = 3
+    PROJECT_MD = 'Project Metadata'
+    DEPOSIT_MD = 'Deposit Metadata'
+    OBJECT_MD = 'DataObject Metadata'
     MD_LEVEL_CHOICES = ((PROJECT_MD, 'Project_md'), (DEPOSIT_MD, 'Deposit_md'), (OBJECT_MD, 'Object_md'),)
     # ref(encapsulation) : http://www.b-list.org/weblog/2007/nov/02/handle-choices-right-way/
 
     label = models.CharField(max_length=50)
     key = KeySlugField(max_length=50, db_index=True, blank=True)
-    type = models.IntegerField(choices=DATA_TYPE_CHOICES, default=TEXT)
+    type = models.CharField(choices=DATA_TYPE_CHOICES, default=TEXT, max_length=25)
     # Remember to do type validation later
-    meta_data_type = models.IntegerField(choices=MD_TYPE_CHOICES, default=MANDATORY)
-    meta_data_level = models.IntegerField(choices=MD_LEVEL_CHOICES, default=PROJECT_MD)
+    meta_data_type = models.CharField(choices=MD_TYPE_CHOICES, default=MANDATORY, max_length=25)
+    meta_data_level = models.CharField(choices=MD_LEVEL_CHOICES, default=PROJECT_MD, max_length=25)
 
     class Meta:
         verbose_name_plural = 'MetaDataAttributes'
