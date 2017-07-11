@@ -1,3 +1,8 @@
+"""
+This module contains the models necessary for the metadata app
+
+"""
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -8,6 +13,10 @@ from .fields import KeySlugField
 
 
 class MetadataAttributes(models.Model):
+    """
+    A Model for the metadata fields
+
+    """
 
     TEXT = 'Text'
     INT = 'Integer'
@@ -48,6 +57,12 @@ class MetadataAttributes(models.Model):
 
 
 class Value(models.Model):
+    """
+    A Model for storing the  fields associated with Project Metadata Value only
+    For more information see the Pdf associated with the documentation
+
+    """
+
     project = models.ForeignKey(Project)
     md_attributes = models.ForeignKey(MetadataAttributes)
     val = models.CharField(max_length=50, blank=True)
@@ -60,6 +75,10 @@ class Value(models.Model):
 
 
 class DepositValue(models.Model):
+    """
+    A Model for storing the  fields associated with Deposit Metadata Value only
+
+    """
     deposit = models.ForeignKey(Deposit)
     md_attributes = models.ForeignKey(MetadataAttributes)
     val = models.CharField(max_length=50, blank=True)
@@ -72,6 +91,10 @@ class DepositValue(models.Model):
 
 
 class DataObjectValue(models.Model):
+    """
+    A Model for storing the  fields associated with Dataobject Metadata Value only
+
+    """
     dataobject = models.ForeignKey(DataObject)
     md_attributes = models.ForeignKey(MetadataAttributes)
     val = models.CharField(max_length=50, blank=True)
@@ -83,10 +106,14 @@ class DataObjectValue(models.Model):
         verbose_name_plural = 'DataobjectValue'
 
 
+"""  Signal functions, these will be later moved to signal.py inside metadata app """
+
+
 @receiver(post_save, sender=Project)
 def create_entry_in_value(sender, instance, created, **kwargs):
     """
     Whenever a project is created, the value table gets populated with all the static metadata attributes
+    You can customize this by filtering the MetadataAttributes Table
     """
 
     if created:

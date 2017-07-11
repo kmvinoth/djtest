@@ -1,3 +1,9 @@
+"""
+Module for serializing all the metadata associated with the Deposit Session.
+
+Note : Make sure you have Django RestFramework installed.
+"""
+
 from rest_framework import serializers
 from .models import MetadataAttributes, Value, Project, Deposit, DepositValue, DataObject, DataObjectValue
 

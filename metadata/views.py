@@ -1,9 +1,23 @@
+"""
+This module contains the following View functions
+
+add_project_metadata,
+add_custom_md_attributes,
+member_metadata_view,
+create_deposit_session,
+add_deposit_metadata,
+edit_deposit_session,
+add_dataobject_metadata,
+create_dataobject,
+serialize_delete_metadata
+
+"""
+
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.contrib import messages
 from django import forms
 from django.shortcuts import get_object_or_404
 from .forms import value_inline_form_set, deposit_value_inline_form_set, MetadataAttributesForm, \
@@ -12,7 +26,6 @@ from .models import MetadataAttributes, Value, DepositValue, DataObjectValue
 from .serializer import ValueSerializer, DepositValueSerializer, DataObjectValueSerializer
 from projects.models import Project, Deposit, DataObject, DepositSessionStatus, User
 from projects.forms import DepositForm, DataobjectForm
-
 import json
 
 
