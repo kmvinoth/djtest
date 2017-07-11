@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>85bf64b0-586f-438f-9ce8-0ba285add172</OriginalElement>
+  <nodes>
+    <node x="0.0" y="970.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_dataobject</node>
+    <node x="470.0" y="1378.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:sqlite_sequence</node>
+    <node x="1544.385579937304" y="108.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_content_type</node>
+    <node x="220.0" y="1378.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_session</node>
+    <node x="0.0" y="1378.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_migrations</node>
+    <node x="1431.7413793103447" y="750.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user_user_permissions</node>
+    <node x="877.1367554858933" y="479.5">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:accounts_myusers</node>
+    <node x="283.63675548589333" y="1190.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_depositvalue</node>
+    <node x="505.13675548589333" y="723.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_depositsessionstatus</node>
+    <node x="757.1367554858933" y="736.5">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_projectmemberrole</node>
+    <node x="637.2617554858933" y="466.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_project</node>
+    <node x="1353.510579937304" y="412.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_admin_log</node>
+    <node x="310.13675548589333" y="736.5">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_deposit</node>
+    <node x="615.3867554858933" y="1190.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_value</node>
+    <node x="1086.1269592476488" y="493.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group</node>
+    <node x="370.88675548589333" y="466.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:accounts_userprofile</node>
+    <node x="1003.8867554858933" y="750.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user_groups</node>
+    <node x="1628.510579937304" y="466.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_permission</node>
+    <node x="709.4902037617555" y="0.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user</node>
+    <node x="195.0" y="943.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_metadataattributes</node>
+    <node x="47.86637931034477" y="1190.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_dataobjectvalue</node>
+    <node x="1178.8867554858934" y="750.0">85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group_permissions</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_dataobject" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_deposit">
+      <point x="43.75" y="-71.5" />
+      <point x="131.25" y="918.0" />
+      <point x="353.88675548589333" y="918.0" />
+      <point x="-43.75" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_dataobjectvalue" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_dataobject">
+      <point x="-52.5" y="-71.5" />
+      <point x="100.36637931034477" y="1170.0" />
+      <point x="87.5" y="1170.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group_permissions" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group">
+      <point x="-48.25" y="-58.0" />
+      <point x="1227.1367554858934" y="703.0" />
+      <point x="1198.6269592476488" y="703.0" />
+      <point x="45.0" y="44.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_dataobject" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-43.75" y="-71.5" />
+      <point x="43.75" y="352.0" />
+      <point x="723.8083855799373" y="352.0" />
+      <point x="-143.18181818181824" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:accounts_myusers" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-38.749999999999886" y="-58.0" />
+      <point x="915.8867554858934" y="392.0" />
+      <point x="895.626567398119" y="392.0" />
+      <point x="28.636363636363626" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user_user_permissions" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-55.25" y="-58.0" />
+      <point x="1486.9913793103447" y="683.0" />
+      <point x="1343.010579937304" y="683.0" />
+      <point x="1343.010579937304" y="372.0" />
+      <point x="981.53565830721" y="372.0" />
+      <point x="114.5454545454545" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_projectmemberrole" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_project">
+      <point x="-73.0" y="-71.5" />
+      <point x="793.6367554858933" y="703.0" />
+      <point x="790.3867554858933" y="703.0" />
+      <point x="65.625" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_depositsessionstatus" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-57.75" y="-85.0" />
+      <point x="562.8867554858933" y="382.0" />
+      <point x="809.7174764890283" y="382.0" />
+      <point x="-57.27272727272725" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:accounts_userprofile" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="0.0" y="-71.5" />
+      <point x="458.38675548589333" y="372.0" />
+      <point x="781.0811128526645" y="372.0" />
+      <point x="-85.90909090909088" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_dataobjectvalue" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_metadataattributes">
+      <point x="52.5" y="-71.5" />
+      <point x="205.36637931034477" y="1170.0" />
+      <point x="234.0" y="1170.0" />
+      <point x="-78.0" y="98.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_admin_log" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_content_type">
+      <point x="63.75" y="-125.5" />
+      <point x="1544.760579937304" y="392.0" />
+      <point x="1587.385579937304" y="392.0" />
+      <point x="-43.0" y="58.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_projectmemberrole" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group">
+      <point x="73.0" y="-71.5" />
+      <point x="939.6367554858933" y="703.0" />
+      <point x="1108.6269592476488" y="703.0" />
+      <point x="-45.0" y="44.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group_permissions" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_permission">
+      <point x="48.25" y="-58.0" />
+      <point x="1323.6367554858934" y="693.0" />
+      <point x="1672.260579937304" y="693.0" />
+      <point x="-43.75" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_permission" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_content_type">
+      <point x="0.0" y="-71.5" />
+      <point x="1716.010579937304" y="392.0" />
+      <point x="1673.385579937304" y="392.0" />
+      <point x="43.0" y="58.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user_user_permissions" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_permission">
+      <point x="55.25" y="-58.0" />
+      <point x="1597.4913793103447" y="703.0" />
+      <point x="1759.760579937304" y="703.0" />
+      <point x="43.75" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_projectmemberrole" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="0.0" y="-71.5" />
+      <point x="0.0" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_depositvalue" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_deposit">
+      <point x="47.0" y="-71.5" />
+      <point x="424.63675548589333" y="1170.0" />
+      <point x="441.38675548589333" y="1170.0" />
+      <point x="43.75" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_project" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="0.0" y="-71.5" />
+      <point x="724.7617554858933" y="392.0" />
+      <point x="838.3538401253918" y="392.0" />
+      <point x="-28.636363636363626" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user_groups" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_group">
+      <point x="38.75" y="-58.0" />
+      <point x="1120.1367554858934" y="703.0" />
+      <point x="1153.6269592476488" y="703.0" />
+      <point x="0.0" y="44.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_depositvalue" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_metadataattributes">
+      <point x="-47.0" y="-71.5" />
+      <point x="330.63675548589333" y="1170.0" />
+      <point x="312.0" y="1170.0" />
+      <point x="0.0" y="98.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_deposit" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-43.75" y="-71.5" />
+      <point x="353.88675548589333" y="362.0" />
+      <point x="752.444749216301" y="362.0" />
+      <point x="-114.5454545454545" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user_groups" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-38.75" y="-58.0" />
+      <point x="1042.6367554858934" y="382.0" />
+      <point x="952.8992946708463" y="382.0" />
+      <point x="85.90909090909088" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_value" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_metadataattributes">
+      <point x="-43.75" y="-71.5" />
+      <point x="659.1367554858933" y="1160.0" />
+      <point x="390.0" y="1160.0" />
+      <point x="78.0" y="98.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:django_admin_log" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:auth_user">
+      <point x="-63.75" y="-125.5" />
+      <point x="1417.260579937304" y="362.0" />
+      <point x="1010.1720219435736" y="362.0" />
+      <point x="143.18181818181813" y="166.0" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:metadata_value" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_project">
+      <point x="43.75" y="-71.5" />
+      <point x="21.875" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_depositsessionstatus" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_project">
+      <point x="57.75" y="-85.0" />
+      <point x="678.3867554858933" y="703.0" />
+      <point x="702.8867554858933" y="703.0" />
+      <point x="-21.875" y="71.5" />
+    </edge>
+    <edge source="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_deposit" target="85bf64b0-586f-438f-9ce8-0ba285add172.TABLE:projects_project">
+      <point x="43.75" y="-71.5" />
+      <point x="441.38675548589333" y="703.0" />
+      <point x="659.1367554858933" y="703.0" />
+      <point x="-65.625" y="71.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6268656716417911" x="902.9761904761904" y="780.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+
